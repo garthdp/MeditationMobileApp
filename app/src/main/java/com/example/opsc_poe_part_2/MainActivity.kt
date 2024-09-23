@@ -1,8 +1,10 @@
 package com.example.opsc_poe_part_2
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
+import android.widget.VideoView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -13,6 +15,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        // Find VideoView by ID and set the video background
+        val videoView = findViewById<VideoView>(R.id.backgroundVideoView)
+        val videoUri = Uri.parse("android.resource://" + packageName + "/" + R.raw.whalebackround) // Replace with your video file name in res/raw
+        videoView.setVideoURI(videoUri)
+
+        // Start the video and loop it
+        videoView.setOnPreparedListener { mediaPlayer ->
+            mediaPlayer.isLooping = true
+            videoView.start()
+        }
 
         // Adjust padding for edge-to-edge display
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -32,9 +45,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        loginButton.setOnClickListener{
-            val intent = Intent(this,Login::class.java)
+        loginButton.setOnClickListener {
+            val intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
     }
 }
+
