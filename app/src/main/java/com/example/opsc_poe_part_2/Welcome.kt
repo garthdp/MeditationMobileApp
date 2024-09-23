@@ -18,12 +18,12 @@ class Welcome : AppCompatActivity() {
         setContentView(R.layout.activity_welcome)
 
         drawerLayout = findViewById(R.id.drawer_layout)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+       // val toolbar: Toolbar = findViewById(R.id.toolbar)
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
         val openNavButton: Button = findViewById(R.id.open_nav_button)
 
         // Set the toolbar as the app bar for this activity
-        setSupportActionBar(toolbar)
+        //setSupportActionBar(toolbar)
 
         // Open drawer when button is clicked
         openNavButton.setOnClickListener {
@@ -35,6 +35,11 @@ class Welcome : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_dairy -> {
                     val intent = Intent(this, Dairy::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.daily_goals -> {
+                    val intent = Intent(this, DailyGoals::class.java)
                     startActivity(intent)
                     true
                 }
