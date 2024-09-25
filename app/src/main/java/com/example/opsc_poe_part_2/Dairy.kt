@@ -20,9 +20,12 @@ class Dairy : AppCompatActivity() {
         recyclerView = findViewById(R.id.recycler_view_entries)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Set the adapter with the entries
+        // Initialize and set the adapter
         adapter = DiaryEntryAdapter(DiaryEntries.entries)
         recyclerView.adapter = adapter
+
+        // Call to display existing diary entries
+        displayDiaryEntries()
 
         addEntryButton.setOnClickListener {
             val intent = Intent(this, AddDiaryEntry::class.java)
@@ -33,9 +36,13 @@ class Dairy : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ADD_ENTRY_REQUEST && resultCode == RESULT_OK) {
-            // Notify the adapter about the new entry
-            adapter.notifyDataSetChanged()
+            // Notify the adapter about the new entry and refresh the entries displayed
+            displayDiaryEntries()
         }
+    }
+
+    private fun displayDiaryEntries() {
+        adapter.notifyDataSetChanged() // Notify the adapter to refresh the views
     }
 
     companion object {

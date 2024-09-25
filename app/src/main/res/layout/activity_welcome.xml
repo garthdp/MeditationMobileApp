@@ -13,11 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Toolbar with navigation button -->
-
         <!-- Welcome message -->
-
-        <!-- Button to open the navigation drawer -->
         <TextView
             android:id="@+id/welcome_message"
             android:layout_width="wrap_content"
@@ -30,15 +26,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <!-- Button to open the navigation drawer -->
+        <ImageButton
             android:id="@+id/open_nav_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="Open Menu"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="42dp"
+            android:layout_height="56dp"
+            android:layout_margin="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="Open Menu"
+            android:src="@drawable/navbar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" /> <!-- Add some margin for spacing -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
