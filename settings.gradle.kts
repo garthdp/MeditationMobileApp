@@ -21,4 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "OPSC_POE_PART_2"
 include(":app")
- 

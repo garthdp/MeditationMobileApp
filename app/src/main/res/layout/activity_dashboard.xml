@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DashboardActivity">
+
+    <!-- Top Icons (Logout, Play Sound, Light/Dark Mode, Settings, Profile) -->
+    <!-- Logout Icon -->
+    <ImageButton
+        android:id="@+id/logout_icon"
+        android:layout_width="57dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Logout"
+        android:src="@drawable/ic_logout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Play Sound Icon -->
+    <ImageButton
+        android:id="@+id/play_sound_icon"
+        android:layout_width="67dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Play Background Sound"
+        android:src="@drawable/ic_sound"
+        app:layout_constraintStart_toEndOf="@id/logout_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Theme Toggle Button -->
+    <ImageButton
+        android:id="@+id/theme_toggle_button"
+        android:layout_width="69dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Theme Toggle Button"
+        android:padding="8dp"
+        android:src="@drawable/ic_dark"
+        app:layout_constraintStart_toEndOf="@id/play_sound_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Settings Icon -->
+    <ImageButton
+        android:id="@+id/ic_settings"
+        android:layout_width="63dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Settings"
+        android:src="@drawable/ic_settings"
+        app:layout_constraintStart_toEndOf="@id/theme_toggle_button"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Profile Icon -->
+    <ImageButton
+        android:id="@+id/profile_icon"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Profile"
+        android:src="@drawable/ic_profile"
+        app:layout_constraintStart_toEndOf="@id/ic_settings"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- ImageView for Quotes -->
+    <ImageView
+        android:id="@+id/ivQuoteImage"
+        android:layout_width="251dp"
+        android:layout_height="149dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Image Quote"
+        android:padding="8dp"
+        android:src="@drawable/quote1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logout_icon" />
+
+    <!-- GraphView -->
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph"
+        android:layout_width="351dp"
+        android:layout_height="229dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivQuoteImage" />
+
+    <!-- Bottom Navigation Bar -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:menu="@menu/bottom_navigation_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
