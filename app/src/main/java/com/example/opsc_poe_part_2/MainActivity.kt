@@ -16,17 +16,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        // Find VideoView by ID and set the video background
-        val videoView = findViewById<VideoView>(R.id.backgroundVideoView)
-        val videoUri = Uri.parse("android.resource://" + packageName + "/" + R.raw.whalebackround) // Replace with your video file name in res/raw
-        videoView.setVideoURI(videoUri)
-
-        // Start the video and loop it
-        videoView.setOnPreparedListener { mediaPlayer ->
-            mediaPlayer.isLooping = true
-            videoView.start()
-        }
-
+        //add video loop
         // Adjust padding for edge-to-edge display
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
