@@ -1,26 +1,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_diary"
-        android:title="Diary" />
+        android:title="Diary"
+        android:icon="@drawable/ic_diary" />
+
     <item
         android:id="@+id/nav_meditation"
-        android:title="Meditation" />
+        android:title="Meditation"
+        android:icon="@drawable/ic_meditation" />
+
     <item
         android:id="@+id/nav_dashboard"
-        android:title="Dashboard" />
+        android:title="Dashboard"
+        android:icon="@drawable/ic_dashboard" />
+
     <item
         android:id="@+id/nav_rewards"
-        android:title="Rewards" />
+        android:title="Rewards"
+        android:icon="@drawable/ic_reward" />
+
     <item
         android:id="@+id/nav_game"
-        android:title="Game" />
-    <item
-        android:id="@+id/nav_profile"
-        android:title="Profile" />
-    <item
-        android:id="@+id/nav_logout"
-        android:title="Logout" />
-    <item
-        android:id="@+id/nav_settings"
-        android:title="Settings" />
-</menu>
+        android:title="Game"
+        android:icon="@drawable/ic_game" /> </menu>
