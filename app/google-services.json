@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "147093333742",
+    "project_id": "opscapi",
+    "storage_bucket": "opscapi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:147093333742:android:e56a1560abe598a39ab5ff",
+        "android_client_info": {
+          "package_name": "com.example.opsc_poe_part_2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGLDxx5r1Re3Cfzk84fTETOzkY33uZcnA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

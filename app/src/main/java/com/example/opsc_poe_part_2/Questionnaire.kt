@@ -62,7 +62,7 @@ class Questionnaire : AppCompatActivity() {
         btnContinue.setOnClickListener {
             // Pass the selected goals to DailyGoals activity
             val intent = Intent(this, Welcome::class.java)
-            intent.putStringArrayListExtra("SELECTED_GOALS", ArrayList(selectedGoals))
+            //intent.putStringArrayListExtra("SELECTED_GOALS", ArrayList(selectedGoals))
             startActivity(intent)
         }
     }

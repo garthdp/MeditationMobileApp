@@ -17,8 +17,8 @@
             android:name=".DailyGoals"
             android:exported="false" />
         <activity
-            android:name=".EmojiPickerDialogFragment"/>
-
+            android:name=".EmojiPickerDialogFragment"  <!-- Fixed typo -->
+        android:exported="false" />
         <activity
             android:name=".AddDiaryEntry"
             android:exported="false" />
