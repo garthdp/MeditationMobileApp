@@ -130,6 +130,10 @@ class Register : AppCompatActivity() {
                                     os.write(jsonInputString)
                                     os.flush()
                                 }
+                                if (connection.responseCode == HttpURLConnection.HTTP_OK) {
+                                    val response = connection.inputStream.bufferedReader()
+                                        .use { it.readText() }
+                                }
                             } catch (e: Exception) {
                                 Log.d("RESPONSE", e.toString())
                                 Handler(Looper.getMainLooper()).post {
