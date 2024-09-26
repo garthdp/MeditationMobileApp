@@ -52,7 +52,7 @@ class Login : AppCompatActivity() {
                         ).show()
 
                         // Navigate to the next activity ( Questionnaire)
-                        val intent = Intent(this, Questionnaire::class.java)
+                        val intent = Intent(this, DashboardActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else {
