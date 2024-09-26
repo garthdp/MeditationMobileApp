@@ -9,8 +9,21 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
+
+var userEmail : String? = null
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var auth: FirebaseAuth
+    public override fun onStart() {
+        super.onStart()
+        val currentUser = auth.currentUser
+        userEmail = auth.currentUser?.email.toString()
+        if (currentUser != null) {
+            val intent = Intent(this, Welcome::class.java)
+            startActivity(intent)
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -27,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         // Find the register button by ID
         val registerButton = findViewById<Button>(R.id.btnRegister)
         val loginButton = findViewById<Button>(R.id.btnLogin)
+        auth = FirebaseAuth.getInstance()
 
         // Set the onClick listener to navigate to the RegisterActivity
         registerButton.setOnClickListener {
