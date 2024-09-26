@@ -51,10 +51,10 @@ class Login : AppCompatActivity() {
                             Toast.LENGTH_SHORT,
                         ).show()
 
-                        // Navigate to the next activity (e.g., Questionnaire)
+                        // Navigate to the next activity ( Questionnaire)
                         val intent = Intent(this, Questionnaire::class.java)
                         startActivity(intent)
-                        finish()  // Optionally, close login activity
+                        finish()
                     } else {
                         Toast.makeText(
                             baseContext,
