@@ -137,7 +137,7 @@ class DashboardActivity : AppCompatActivity() {
         graph.removeAllSeries()
         graph.addSeries(series)
 
-        graph.title = "Weekly Interaction"
+        graph.title = "Weekly Sessions"
         graph.gridLabelRenderer.verticalAxisTitle = "Hours Spent"
         graph.gridLabelRenderer.horizontalAxisTitle = "Days"
     }
