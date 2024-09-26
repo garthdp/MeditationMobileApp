@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
         userEmail = auth.currentUser?.email.toString()
         if (currentUser != null) {
-           val intent = Intent(this, DashboardActivity::class.java)
+            val intent = Intent(this, DashboardActivity::class.java)
             startActivity(intent)
         }
     }
