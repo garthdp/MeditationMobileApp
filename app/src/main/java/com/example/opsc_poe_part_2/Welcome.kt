@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import android.content.Intent
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 
 class Welcome : AppCompatActivity() {
 
@@ -20,7 +21,7 @@ class Welcome : AppCompatActivity() {
         drawerLayout = findViewById(R.id.drawer_layout)
        // val toolbar: Toolbar = findViewById(R.id.toolbar)
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
-        val openNavButton: Button = findViewById(R.id.open_nav_button)
+        val openNavButton: ImageButton = findViewById(R.id.open_nav_button)
 
         // Set the toolbar as the app bar for this activity
         //setSupportActionBar(toolbar)
