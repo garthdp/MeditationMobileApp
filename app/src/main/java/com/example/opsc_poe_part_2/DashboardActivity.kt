@@ -45,6 +45,7 @@ class DashboardActivity : AppCompatActivity() {
 
         val quoteImageView = findViewById<ImageView>(R.id.ivQuoteImage)
 
+        // Restore the current quote index after rotation
         if (savedInstanceState != null) {
             currentQuoteIndex = savedInstanceState.getInt("currentQuoteIndex", 0)
             quoteImageView.setImageResource(quoteImages[currentQuoteIndex])
@@ -52,47 +53,55 @@ class DashboardActivity : AppCompatActivity() {
 
         quoteImageView.setImageResource(quoteImages[currentQuoteIndex])
 
+        // Handle image change on click
         quoteImageView.setOnClickListener {
             currentQuoteIndex = (currentQuoteIndex + 1) % quoteImages.size
             quoteImageView.setImageResource(quoteImages[currentQuoteIndex])
             updateInteractionTime()
-            setGraphData()  // Update the graph with real data
+            setGraphData()
         }
 
-        // Set up the bottom navigation
+        // Initialize BottomNavigationView and set up item selection listener
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
+        bottomNavigationView.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
                 R.id.nav_diary -> {
-                    startActivity(Intent(this, Dairy::class.java)) // Navigate to Diary
+                    val intent = Intent(this, Dairy::class.java)
+                    startActivity(intent)
                     true
                 }
-                //R.id.nav_meditation -> {
-                 //   startActivity(Intent(this, Meditation::class.java)) // Uncomment this line for Meditation
-                //    true
-             //   }
+                R.id.nav_meditation -> {
+                    val intent = Intent(this, Meditation::class.java)
+                    startActivity(intent)
+                    true
+                }
                 R.id.nav_dashboard -> {
-                    // Already in Dashboard, do nothing
+                    val intent = Intent(this, DashboardActivity::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.nav_rewards -> {
-                    startActivity(Intent(this, Rewards::class.java)) // Navigate to Rewards
+                    val intent = Intent(this, Rewards::class.java)
+                    startActivity(intent)
                     true
                 }
-               // R.id.nav_game -> {
-               //     startActivity(Intent(this, GameActivity::class.java)) // Uncomment this line for Game
-             //       true
-              //  }
-                R.id.ic_settings -> {
-                    startActivity(Intent(this, Settings::class.java)) // Navigate to Settings
+                R.id.nav_game -> {
+                    val intent = Intent(this, Game::class.java)
+                    startActivity(intent)
                     true
                 }
-                R.id.profile_icon -> {
-                    startActivity(Intent(this, Profile::class.java)) // Navigate to Profile
+                R.id.nav_profile -> {
+                    val intent = Intent(this, Profile::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.nav_logout -> {
-                    handleLogout() // Handle logout action
+                    handleLogout()
+                    true
+                }
+                R.id.nav_settings -> {
+                    val intent = Intent(this, Settings::class.java)
+                    startActivity(intent)
                     true
                 }
                 else -> false
@@ -126,8 +135,6 @@ class DashboardActivity : AppCompatActivity() {
 
         val todayKey = "day_$dayOfWeek"
         val currentTimeSpent = sharedPreferences.getInt(todayKey, 0)
-
-
         sharedPreferences.edit().putInt(todayKey, currentTimeSpent + 1).apply()
     }
 
@@ -140,27 +147,22 @@ class DashboardActivity : AppCompatActivity() {
             dataPoints.add(DataPoint(i.toDouble(), timeSpent))
         }
 
-
         val series = BarGraphSeries(dataPoints.toTypedArray())
         graph.removeAllSeries()
         graph.addSeries(series)
-
 
         graph.title = "Weekly Interaction"
         graph.gridLabelRenderer.verticalAxisTitle = "Hours Spent"
         graph.gridLabelRenderer.horizontalAxisTitle = "Days"
     }
 
-    // Function to handle logout
     private fun handleLogout() {
         sharedPreferences.edit().clear().apply()
 
-        // Redirect to the welcome activity
         val intent = Intent(this, Welcome::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK) // Clear the activity stack
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
-
 
         Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
     }
