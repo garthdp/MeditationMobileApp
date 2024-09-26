@@ -38,7 +38,7 @@
             android:name=".Dairy"
             android:exported="false" />
         <activity
-            android:name=".Welcome"
+            android:name=".DashboardActivity"
             android:exported="false" />
         <activity
             android:name=".Questionnaire"
