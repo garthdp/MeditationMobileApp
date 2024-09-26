@@ -17,11 +17,13 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        // Initialize Firebase Auth
+        auth = FirebaseAuth.getInstance()
+
+        // Get references to UI elements
         val loginButton = findViewById<Button>(R.id.btnLoggingin)
         val txtEmail = findViewById<EditText>(R.id.editTextEmail)
         val txtPassword = findViewById<EditText>(R.id.editTextPassword)
-
-        auth = FirebaseAuth.getInstance()
 
         // Set the onClick listener for login action
         loginButton.setOnClickListener {
@@ -33,7 +35,7 @@ class Login : AppCompatActivity() {
                 Toast.makeText(
                     baseContext,
                     "Please enter both email and password.",
-                    Toast.LENGTH_SHORT,
+                    Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener
             }
@@ -42,28 +44,32 @@ class Login : AppCompatActivity() {
             hideKeyboard()
 
             // Firebase Authentication
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        Toast.makeText(
-                            baseContext,
-                            "Login successful",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-
-                        // Navigate to the next activity ( Questionnaire)
-                        val intent = Intent(this, DashboardActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        Toast.makeText(
-                            baseContext,
-                            "Authentication failed: ${task.exception?.message}",
-                            Toast.LENGTH_LONG,
-                        ).show()
-                    }
-                }
+            authenticateUser(email, password)
         }
+    }
+
+    private fun authenticateUser(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(
+                        baseContext,
+                        "Login successful",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    // Navigate to the next activity (DashboardActivity)
+                    val intent = Intent(this, DashboardActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(
+                        baseContext,
+                        "Authentication failed: ${task.exception?.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
     }
 
     // Helper function to hide the keyboard

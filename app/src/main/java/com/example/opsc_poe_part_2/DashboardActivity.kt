@@ -3,6 +3,7 @@ package com.example.opsc_poe_part_2
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -31,10 +32,12 @@ class DashboardActivity : AppCompatActivity() {
     private var currentQuoteIndex = 0
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var graph: GraphView
+    private var sessionStartTime: Long = 0 // Track session start time
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Load theme preference
         val isDarkMode = loadThemePreference()
         toggleTheme(isDarkMode)
 
@@ -94,7 +97,19 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
 
+        // Set the graph data
         setGraphData()
+
+        // Track session start time
+        sessionStartTime = System.currentTimeMillis()
+
+        // Theme toggle button
+        val themeToggleButton = findViewById<ImageButton>(R.id.theme_toggle_button)
+        themeToggleButton.setOnClickListener {
+            val newIsDarkMode = !isDarkMode
+            saveThemePreference(newIsDarkMode)
+            toggleTheme(newIsDarkMode)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -102,11 +117,26 @@ class DashboardActivity : AppCompatActivity() {
         outState.putInt("currentQuoteIndex", currentQuoteIndex)
     }
 
+    override fun onStop() {
+        super.onStop()
+
+        // Calculate session time in minutes
+        val sessionEndTime = System.currentTimeMillis()
+        val sessionDuration = (sessionEndTime - sessionStartTime) / 60000 // Convert to minutes
+
+        // Update the session time in SharedPreferences
+        updateDailyUsage(sessionDuration)
+    }
+
     private fun toggleTheme(isDarkMode: Boolean) {
+        val themeToggleButton = findViewById<ImageButton>(R.id.theme_toggle_button)
+
         if (isDarkMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            themeToggleButton.setImageResource(R.drawable.ic_light) // Set light mode icon
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            themeToggleButton.setImageResource(R.drawable.ic_dark) // Set dark mode icon
         }
     }
 
@@ -115,13 +145,13 @@ class DashboardActivity : AppCompatActivity() {
         return sharedPreferences.getBoolean("isDarkMode", false)
     }
 
-    private fun updateInteractionTime() {
-        val calendar = Calendar.getInstance()
-        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1
+    private fun saveThemePreference(isDarkMode: Boolean) {
+        val sharedPreferences = getSharedPreferences("ThemePrefs", MODE_PRIVATE)
+        sharedPreferences.edit().putBoolean("isDarkMode", isDarkMode).apply()
+    }
 
-        val todayKey = "day_$dayOfWeek"
-        val currentTimeSpent = sharedPreferences.getInt(todayKey, 0)
-        sharedPreferences.edit().putInt(todayKey, currentTimeSpent + 1).apply()
+    private fun updateInteractionTime() {
+        // Update user interaction time, you can track specific interactions here if needed
     }
 
     private fun setGraphData() {
@@ -129,7 +159,7 @@ class DashboardActivity : AppCompatActivity() {
 
         // Retrieve data for each day of the week
         for (i in 0 until 7) {
-            val timeSpent = sharedPreferences.getInt("day_$i", 0).toDouble()
+            val timeSpent = sharedPreferences.getLong("day_$i", 0).toDouble()
             dataPoints.add(DataPoint(i.toDouble(), timeSpent))
         }
 
@@ -138,8 +168,20 @@ class DashboardActivity : AppCompatActivity() {
         graph.addSeries(series)
 
         graph.title = "Weekly Sessions"
-        graph.gridLabelRenderer.verticalAxisTitle = "Hours Spent"
+        graph.gridLabelRenderer.verticalAxisTitle = "Minutes Spent"
         graph.gridLabelRenderer.horizontalAxisTitle = "Days"
+    }
+
+    private fun updateDailyUsage(sessionDuration: Long) {
+        val calendar = Calendar.getInstance()
+        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1
+
+        val todayKey = "day_$dayOfWeek"
+        val currentTimeSpent = sharedPreferences.getLong(todayKey, 0)
+        sharedPreferences.edit().putLong(todayKey, currentTimeSpent + sessionDuration).apply()
+
+        // Update the graph with the new data
+        setGraphData()
     }
 
     private fun handleLogout() {
