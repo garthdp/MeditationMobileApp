@@ -15,15 +15,15 @@ var userEmail : String? = null
 
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
-    public override fun onStart() {
-        super.onStart()
-        val currentUser = auth.currentUser
-        userEmail = auth.currentUser?.email.toString()
-        if (currentUser != null) {
-            val intent = Intent(this, Welcome::class.java)
-            startActivity(intent)
-        }
-    }
+//    public override fun onStart() {
+//        super.onStart()
+//        val currentUser = auth.currentUser
+//        userEmail = auth.currentUser?.email.toString()
+//        if (currentUser != null) {
+//            val intent = Intent(this, Welcome::class.java)
+//            startActivity(intent)
+//        }
+//    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
