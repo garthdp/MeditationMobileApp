@@ -36,12 +36,11 @@ class DashboardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_dashboard)
 
         // Load theme preference
         val isDarkMode = loadThemePreference()
         toggleTheme(isDarkMode)
-
-        setContentView(R.layout.activity_dashboard)
 
         sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE)
         graph = findViewById(R.id.graph)
@@ -159,7 +158,7 @@ class DashboardActivity : AppCompatActivity() {
 
         // Retrieve data for each day of the week
         for (i in 0 until 7) {
-            val timeSpent = sharedPreferences.getLong("day_$i", 0).toDouble()
+            val timeSpent = sharedPreferences.getInt("day_$i", 0).toDouble()
             dataPoints.add(DataPoint(i.toDouble(), timeSpent))
         }
 
