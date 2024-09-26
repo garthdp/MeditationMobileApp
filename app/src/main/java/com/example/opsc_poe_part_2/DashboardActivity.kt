@@ -32,7 +32,7 @@ class DashboardActivity : AppCompatActivity() {
     private var currentQuoteIndex = 0
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var graph: GraphView
-    private var sessionStartTime: Long = 0 // Track session start time
+    private var sessionStartTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -122,7 +122,7 @@ class DashboardActivity : AppCompatActivity() {
 
         // Calculate session time in minutes
         val sessionEndTime = System.currentTimeMillis()
-        val sessionDuration = (sessionEndTime - sessionStartTime) / 60000 // Convert to minutes
+        val sessionDuration = (sessionEndTime - sessionStartTime) / 60000
 
         // Update the session time in SharedPreferences
         updateDailyUsage(sessionDuration)
@@ -151,7 +151,7 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun updateInteractionTime() {
-        // Update user interaction time, you can track specific interactions here if needed
+
     }
 
     private fun setGraphData() {
@@ -180,7 +180,7 @@ class DashboardActivity : AppCompatActivity() {
         val currentTimeSpent = sharedPreferences.getLong(todayKey, 0)
         sharedPreferences.edit().putLong(todayKey, currentTimeSpent + sessionDuration).apply()
 
-        // Update the graph with the new data
+
         setGraphData()
     }
 
