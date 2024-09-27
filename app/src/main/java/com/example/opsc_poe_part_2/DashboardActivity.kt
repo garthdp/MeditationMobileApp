@@ -2,6 +2,7 @@ package com.example.opsc_poe_part_2
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -12,6 +13,7 @@ import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.BarGraphSeries
 import com.jjoe64.graphview.series.DataPoint
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.jjoe64.graphview.DefaultLabelFormatter
 import java.util.*
 
 class DashboardActivity : AppCompatActivity() {
@@ -150,47 +152,98 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun updateInteractionTime() {
-
+        // Function for future use
     }
 
     private fun setGraphData() {
         val dataPoints = ArrayList<DataPoint>()
 
-        // Retrieve data for each day of the week
+        // Day labels
+        val dayLabels = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+
         for (i in 0 until 7) {
-            val timeSpent = sharedPreferences.getLong("day_$i", 0).toDouble()
-            dataPoints.add(DataPoint(i.toDouble(), timeSpent))
+            // Retrieve time spent in minutes from SharedPreferences
+            val timeSpentInMinutes = sharedPreferences.getLong("day_$i", 0).toDouble()
+            val timeSpentInHours = timeSpentInMinutes / 60.0
+            dataPoints.add(DataPoint(i.toDouble(), timeSpentInHours))
         }
 
+        // Create a series for the graph
         val series = BarGraphSeries(dataPoints.toTypedArray())
         graph.removeAllSeries()
         graph.addSeries(series)
 
+        // Set graph title and labels
         graph.title = "Weekly Sessions"
-        graph.gridLabelRenderer.verticalAxisTitle = "Minutes Spent"
+        graph.gridLabelRenderer.verticalAxisTitle = "Time Spent (Hours)"
         graph.gridLabelRenderer.horizontalAxisTitle = "Days"
-    }
 
+        // Set custom labels for x-axis (days of the week)
+        graph.gridLabelRenderer.labelFormatter = object : DefaultLabelFormatter() {
+            override fun formatLabel(value: Double, isValueX: Boolean): String {
+                return if (isValueX) {
+                    if (value.toInt() in dayLabels.indices) {
+                        dayLabels[value.toInt()]
+                    } else {
+                        "" // Return empty string if out of bounds
+                    }
+                } else {
+                    String.format("%.1f h", value)
+                }
+            }
+        }
+
+        // Set custom Y-axis range and labels
+        graph.viewport.isYAxisBoundsManual = true
+        graph.viewport.setMinY(0.0) // Set minimum to 0 to make bars rise from the baseline
+        graph.viewport.setMaxY(3.0) // Adjust as necessary to fit your data
+        graph.gridLabelRenderer.numVerticalLabels = 6
+
+        // Set custom X-axis bounds (0-6 for days of the week)
+        graph.viewport.isXAxisBoundsManual = true
+        graph.viewport.setMinX(0.0)
+        graph.viewport.setMaxX(6.0)
+        graph.gridLabelRenderer.numHorizontalLabels = 7
+
+        // Enable scaling and scrolling
+        graph.viewport.isScalable = true
+        graph.viewport.isScrollable = true
+
+        // Set bar spacing to prevent bars from appearing too close together
+        series.spacing = 50 // Adjust spacing to widen the gaps between bars
+
+        // Set the color of the bars
+        series.color = Color.parseColor("#6B8072")
+
+        // Add padding to x-axis labels to avoid overlap with bars
+        graph.gridLabelRenderer.padding = 50
+    }
     private fun updateDailyUsage(sessionDuration: Long) {
         val calendar = Calendar.getInstance()
         val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1
 
         val todayKey = "day_$dayOfWeek"
         val currentTimeSpent = sharedPreferences.getLong(todayKey, 0)
+
+        // Update the time spent for today
         sharedPreferences.edit().putLong(todayKey, currentTimeSpent + sessionDuration).apply()
 
-
+        // Call to update the graph data
         setGraphData()
     }
+
 
     private fun handleLogout() {
         sharedPreferences.edit().clear().apply()
 
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
-        finish()
-
-        Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
+        val logout = findViewById<ImageButton>(R.id.logout_icon)
+        logout.setOnClickListener {
+            sharedPreferences.edit().clear().apply()
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+            Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
+        }
     }
 }
