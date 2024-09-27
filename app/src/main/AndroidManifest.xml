@@ -53,6 +53,15 @@
             android:name=".MusicActivity"
             android:exported="false" />
         <activity
+            android:name=".FocusActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SleepActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MeditateActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

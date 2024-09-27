@@ -21,6 +21,17 @@ class Meditation : AppCompatActivity() {
         val intent = Intent(this, MusicActivity::class.java)
         startActivity(intent)
     }
-
+    fun goToFocusPage(view: View) {
+        val intent = Intent(this, FocusActivity::class.java)
+        startActivity(intent)
+    }
+    fun goToSleepPage(view: View) {
+        val intent = Intent(this, SleepActivity::class.java)
+        startActivity(intent)
+    }
+    fun goToMeditationPage(view: View) {
+        val intent = Intent(this, MeditateActivity::class.java)
+        startActivity(intent)
+    }
 
 }
