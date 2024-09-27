@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:background="#3BA8D0"
     tools:context=".FocusActivity">
-    <!-- Upside-Down Rounded Shape at the Top -->
-    <!-- Title (Music) -->
+
     <View
         android:id="@+id/roundedShape"
         android:layout_width="409dp"
@@ -43,7 +42,7 @@
         android:layout_marginTop="16dp"
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="Back Button"
-        android:src="@drawable/back_arrow"
+        android:src="@drawable/ic_return"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@android:color/white" />
@@ -71,5 +70,15 @@
         app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toBottomOf="@+id/roundedShape" />
 
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:clipToPadding="false"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
