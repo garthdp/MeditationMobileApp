@@ -3,10 +3,12 @@ package com.example.opsc_poe_part_2
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
+import android.widget.VideoView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -42,6 +44,16 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
+        // Find VideoView by ID and set the video background
+        val videoView = findViewById<VideoView>(R.id.backgroundVideoView)
+        val videoUri = Uri.parse("android.resource://" + packageName + "/" + R.raw.star_background)
+        videoView.setVideoURI(videoUri)
+
+        // Start the video and loop it
+        videoView.setOnPreparedListener { mediaPlayer ->
+            mediaPlayer.isLooping = true
+            videoView.start()
+        }
         // Load theme preference
         val isDarkMode = loadThemePreference()
         toggleTheme(isDarkMode)
@@ -97,6 +109,7 @@ class DashboardActivity : AppCompatActivity() {
         logout.setOnClickListener {
             handleLogout()
         }
+
     }
 
     private fun handleLogout() {
