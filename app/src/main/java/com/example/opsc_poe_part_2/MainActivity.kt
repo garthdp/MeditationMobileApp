@@ -53,6 +53,16 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
+        // Find VideoView by ID and set the video background
+        val videoView = findViewById<VideoView>(R.id.backgroundVideoView)
+        val videoUri = Uri.parse("android.resource://" + packageName + "/" + R.raw.whalebackround)
+        videoView.setVideoURI(videoUri)
+
+        // Start the video and loop it
+        videoView.setOnPreparedListener { mediaPlayer ->
+            mediaPlayer.isLooping = true
+            videoView.start()
     }
+}
 }
 

@@ -7,6 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".DashboardActivity">
 
+    <VideoView
+        android:id="@+id/backgroundVideoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
     <!-- Top Icons (Logout, Play Sound, Light/Dark Mode, Settings, Profile) -->
     <!-- Logout Icon -->
     <ImageButton
