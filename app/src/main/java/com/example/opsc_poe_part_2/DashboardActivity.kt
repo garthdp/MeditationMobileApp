@@ -13,6 +13,8 @@ import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.BarGraphSeries
 import com.jjoe64.graphview.series.DataPoint
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import com.jjoe64.graphview.DefaultLabelFormatter
 import java.util.*
 
@@ -110,6 +112,14 @@ class DashboardActivity : AppCompatActivity() {
             val newIsDarkMode = !isDarkMode
             saveThemePreference(newIsDarkMode)
             toggleTheme(newIsDarkMode)
+        }
+
+        val logout = findViewById<ImageButton>(R.id.logout_icon)
+        logout.setOnClickListener {
+            Firebase.auth.signOut()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -230,20 +240,5 @@ class DashboardActivity : AppCompatActivity() {
 
         // Call to update the graph data
         setGraphData()
-    }
-
-
-    private fun handleLogout() {
-        sharedPreferences.edit().clear().apply()
-
-        val logout = findViewById<ImageButton>(R.id.logout_icon)
-        logout.setOnClickListener {
-            sharedPreferences.edit().clear().apply()
-            val intent = Intent(this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            finish()
-            Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
-        }
     }
 }
