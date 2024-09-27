@@ -7,9 +7,20 @@
 
     <!-- Other TextViews for user information -->
     <TextView
-        android:id="@+id/entryText"
+        android:id="@+id/entryTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:text="Diary Entry Text" />
+    <TextView
+        android:id="@+id/entryDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Diary Entry Text" />
+    <TextView
+        android:id="@+id/entryContent"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
         android:text="Diary Entry Text" />
 
     <!-- ImageView for emoji -->
@@ -18,5 +29,11 @@
         android:layout_width="48dp"
     android:layout_height="48dp"
     android:src="@drawable/sademoji" />
+
+    <TextView
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="______________________________________________________________________" />
 
 </LinearLayout>
