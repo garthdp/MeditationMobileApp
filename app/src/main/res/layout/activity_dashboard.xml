@@ -76,16 +76,13 @@
 
     <!-- ImageView for Quotes -->
     <ImageView
-        android:id="@+id/ivQuoteImage"
-        android:layout_width="303dp"
-        android:layout_height="211dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="Image Quote"
-        android:padding="8dp"
-        android:src="@drawable/quote1"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/imgQuote"
+        android:layout_width="300dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/play_sound_icon"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logout_icon" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- GraphView -->
     <com.jjoe64.graphview.GraphView
@@ -95,7 +92,7 @@
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivQuoteImage" />
+        app:layout_constraintTop_toBottomOf="@id/imgQuote" />
 
     <!-- Bottom Navigation Bar -->
     <com.google.android.material.bottomnavigation.BottomNavigationView

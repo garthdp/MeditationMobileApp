@@ -20,19 +20,6 @@ import java.util.*
 
 class DashboardActivity : AppCompatActivity() {
 
-    private val quoteImages = arrayOf(
-        R.drawable.quote1,
-        R.drawable.quote2,
-        R.drawable.quote3,
-        R.drawable.quote4,
-        R.drawable.quote5,
-        R.drawable.quote6,
-        R.drawable.quote7,
-        R.drawable.quote8,
-        R.drawable.quote9,
-        R.drawable.quote10
-    )
-
     private var currentQuoteIndex = 0
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var graph: GraphView
@@ -49,20 +36,19 @@ class DashboardActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE)
         graph = findViewById(R.id.graph)
 
-        val quoteImageView = findViewById<ImageView>(R.id.ivQuoteImage)
+        val profileIcon = findViewById<ImageButton>(R.id.profile_icon)
+        profileIcon.setOnClickListener {
+            startActivity(Intent(this, Profile::class.java))
+        }
+        val settingsIcon = findViewById<ImageButton>(R.id.ic_settings)
+        settingsIcon.setOnClickListener {
+            startActivity(Intent(this, Settings::class.java))
+        }
+        val quoteImageView = findViewById<ImageView>(R.id.imgQuote)
 
         // Restore the current quote index after rotation
         if (savedInstanceState != null) {
             currentQuoteIndex = savedInstanceState.getInt("currentQuoteIndex", 0)
-        }
-        quoteImageView.setImageResource(quoteImages[currentQuoteIndex])
-
-        // Handle image change on click
-        quoteImageView.setOnClickListener {
-            currentQuoteIndex = (currentQuoteIndex + 1) % quoteImages.size
-            quoteImageView.setImageResource(quoteImages[currentQuoteIndex])
-            updateInteractionTime()
-            setGraphData()
         }
 
         // Initialize BottomNavigationView and set up item selection listener
@@ -99,12 +85,12 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
+    // Logic for logging out
     private fun handleLogout() {
         AlertDialog.Builder(this)
             .setTitle("Logout")
             .setMessage("Are you sure you want to log out?")
             .setPositiveButton("Yes") { dialog, which ->
-                // Clear SharedPreferences
                 sharedPreferences.edit().clear().apply()
                 FirebaseAuth.getInstance().signOut()
                 startActivity(Intent(this, MainActivity::class.java))
@@ -114,6 +100,7 @@ class DashboardActivity : AppCompatActivity() {
             .show()
     }
 
+    // Save state when rotating the screen
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("currentQuoteIndex", currentQuoteIndex)
@@ -121,21 +108,20 @@ class DashboardActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        // Calculate session time in minutes
         val sessionEndTime = System.currentTimeMillis()
         val sessionDuration = (sessionEndTime - sessionStartTime) / 60000
-        // Update the session time in SharedPreferences
         updateDailyUsage(sessionDuration)
     }
 
+    // Toggle between dark/light mode
     private fun toggleTheme(isDarkMode: Boolean) {
         val themeToggleButton = findViewById<ImageButton>(R.id.theme_toggle_button)
         if (isDarkMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            themeToggleButton.setImageResource(R.drawable.ic_light) // Set light mode icon
+            themeToggleButton.setImageResource(R.drawable.ic_light)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            themeToggleButton.setImageResource(R.drawable.ic_dark) // Set dark mode icon
+            themeToggleButton.setImageResource(R.drawable.ic_dark)
         }
     }
 
@@ -150,9 +136,10 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun updateInteractionTime() {
-        // Function for future use
+        // Placeholder for tracking interaction time
     }
 
+    // Setting graph data
     private fun setGraphData() {
         val dataPoints = ArrayList<DataPoint>()
         val dayLabels = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
@@ -210,6 +197,6 @@ class DashboardActivity : AppCompatActivity() {
         val currentTimeSpent = sharedPreferences.getLong(todayKey, 0)
 
         sharedPreferences.edit().putLong(todayKey, currentTimeSpent + sessionDuration).apply()
-        setGraphData() // Call to update the graph data
+        setGraphData() // Update the graph data after the session
     }
 }
