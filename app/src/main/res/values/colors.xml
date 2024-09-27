@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Light Mode Colors -->
-    <color name="light_background">#6B8072</color>
+    <color name="light_background">#76ADFF</color>
     <color name="light_text">#FFFFFF</color>
     <color name="light_accent">#FFFFFF</color>
 
