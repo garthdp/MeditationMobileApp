@@ -2,10 +2,15 @@ package com.example.opsc_poe_part_2
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
@@ -20,6 +25,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.jjoe64.graphview.DefaultLabelFormatter
 import java.util.*
+import java.util.concurrent.Executors
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -37,12 +43,19 @@ class DashboardActivity : AppCompatActivity() {
         // Find VideoView by ID and set the video background
         val videoView = findViewById<VideoView>(R.id.backgroundVideoView)
         val videoUri = Uri.parse("android.resource://" + packageName + "/" + R.raw.star_background)
+        val imageQuote : ImageView = findViewById(R.id.imgQuote)
         videoView.setVideoURI(videoUri)
+
+        getImage(imageQuote)
 
         // Start the video and loop it
         videoView.setOnPreparedListener { mediaPlayer ->
             mediaPlayer.isLooping = true
             videoView.start()
+        }
+
+        imageQuote.setOnClickListener{
+            getImage(imageQuote)
         }
 
         // Play Sound Icon
@@ -271,5 +284,28 @@ class DashboardActivity : AppCompatActivity() {
             .apply()
 
         setGraphData()
+    }
+    private fun getImage(img : ImageView){
+        val handler = Handler(Looper.getMainLooper())
+        val executor = Executors.newSingleThreadExecutor()
+
+        executor.execute{
+            val imageURL = "https://zenquotes.io/api/image"
+            try
+            {
+                val `in` = java.net.URL(imageURL).openStream()
+                val image = BitmapFactory.decodeStream(`in`)
+                Log.d("Welcome", "Image added "+ image.toString())
+                handler.post{
+                    Log.d("Welcome", "Image added")
+                    img.setImageBitmap(image)
+                }
+            }
+            catch (e:java.lang.Exception)
+            {
+                Log.d("Welcome", "Error occurred: $e")
+                e.printStackTrace()
+            }
+        }
     }
 }
