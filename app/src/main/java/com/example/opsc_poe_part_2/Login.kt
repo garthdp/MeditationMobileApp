@@ -25,11 +25,10 @@ class Login : AppCompatActivity() {
         val loginButton = findViewById<Button>(R.id.btnLoggingin)
         val txtEmail = findViewById<EditText>(R.id.editTextEmail)
         val txtPassword = findViewById<EditText>(R.id.editTextPassword)
+        val progressBar: ProgressBar = findViewById(R.id.progressBar)
 
         // Set the onClick listener for login action
         loginButton.setOnClickListener {
-            val progressBar : ProgressBar = findViewById(R.id.progressBar)
-            progressBar.visibility = View.VISIBLE
             val email = txtEmail.text.toString().trim()
             val password = txtPassword.text.toString().trim()
 
@@ -46,15 +45,20 @@ class Login : AppCompatActivity() {
             // Hide keyboard after clicking the button
             hideKeyboard()
 
+            // Show progress bar before authentication
+            progressBar.visibility = View.VISIBLE
+
             // Firebase Authentication
-            authenticateUser(email, password)
+            authenticateUser(email, password, progressBar)
         }
     }
 
-    private fun authenticateUser(email: String, password: String) {
-        val progressBar : ProgressBar = findViewById(R.id.progressBar)
+    private fun authenticateUser(email: String, password: String, progressBar: ProgressBar) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
+                // Hide progress bar after authentication attempt
+                progressBar.visibility = View.INVISIBLE
+
                 if (task.isSuccessful) {
                     Toast.makeText(
                         baseContext,
@@ -74,8 +78,6 @@ class Login : AppCompatActivity() {
                     ).show()
                 }
             }
-
-        progressBar.visibility = View.INVISIBLE
     }
 
     // Helper function to hide the keyboard

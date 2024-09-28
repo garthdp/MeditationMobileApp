@@ -14,4 +14,10 @@
     <color name="dark_text">#FFFFFF</color>
     <color name="dark_accent">#FFFFFF</color>
 
+
+        <!-- Define a nice background color for the entry boxes -->
+        <color name="entry_background">#FFBB86FC</color>
+
+
+
 </resources>

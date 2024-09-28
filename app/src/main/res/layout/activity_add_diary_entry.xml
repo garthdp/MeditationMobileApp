@@ -67,7 +67,7 @@
         android:layout_marginStart="7dp"
         android:layout_marginBottom="16dp"
         android:contentDescription="Select Emoji"
-        android:src="@drawable/logo"
+        android:src="@drawable/emojipicker"
         app:layout_constraintBottom_toTopOf="@+id/btn_save"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_selected_emoji" /> <!-- Ensure you have an emoji icon drawable -->
