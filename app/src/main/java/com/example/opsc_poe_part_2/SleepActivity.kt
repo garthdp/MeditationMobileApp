@@ -24,8 +24,8 @@ class SleepActivity : AppCompatActivity() {
 
         // Set an OnClickListener on the back button
         backButton.setOnClickListener {
-            // Create an Intent to navigate back to MainActivity
-            val intent = Intent(this, MainActivity::class.java)
+            //navigate back to Mediation page
+            val intent = Intent(this, Meditation::class.java)
             // Start MainActivity
             startActivity(intent)
 
