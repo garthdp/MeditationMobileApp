@@ -7,55 +7,59 @@
     android:background="#9381AD"
     tools:context=".SleepActivity">
 
+    <!-- Rounded Shape at the Top -->
     <View
         android:id="@+id/roundedShape"
-        android:layout_width="409dp"
-        android:layout_height="297dp"
-        android:layout_marginBottom="27dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@drawable/rounded_top_shape_with_glow"
         android:rotation="180"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintDimensionRatio="2:1" /> <!-- Aspect ratio for the shape -->
 
+    <!-- Title inside the Shape -->
     <TextView
         android:id="@+id/MeditateTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="115dp"
-        android:layout_marginBottom="19dp"
+        android:layout_marginTop="24dp"
         android:text="Sleep"
         android:textColor="@android:color/white"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/roundedShape"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/imageView2" />
 
+    <!-- Back Button at Top Left -->
     <ImageButton
         android:id="@+id/backButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_margin="16dp"
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="Back Button"
         android:src="@drawable/ic_return"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:tint="@android:color/white" />
+
+    <!-- ImageView (Logo) below the Title -->
+
+    <!-- Text below the Shape -->
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="219dp"
-        android:layout_height="150dp"
-        android:layout_marginBottom="506dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="309dp"
+        android:layout_height="186dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MeditateTitle"
         app:srcCompat="@drawable/sleep_page_logo" />
@@ -64,14 +68,14 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginBottom="490dp"
+        android:layout_marginTop="16dp"
         android:text="Sleep Guide"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/roundedShape" />
+        app:layout_constraintTop_toBottomOf="@+id/roundedShape"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- ViewPager2 for Videos -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
@@ -80,9 +84,9 @@
         android:clipToPadding="false"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView2" />
-
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

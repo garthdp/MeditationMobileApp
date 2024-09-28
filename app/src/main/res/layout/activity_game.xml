@@ -24,8 +24,8 @@
 
     <ImageView
         android:id="@+id/semi_circle"
-        android:layout_width="407dp"
-        android:layout_height="518dp"
+        android:layout_width="422dp"
+        android:layout_height="551dp"
         android:contentDescription="Semi-Circle Shape"
         android:src="@drawable/semi_circle_shape"
         app:layout_constraintBottom_toBottomOf="parent"
