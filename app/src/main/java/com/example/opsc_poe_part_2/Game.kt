@@ -32,12 +32,12 @@ class Game: AppCompatActivity() {
                     true
                 }
                 R.id.nav_game -> {
-
                     true
                 }
                 else -> false
             }
         }
+        bottomNavigationView.selectedItemId = R.id.nav_game
         val button = findViewById<Button>(R.id.start_btn_id)
         button.setOnClickListener {
             Toast.makeText(this, "Coming Soon in part 3!", Toast.LENGTH_SHORT).show()

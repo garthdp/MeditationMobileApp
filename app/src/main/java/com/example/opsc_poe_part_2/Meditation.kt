@@ -38,6 +38,7 @@ class Meditation : AppCompatActivity() {
                 else -> false
             }
         }
+        bottomNavigationView.selectedItemId = R.id.nav_meditation
     }
 
     // Navigation to specific pages using button clicks

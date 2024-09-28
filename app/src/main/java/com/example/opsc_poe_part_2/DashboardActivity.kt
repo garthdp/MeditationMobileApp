@@ -123,7 +123,6 @@ class DashboardActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_dashboard -> {
-                    startActivity(Intent(this, DashboardActivity::class.java))
                     true
                 }
                 R.id.nav_rewards -> {
@@ -137,7 +136,7 @@ class DashboardActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
+        bottomNavigationView.selectedItemId = R.id.nav_dashboard
         // Track session start time
         sessionStartTime = System.currentTimeMillis()
 
