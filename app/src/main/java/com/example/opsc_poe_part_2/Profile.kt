@@ -1,7 +1,9 @@
 package com.example.opsc_poe_part_2
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -25,17 +27,33 @@ class Profile : AppCompatActivity() {
         }
 
         // Initialize SharedPreferences and TextView
-        sharedPreferences = getSharedPreferences("UserGoals", MODE_PRIVATE)
-        txtSelectedGoals = findViewById(R.id.txtSelectedGoals)
+
+       // sharedPreferences = getSharedPreferences("UserGoals", MODE_PRIVATE)
+       // txtSelectedGoals = findViewById(R.id.txtSelectedGoals)
 
         // Retrieve the selected goals from SharedPreferences
-        val selectedGoals = sharedPreferences.getStringSet("selected_goals", emptySet()) ?: emptySet()
+       // val selectedGoals = sharedPreferences.getStringSet("selected_goals", emptySet()) ?: emptySet()
 
         // Display the selected goals
-        if (selectedGoals.isNotEmpty()) {
-            txtSelectedGoals.text = selectedGoals.joinToString(", ")
-        } else {
-            txtSelectedGoals.text = "No goals selected."
+
+       // if (selectedGoals.isNotEmpty()) {
+       //     txtSelectedGoals.text = selectedGoals.joinToString(", ")
+       // } else {
+       //     txtSelectedGoals.text = "No goals selected."
+       // }
+
+        var lblEmail = findViewById<TextView>(R.id.lblemail)
+        var lblPassword = findViewById<TextView>(R.id.lblpassword)
+        var lblUsername = findViewById<TextView>(R.id.lblUsername)
+
+
+
+        val btnSettings = findViewById<Button>(R.id.btnSetting)
+        btnSettings.setOnClickListener {
+            // Create an intent to start RegisterActivity
+            val intent = Intent(this, Settings::class.java)
+            startActivity(intent)
         }
+
     }
 }
