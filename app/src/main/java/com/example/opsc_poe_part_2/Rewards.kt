@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class Rewards : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +33,33 @@ class Rewards : AppCompatActivity() {
             val intent = Intent(this, LevelUp::class.java)
             startActivity(intent)
         }
+        // Initialize BottomNavigationView and set up item selection listener
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_diary -> {
+                    startActivity(Intent(this, Dairy::class.java))
+                    true
+                }
+                R.id.nav_meditation -> {
+                    startActivity(Intent(this, Meditation::class.java))
+                    true
+                }
+                R.id.nav_dashboard -> {
+                    startActivity(Intent(this, DashboardActivity::class.java))
+                    true
+                }
+                R.id.nav_rewards -> {
+                    true
+                }
+                R.id.nav_game -> {
+                    startActivity(Intent(this, Game::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
+        bottomNavigationView.selectedItemId = R.id.nav_rewards
     }
 
 
