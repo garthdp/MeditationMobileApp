@@ -1,6 +1,8 @@
 package com.example.opsc_poe_part_2
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -59,13 +61,10 @@ class AddDiaryEntry : AppCompatActivity(), EmojiPickerDialogFragment.EmojiPicker
             // Set result to OK and pass back the new entry (optional)
             setResult(RESULT_OK)
 
-            GlobalScope.launch(Dispatchers.IO) {
-                val check = async { patchRequest() }
-                check.await()
-                val addUser = async { postRequest(content, title, selectedEmojiResId) }
-                addUser.await()
-            }
-            finish()
+            patchRequest()
+            postRequest(content, title, selectedEmojiResId)
+            val intent = Intent(this, DashboardActivity::class.java)
+            startActivity(intent)
         }
 
     }
@@ -75,12 +74,13 @@ class AddDiaryEntry : AppCompatActivity(), EmojiPickerDialogFragment.EmojiPicker
         emojiTextView.setCompoundDrawablesWithIntrinsicBounds(0, emojiResId, 0, 0)
     }
 
-    suspend fun patchRequest() {
+    fun patchRequest() {
         /*
             Code Attribution
-            Title: How to use the OkHttp library in Android Studio
-            Author: Codes Easy
-            Link: https://www.youtube.com/watch?v=uSY2RqdBL04
+            Title: How to use OKHTTP to make a post request in Kotlin?
+            Author: heX
+            Author Link: https://stackoverflow.com/users/11740298/hex
+            Post Link: https://stackoverflow.com/questions/56893945/how-to-use-okhttp-to-make-a-post-request-in-kotlin
             Usage: learned how to make patch api requests
         */
         val client = OkHttpClient()
@@ -94,19 +94,19 @@ class AddDiaryEntry : AppCompatActivity(), EmojiPickerDialogFragment.EmojiPicker
         val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), "")
 
         val request = Request.Builder().url(url).patch(requestBody).build()
-        val executor = Executors.newSingleThreadExecutor()
 
-        executor.execute{
-            client.newCall(request).execute().use { response ->
-                if (!response.isSuccessful) throw IOException("Unexpected code $response")
-
-                println(response.body?.string())
+        client.newCall(request).enqueue(object : Callback{
+            override fun onFailure(call: Call, e: IOException) {
+                Log.d("Patch Response", "Failure")
             }
-        }
-        delay(3000)
+
+            override fun onResponse(call: Call, response: Response) {
+                Log.d("Patch Response", "Success")
+            }
+        } )
     }
 
-    suspend fun postRequest(content: String, title: String, emoji: Int) {
+    fun postRequest(content: String, title: String, emoji: Int) {
         val client = OkHttpClient()
 
         val sdf = SimpleDateFormat("dd/MM/yyyy")
@@ -124,23 +124,19 @@ class AddDiaryEntry : AppCompatActivity(), EmojiPickerDialogFragment.EmojiPicker
         val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), "")
 
         val request = Request.Builder().url(url).post(requestBody).build()
-        val executor = Executors.newSingleThreadExecutor()
 
-        executor.execute{
-            client.newCall(request).execute().use { response ->
-                if (!response.isSuccessful) throw IOException("Unexpected code $response")
-
-                println(response.body?.string())
+        client.newCall(request).enqueue(object : Callback{
+            override fun onFailure(call: Call, e: IOException) {
+                Log.d("Patch Response", "Failure")
             }
-        }
-        delay(3000)
+
+            override fun onResponse(call: Call, response: Response) {
+                Log.d("Patch Response", "Success")
+            }
+        } )
     }
 }
 
-// Singleton object to hold diary entries
-object DiaryEntries {
-    val entries = mutableListOf<DiaryEntry>()
-}
 data class DiaryEntry(
     val emoji: Int,
     val EntryId: String,

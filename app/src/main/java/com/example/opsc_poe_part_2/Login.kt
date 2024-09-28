@@ -6,6 +6,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -27,6 +28,8 @@ class Login : AppCompatActivity() {
 
         // Set the onClick listener for login action
         loginButton.setOnClickListener {
+            val progressBar : ProgressBar = findViewById(R.id.progressBar)
+            progressBar.visibility = View.VISIBLE
             val email = txtEmail.text.toString().trim()
             val password = txtPassword.text.toString().trim()
 
@@ -49,6 +52,7 @@ class Login : AppCompatActivity() {
     }
 
     private fun authenticateUser(email: String, password: String) {
+        val progressBar : ProgressBar = findViewById(R.id.progressBar)
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -70,6 +74,8 @@ class Login : AppCompatActivity() {
                     ).show()
                 }
             }
+
+        progressBar.visibility = View.INVISIBLE
     }
 
     // Helper function to hide the keyboard

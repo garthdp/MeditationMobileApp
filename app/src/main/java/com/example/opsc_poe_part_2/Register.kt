@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -21,6 +22,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import okhttp3.Call
+import okhttp3.Callback
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
@@ -54,6 +57,8 @@ class Register : AppCompatActivity() {
         // Set the onClick listener to navigate to the RegisterActivity
         registerButton.setOnClickListener {
             // Create an intent to start RegisterActivity
+            val progressBar : ProgressBar = findViewById(R.id.progressBar)
+            progressBar.visibility = View.VISIBLE
             checkUser = false
             txtEmail.error = null;
             txtUsername.error = null;
@@ -132,15 +137,16 @@ class Register : AppCompatActivity() {
                                 val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), "")
 
                                 val request = Request.Builder().url(url).post(requestBody).build()
-                                val executor = Executors.newSingleThreadExecutor()
 
-                                executor.execute{
-                                    client.newCall(request).execute().use { response ->
-                                        if (!response.isSuccessful) throw IOException("Unexpected code $response")
-
-                                        println(response.body?.string())
+                                client.newCall(request).enqueue(object : Callback {
+                                    override fun onFailure(call: Call, e: IOException) {
+                                        Log.d("Patch Response", "Failure")
                                     }
-                                }
+
+                                    override fun onResponse(call: Call, response: okhttp3.Response) {
+                                        Log.d("Patch Response", "Success")
+                                    }
+                                } )
                             } catch (e: Exception) {
                                 Log.d("RESPONSE", e.toString())
                                 Handler(Looper.getMainLooper()).post {
@@ -166,5 +172,7 @@ class Register : AppCompatActivity() {
                     }
                 }
         }
+        val progress : ProgressBar = findViewById(R.id.progressBar)
+        progress.visibility = View.INVISIBLE
     }
 }

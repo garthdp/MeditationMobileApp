@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import kotlinx.coroutines.delay
 import java.net.URL
 import java.util.concurrent.Executors
 import kotlin.math.log
@@ -28,25 +29,8 @@ class Dairy : AppCompatActivity() {
 
         addEntryButton.setOnClickListener {
             val intent = Intent(this, AddDiaryEntry::class.java)
-            startActivityForResult(intent, ADD_ENTRY_REQUEST)
+            startActivity(intent)
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == ADD_ENTRY_REQUEST && resultCode == RESULT_OK) {
-            // Notify the adapter about the new entry and refresh the entries displayed
-            getDiaryEntries()
-        }
-    }
-
-    private fun displayDiaryEntries() {
-        adapter.notifyDataSetChanged() // Notify the adapter to refresh the views
-    }
-    override fun onResume() {
-        super.onResume()
-        // Fetch and display the diary entries every time the page is reloaded (resumed)
-        getDiaryEntries()
     }
 
     private fun getDiaryEntries(){
@@ -67,18 +51,11 @@ class Dairy : AppCompatActivity() {
                         // Initialize and set the adapter
                         adapter = DiaryEntryAdapter(dairyResponse)
                         recyclerView.adapter = adapter
-
-                        // Call to display existing diary entries
-                        displayDiaryEntries()
                     }
                 }
             } catch (e: Exception) {
                 Log.d("Error", "Fetch error occured")
             }
         }
-    }
-
-    companion object {
-        const val ADD_ENTRY_REQUEST = 1
     }
 }

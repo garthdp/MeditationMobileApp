@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-class DiaryEntryAdapter(private val entries: Array<DiaryEntry>) : RecyclerView.Adapter<DiaryEntryAdapter.ViewHolder>() {
+class DiaryEntryAdapter(private var entries: Array<DiaryEntry>) : RecyclerView.Adapter<DiaryEntryAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val entryText: TextView = view.findViewById(R.id.entryTitle)
@@ -29,7 +29,10 @@ class DiaryEntryAdapter(private val entries: Array<DiaryEntry>) : RecyclerView.A
         // Assuming your emoji is stored as a drawable resource ID in the entry
         holder.emojiView.setImageResource(entry.emoji)
     }
-
+    fun updateEntries(newEntries: Array<DiaryEntry>) {
+        entries = newEntries
+        notifyDataSetChanged()  // Notify the adapter that the data has changed
+    }
     override fun getItemCount(): Int {
         return entries.size
     }

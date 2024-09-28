@@ -189,6 +189,7 @@ class DashboardActivity : AppCompatActivity() {
             .setPositiveButton("Yes") { dialog, which ->
                 sharedPreferences.edit().clear().apply()
                 FirebaseAuth.getInstance().signOut()
+                userEmail = null
                 startActivity(Intent(this, MainActivity::class.java))
                 Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
             }
