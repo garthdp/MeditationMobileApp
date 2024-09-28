@@ -1,5 +1,6 @@
 package com.example.opsc_poe_part_2
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,15 +18,16 @@ class DiaryEntryAdapter(private var entries: Array<DiaryEntry>) : RecyclerView.A
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recycler_view_item, parent, false)
+            .inflate(R.layout.diary_item, parent, false)
         return ViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val entry = entries[position]
         holder.entryText.text = entry.Title
         holder.entryContent.text = entry.Content
-        holder.date.text = entry.Date
+        holder.date.text = "DATE: " + entry.Date
         // Assuming your emoji is stored as a drawable resource ID in the entry
         holder.emojiView.setImageResource(entry.emoji)
     }
