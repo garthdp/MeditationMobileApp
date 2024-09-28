@@ -3,6 +3,7 @@ package com.example.opsc_poe_part_2
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageButton
@@ -26,6 +27,8 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var graph: GraphView
     private var sessionStartTime: Long = 0
+    private lateinit var mediaPlayer: MediaPlayer
+    private var isPlaying = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +44,36 @@ class DashboardActivity : AppCompatActivity() {
             mediaPlayer.isLooping = true
             videoView.start()
         }
+
+        // Play Sound Icon
+        val playSoundIcon = findViewById<ImageButton>(R.id.play_sound_icon)
+
+        // Initialize MediaPlayer with your audio file in the raw folder
+        mediaPlayer = MediaPlayer.create(this, R.raw.audio)
+
+        // Set the OnClickListener for the playSoundIcon
+        playSoundIcon.setOnClickListener {
+            if (isPlaying) {
+                // If sound is playing, stop it
+                mediaPlayer.pause()
+                mediaPlayer.seekTo(0) // Reset to the beginning of the track
+                playSoundIcon.setImageResource(R.drawable.ic_sound) // Change icon if needed
+                isPlaying = false
+            } else {
+                // If sound is not playing, start it
+                mediaPlayer.start()
+                playSoundIcon.setImageResource(R.drawable.ic_sound) // Change icon to indicate it's playing (if you have such an icon)
+                isPlaying = true
+            }
+        }
+
+        // Release the MediaPlayer when the activity is destroyed
+        mediaPlayer.setOnCompletionListener {
+            mediaPlayer.seekTo(0)
+            playSoundIcon.setImageResource(R.drawable.ic_sound) // Reset to original icon when finished
+            isPlaying = false
+        }
+
         // Load theme preference
         val isDarkMode = loadThemePreference()
         toggleTheme(isDarkMode)
@@ -48,37 +81,49 @@ class DashboardActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE)
         graph = findViewById(R.id.graph)
 
+        // Restore the current quote index after rotation
+        if (savedInstanceState != null) {
+            currentQuoteIndex = savedInstanceState.getInt("currentQuoteIndex", 0)
+        }
+
+        // Profile and settings icons
         val profileIcon = findViewById<ImageButton>(R.id.profile_icon)
         profileIcon.setOnClickListener {
             startActivity(Intent(this, Profile::class.java))
         }
+
         val settingsIcon = findViewById<ImageButton>(R.id.ic_settings)
         settingsIcon.setOnClickListener {
             startActivity(Intent(this, Settings::class.java))
-        }
-        val quoteImageView = findViewById<ImageView>(R.id.imgQuote)
-
-        // Restore the current quote index after rotation
-        if (savedInstanceState != null) {
-            currentQuoteIndex = savedInstanceState.getInt("currentQuoteIndex", 0)
         }
 
         // Initialize BottomNavigationView and set up item selection listener
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.nav_diary -> startActivity(Intent(this, Dairy::class.java))
-                R.id.nav_meditation -> startActivity(Intent(this, Meditation::class.java))
-                R.id.nav_dashboard -> startActivity(Intent(this, DashboardActivity::class.java))
-                R.id.nav_rewards -> startActivity(Intent(this, Rewards::class.java))
-                R.id.nav_game -> startActivity(Intent(this, Game::class.java))
+                R.id.nav_diary -> {
+                    startActivity(Intent(this, Dairy::class.java))
+                    true
+                }
+                R.id.nav_meditation -> {
+                    startActivity(Intent(this, Meditation::class.java))
+                    true
+                }
+                R.id.nav_dashboard -> {
+                    startActivity(Intent(this, DashboardActivity::class.java))
+                    true
+                }
+                R.id.nav_rewards -> {
+                    startActivity(Intent(this, Rewards::class.java))
+                    true
+                }
+                R.id.nav_game -> {
+                    startActivity(Intent(this, Game::class.java))
+                    true
+                }
                 else -> false
             }
-            true
         }
-
-        // Set the graph data
-        setGraphData()
 
         // Track session start time
         sessionStartTime = System.currentTimeMillis()
@@ -91,11 +136,36 @@ class DashboardActivity : AppCompatActivity() {
             toggleTheme(newIsDarkMode)
         }
 
+        // Logout button
         val logout = findViewById<ImageButton>(R.id.logout_icon)
         logout.setOnClickListener {
             handleLogout()
         }
 
+        // Set the graph data
+        setGraphData()
+    }
+
+    // Save state when rotating the screen
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("currentQuoteIndex", currentQuoteIndex)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Release the MediaPlayer resources
+        if (mediaPlayer.isPlaying) {
+            mediaPlayer.stop()
+        }
+        mediaPlayer.release()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val sessionEndTime = System.currentTimeMillis()
+        val sessionDuration = (sessionEndTime - sessionStartTime) / 60000
+        updateDailyUsage(sessionDuration)
     }
 
     // Logic for logging out
@@ -111,19 +181,6 @@ class DashboardActivity : AppCompatActivity() {
             }
             .setNegativeButton("No", null)
             .show()
-    }
-
-    // Save state when rotating the screen
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt("currentQuoteIndex", currentQuoteIndex)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        val sessionEndTime = System.currentTimeMillis()
-        val sessionDuration = (sessionEndTime - sessionStartTime) / 60000
-        updateDailyUsage(sessionDuration)
     }
 
     // Toggle between dark/light mode
@@ -207,9 +264,12 @@ class DashboardActivity : AppCompatActivity() {
         val calendar = Calendar.getInstance()
         val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1
         val todayKey = "day_$dayOfWeek"
-        val currentTimeSpent = sharedPreferences.getLong(todayKey, 0)
+        val previousMinutes = sharedPreferences.getLong(todayKey, 0)
 
-        sharedPreferences.edit().putLong(todayKey, currentTimeSpent + sessionDuration).apply()
-        setGraphData() // Update the graph data after the session
+        sharedPreferences.edit()
+            .putLong(todayKey, previousMinutes + sessionDuration)
+            .apply()
+
+        setGraphData()
     }
 }
