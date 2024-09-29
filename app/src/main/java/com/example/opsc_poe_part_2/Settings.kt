@@ -45,7 +45,7 @@ class Settings : AppCompatActivity() {
         val btnDelete = findViewById<Button>(R.id.btnDelete)
         btnBack.setOnClickListener {
             // Create an intent to start RegisterActivity
-            val intent = Intent(this, Profile::class.java)
+            val intent = Intent(this, DashboardActivity::class.java)
             startActivity(intent)
         }
         // Initialize BottomNavigationView and set up item selection listener
