@@ -7,9 +7,15 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.Response
+import java.io.IOException
 
 class Login : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -26,6 +32,18 @@ class Login : AppCompatActivity() {
         val txtEmail = findViewById<EditText>(R.id.editTextEmail)
         val txtPassword = findViewById<EditText>(R.id.editTextPassword)
         val progressBar: ProgressBar = findViewById(R.id.progressBar)
+        val forgotPassword: TextView = findViewById(R.id.txtForgotPassword)
+
+        forgotPassword.setOnClickListener{
+            val email = txtEmail.text.toString()
+            if(email != ""){
+                ResetPassword(email)
+            }
+            else{
+                txtEmail.error = "Email needed for reset."
+            }
+
+        }
 
         // Set the onClick listener for login action
         loginButton.setOnClickListener {
@@ -50,6 +68,32 @@ class Login : AppCompatActivity() {
 
             // Firebase Authentication
             authenticateUser(email, password, progressBar)
+        }
+    }
+
+    fun ResetPassword(email : String){
+        /*
+            Code Attribution
+            Title: How to create Forgot Password Page in Android Studio using Firebase 🔥
+            Author: Android Mate
+            Post Link: https://www.youtube.com/watch?v=3AFGljftCzo&t=160s
+            Usage: learned how to reset password for firebase
+        */
+        auth.sendPasswordResetEmail(email).addOnCompleteListener {
+            Toast.makeText(
+                baseContext,
+                "Email Sent",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        .addOnFailureListener{
+            Toast.makeText(
+                baseContext,
+                "Please enter valid email",
+                Toast.LENGTH_SHORT
+            ).show()
+            val txtEmail : EditText = findViewById(R.id.editTextEmail)
+            txtEmail.error = "Please enter valid email."
         }
     }
 
