@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -14,6 +15,15 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.Response
+import java.io.IOException
 
 class DailyGoals : AppCompatActivity() {
 
@@ -101,6 +111,7 @@ class DailyGoals : AppCompatActivity() {
         bottomNavigationView.selectedItemId = R.id.nav_dashboard
         // Mark goals as completed by checking them off in the list
         goalsListView.setOnItemClickListener { _, _, position, _ ->
+            levelUp()
             goalsList.removeAt(position)
             adapter.notifyDataSetChanged()
         }
@@ -117,6 +128,41 @@ class DailyGoals : AppCompatActivity() {
                 )
             }
         }
+    }
+
+    // levels user up
+    fun levelUp() {
+        /*
+            Code Attribution
+            Title: How to use OKHTTP to make a post request in Kotlin?
+            Author: heX
+            Author Link: https://stackoverflow.com/users/11740298/hex
+            Post Link: https://stackoverflow.com/questions/56893945/how-to-use-okhttp-to-make-a-post-request-in-kotlin
+            Usage: learned how to make patch api requests
+        */
+        val client = OkHttpClient()
+
+        //gets url and adds parameters
+        val url = "https://opscmeditationapi.azurewebsites.net/api/users/updateLevel".toHttpUrlOrNull()!!.newBuilder()
+            .addQueryParameter("email", userEmail)
+            .addQueryParameter("experience", "50")
+            .build()
+
+        val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), "")
+
+        // builds request
+        val request = Request.Builder().url(url).patch(requestBody).build()
+
+        // does call
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.d("Patch Response", "Failure")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                Log.d("Patch Response", "Success")
+            }
+        } )
     }
 
     // Show a notification to remind the user of the goal

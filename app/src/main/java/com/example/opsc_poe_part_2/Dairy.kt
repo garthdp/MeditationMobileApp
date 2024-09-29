@@ -64,6 +64,7 @@ class Dairy : AppCompatActivity() {
         }
     }
 
+    // gets diary entries
     private fun getDiaryEntries(){
         val progressBar : ProgressBar = findViewById(R.id.progressBar)
         val executor = Executors.newSingleThreadExecutor()
@@ -71,12 +72,15 @@ class Dairy : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         executor.execute {
             try {
+                //url for request
                 val url = URL("https://opscmeditationapi.azurewebsites.net/api/Journal/GetJournalEntries?email=${userEmail}")
                 val json = url.readText()
+                // if null on response log error
                 if(json.equals("null")){
                     Log.d("Error", "Nothing found")
                 }
                 else{
+                    // assigns response to array of diary entries
                     val dairyResponse = Gson().fromJson(json, Array<DiaryEntry>::class.java)
                     Log.d("Response", dairyResponse[0].toString())
                     Handler(Looper.getMainLooper()).post{

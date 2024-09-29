@@ -8,11 +8,6 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
@@ -23,9 +18,7 @@ import okhttp3.RequestBody
 import okhttp3.Response
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.Date
-import java.util.concurrent.Executors
 
 class AddDiaryEntry : AppCompatActivity(), EmojiPickerDialogFragment.EmojiPickerListener {
     private lateinit var saveButton: Button
@@ -61,7 +54,7 @@ class AddDiaryEntry : AppCompatActivity(), EmojiPickerDialogFragment.EmojiPicker
             // Set result to OK and pass back the new entry (optional)
             setResult(RESULT_OK)
 
-            patchRequest()
+            levelUp()
             postRequest(content, title, selectedEmojiResId)
             val intent = Intent(this, DashboardActivity::class.java)
             startActivity(intent)
@@ -74,7 +67,8 @@ class AddDiaryEntry : AppCompatActivity(), EmojiPickerDialogFragment.EmojiPicker
         emojiTextView.setCompoundDrawablesWithIntrinsicBounds(0, emojiResId, 0, 0)
     }
 
-    fun patchRequest() {
+    // adds experience to user profile
+    fun levelUp() {
         /*
             Code Attribution
             Title: How to use OKHTTP to make a post request in Kotlin?
@@ -85,16 +79,18 @@ class AddDiaryEntry : AppCompatActivity(), EmojiPickerDialogFragment.EmojiPicker
         */
         val client = OkHttpClient()
 
+        // gets url and adds parameters
         val url = "https://opscmeditationapi.azurewebsites.net/api/users/updateLevel".toHttpUrlOrNull()!!.newBuilder()
             .addQueryParameter("email", userEmail)
             .addQueryParameter("experience", "50")
             .build()
 
-        // Create a dummy request body as PATCH requires a body, even if it's empty
         val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), "")
 
+        // builds request
         val request = Request.Builder().url(url).patch(requestBody).build()
 
+        //makes call
         client.newCall(request).enqueue(object : Callback{
             override fun onFailure(call: Call, e: IOException) {
                 Log.d("Patch Response", "Failure")
@@ -106,11 +102,13 @@ class AddDiaryEntry : AppCompatActivity(), EmojiPickerDialogFragment.EmojiPicker
         } )
     }
 
+    // adds diary
     fun postRequest(content: String, title: String, emoji: Int) {
         val client = OkHttpClient()
 
         val sdf = SimpleDateFormat("dd/MM/yyyy")
         val currentDate = sdf.format(Date())
+        // gets url and adds parameters
         val url = "https://opscmeditationapi.azurewebsites.net/api/Journal".toHttpUrlOrNull()!!.newBuilder()
             .addQueryParameter("email", userEmail)
             .addQueryParameter("date", currentDate)
@@ -119,12 +117,12 @@ class AddDiaryEntry : AppCompatActivity(), EmojiPickerDialogFragment.EmojiPicker
             .addQueryParameter("title", title)
             .build()
 
-
-        // Create a dummy request body as PATCH requires a body, even if it's empty
         val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), "")
 
+        // builds request
         val request = Request.Builder().url(url).post(requestBody).build()
 
+        // does request
         client.newCall(request).enqueue(object : Callback{
             override fun onFailure(call: Call, e: IOException) {
                 Log.d("Patch Response", "Failure")
