@@ -2,15 +2,12 @@ package com.example.opsc_poe_part_2
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
@@ -35,18 +32,49 @@ class DashboardActivity : AppCompatActivity() {
     private var sessionStartTime: Long = 0
     private lateinit var mediaPlayer: MediaPlayer
     private var isPlaying = false
+    private lateinit var imageView: ImageView
+    private lateinit var handler: Handler
+    private lateinit var runnable: Runnable
+
+    private val quoteImages = arrayOf(
+        R.drawable.quote1,
+        R.drawable.quote2,
+        R.drawable.quote3,
+        R.drawable.quote4,
+        R.drawable.quote5,
+        R.drawable.quote6,
+        R.drawable.quote7,
+        R.drawable.quote8,
+        R.drawable.quote9,
+        R.drawable.quote10
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        // Find VideoView by ID and set the video background
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences("ThemePrefs", MODE_PRIVATE)
+
+        // Initialize VideoView for background video
         val videoView = findViewById<VideoView>(R.id.backgroundVideoView)
         val videoUri = Uri.parse("android.resource://" + packageName + "/" + R.raw.star_background)
-        val imageQuote : ImageView = findViewById(R.id.imgQuote)
         videoView.setVideoURI(videoUri)
 
-        getImage(imageQuote)
+        // Initialize ImageView
+        imageView = findViewById(R.id.imgQuote)
+        startImageLoop()
+
+        // Set OnClickListener for ImageView to change image on click
+        imageView.setOnClickListener {
+            changeImage()
+        }
+
+        // Restore the current quote index after rotation
+        if (savedInstanceState != null) {
+            currentQuoteIndex = savedInstanceState.getInt("currentQuoteIndex", 0)
+            changeImage()
+        }
 
         // Start the video and loop it
         videoView.setOnPreparedListener { mediaPlayer ->
@@ -54,49 +82,22 @@ class DashboardActivity : AppCompatActivity() {
             videoView.start()
         }
 
-        imageQuote.setOnClickListener{
-            getImage(imageQuote)
-        }
-
-        // Play Sound Icon
+        // Initialize MediaPlayer for sound
         val playSoundIcon = findViewById<ImageButton>(R.id.play_sound_icon)
-
-        // Initialize MediaPlayer with your audio file in the raw folder
         mediaPlayer = MediaPlayer.create(this, R.raw.audio)
 
-        // Set the OnClickListener for the playSoundIcon
+        // Set OnClickListener for sound control
         playSoundIcon.setOnClickListener {
             if (isPlaying) {
-                // If sound is playing, stop it
                 mediaPlayer.pause()
-                mediaPlayer.seekTo(0) // Reset to the beginning of the track
-                playSoundIcon.setImageResource(R.drawable.ic_sound) // Change icon if needed
+                mediaPlayer.seekTo(0)
+                playSoundIcon.setImageResource(R.drawable.ic_sound)
                 isPlaying = false
             } else {
-                // If sound is not playing, start it
                 mediaPlayer.start()
-                playSoundIcon.setImageResource(R.drawable.ic_sound) // Change icon to indicate it's playing (if you have such an icon)
+                playSoundIcon.setImageResource(R.drawable.ic_sound)
                 isPlaying = true
             }
-        }
-
-        // Release the MediaPlayer when the activity is destroyed
-        mediaPlayer.setOnCompletionListener {
-            mediaPlayer.seekTo(0)
-            playSoundIcon.setImageResource(R.drawable.ic_sound) // Reset to original icon when finished
-            isPlaying = false
-        }
-
-        // Load theme preference
-        val isDarkMode = loadThemePreference()
-        toggleTheme(isDarkMode)
-
-        sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE)
-        graph = findViewById(R.id.graph)
-
-        // Restore the current quote index after rotation
-        if (savedInstanceState != null) {
-            currentQuoteIndex = savedInstanceState.getInt("currentQuoteIndex", 0)
         }
 
         // Profile and settings icons
@@ -110,7 +111,7 @@ class DashboardActivity : AppCompatActivity() {
             startActivity(Intent(this, Settings::class.java))
         }
 
-        // Initialize BottomNavigationView and set up item selection listener
+        // Initialize BottomNavigationView
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -122,9 +123,7 @@ class DashboardActivity : AppCompatActivity() {
                     startActivity(Intent(this, Meditation::class.java))
                     true
                 }
-                R.id.nav_dashboard -> {
-                    true
-                }
+                R.id.nav_dashboard -> true
                 R.id.nav_rewards -> {
                     startActivity(Intent(this, Rewards::class.java))
                     true
@@ -137,11 +136,13 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
         bottomNavigationView.selectedItemId = R.id.nav_dashboard
-        // Track session start time
+
         sessionStartTime = System.currentTimeMillis()
 
-        // Theme toggle button
+        // Theme toggle
         val themeToggleButton = findViewById<ImageButton>(R.id.theme_toggle_button)
+        val isDarkMode = loadThemePreference()
+        toggleTheme(isDarkMode)
         themeToggleButton.setOnClickListener {
             val newIsDarkMode = !isDarkMode
             saveThemePreference(newIsDarkMode)
@@ -155,29 +156,26 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         // Set the graph data
+        graph = findViewById(R.id.graph)
         setGraphData()
     }
 
-    // Save state when rotating the screen
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt("currentQuoteIndex", currentQuoteIndex)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        // Release the MediaPlayer resources
-        if (mediaPlayer.isPlaying) {
-            mediaPlayer.stop()
+    // Function to start image loop
+    private fun startImageLoop() {
+        handler = Handler(Looper.getMainLooper())
+        runnable = object : Runnable {
+            override fun run() {
+                changeImage()
+                handler.postDelayed(this, 300000) // Change image every 5 minutes
+            }
         }
-        mediaPlayer.release()
+        handler.post(runnable)
     }
 
-    override fun onStop() {
-        super.onStop()
-        val sessionEndTime = System.currentTimeMillis()
-        val sessionDuration = (sessionEndTime - sessionStartTime) / 60000
-        updateDailyUsage(sessionDuration)
+    // Change image
+    private fun changeImage() {
+        imageView.setImageResource(quoteImages[currentQuoteIndex])
+        currentQuoteIndex = (currentQuoteIndex + 1) % quoteImages.size
     }
 
     // Logic for logging out
@@ -185,10 +183,9 @@ class DashboardActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setTitle("Logout")
             .setMessage("Are you sure you want to log out?")
-            .setPositiveButton("Yes") { dialog, which ->
+            .setPositiveButton("Yes") { _, _ ->
                 sharedPreferences.edit().clear().apply()
                 FirebaseAuth.getInstance().signOut()
-                userEmail = null
                 startActivity(Intent(this, MainActivity::class.java))
                 Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
             }
@@ -209,20 +206,14 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun loadThemePreference(): Boolean {
-        val sharedPreferences = getSharedPreferences("ThemePrefs", MODE_PRIVATE)
         return sharedPreferences.getBoolean("isDarkMode", false)
     }
 
     private fun saveThemePreference(isDarkMode: Boolean) {
-        val sharedPreferences = getSharedPreferences("ThemePrefs", MODE_PRIVATE)
         sharedPreferences.edit().putBoolean("isDarkMode", isDarkMode).apply()
     }
 
-    private fun updateInteractionTime() {
-        // Placeholder for tracking interaction time
-    }
-
-    // Setting graph data
+    // Set the graph data
     private fun setGraphData() {
         val dataPoints = ArrayList<DataPoint>()
         val dayLabels = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
@@ -244,11 +235,7 @@ class DashboardActivity : AppCompatActivity() {
         graph.gridLabelRenderer.labelFormatter = object : DefaultLabelFormatter() {
             override fun formatLabel(value: Double, isValueX: Boolean): String {
                 return if (isValueX) {
-                    if (value.toInt() in dayLabels.indices) {
-                        dayLabels[value.toInt()]
-                    } else {
-                        ""
-                    }
+                    dayLabels.getOrNull(value.toInt()) ?: ""
                 } else {
                     String.format("%.1f h", value)
                 }
@@ -273,39 +260,16 @@ class DashboardActivity : AppCompatActivity() {
         graph.gridLabelRenderer.padding = 50
     }
 
-    private fun updateDailyUsage(sessionDuration: Long) {
-        val calendar = Calendar.getInstance()
-        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1
-        val todayKey = "day_$dayOfWeek"
-        val previousMinutes = sharedPreferences.getLong(todayKey, 0)
-
-        sharedPreferences.edit()
-            .putLong(todayKey, previousMinutes + sessionDuration)
-            .apply()
-
-        setGraphData()
-    }
-    private fun getImage(img : ImageView){
-        val handler = Handler(Looper.getMainLooper())
+    private fun getImage() {
         val executor = Executors.newSingleThreadExecutor()
 
-        executor.execute{
-            val imageURL = "https://zenquotes.io/api/image"
-            try
-            {
-                val `in` = java.net.URL(imageURL).openStream()
-                val image = BitmapFactory.decodeStream(`in`)
-                Log.d("Welcome", "Image added "+ image.toString())
-                handler.post{
-                    Log.d("Welcome", "Image added")
-                    img.setImageBitmap(image)
-                }
-            }
-            catch (e:java.lang.Exception)
-            {
-                Log.d("Welcome", "Error occurred: $e")
-                e.printStackTrace()
-            }
+        executor.execute {
+            // Load image in background task here
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("currentQuoteIndex", currentQuoteIndex)
     }
 }
