@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="Profile"
+        android:textStyle="bold"
         android:textColor="#FFFFFF"
         android:textSize="34sp"
         app:layout_constraintTop_toTopOf="parent"
@@ -30,6 +31,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_profile" />
+
+    <ImageView
+        android:id="@+id/semi_circle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="Semi-Circle Shape"
+        android:src="@drawable/semi_circle_shape"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView13" />
 
     <TextView
         android:id="@+id/lblUsername"

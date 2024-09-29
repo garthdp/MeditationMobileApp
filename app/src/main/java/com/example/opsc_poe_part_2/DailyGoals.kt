@@ -45,6 +45,7 @@ class DailyGoals : AppCompatActivity() {
         // Check for notification permission
         checkNotificationPermission()
 
+        Log.d("Test", "Test")
         // Initialize views
         goalTypeSpinner = findViewById(R.id.spinner_goal_type)
         troubleSpinner = findViewById(R.id.spinner_trouble)
@@ -108,7 +109,6 @@ class DailyGoals : AppCompatActivity() {
                 else -> false
             }
         }
-        bottomNavigationView.selectedItemId = R.id.nav_dashboard
         // Mark goals as completed by checking them off in the list
         goalsListView.setOnItemClickListener { _, _, position, _ ->
             levelUp()

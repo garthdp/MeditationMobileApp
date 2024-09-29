@@ -58,29 +58,52 @@ class Register : AppCompatActivity() {
         registerButton.setOnClickListener {
             // Create an intent to start RegisterActivity
             val progressBar : ProgressBar = findViewById(R.id.progressBar)
-            progressBar.visibility = View.VISIBLE
             checkUser = false
             txtEmail.error = null;
             txtUsername.error = null;
+            var check = true
 
-            val email = txtEmail.text.toString()
-            val password = txtPassword.text.toString()
-            val username = txtUsername.text.toString()
-            val name = txtName.text.toString()
-            val surname = txtSurname.text.toString()
+            if(txtEmail.text.toString() == ""){
+                txtEmail.error = "Please enter email"
+                check = false
+            }
+            if(txtPassword.text.toString() == ""){
+                txtPassword.error = "Please enter password"
+                check = false
+            }
+            if(txtUsername.text.toString() == ""){
+                txtUsername.error = "Please enter username"
+                check = false
+            }
+            if(txtName.text.toString() == ""){
+                txtName.error = "Please enter name"
+                check = false
+            }
+            if(txtSurname.text.toString() == ""){
+                txtSurname.error = "Please enter surname"
+                check = false
+            }
+            if(check){
+                /*
+                    Code Attribution
+                    Title: Async and Await - Kotlin Coroutines
+                    Author: Philipp Lackner
+                    Link: https://www.youtube.com/watch?v=t-3TOke8tq8
+                    Usage: Used to see how to make async functions
+                */
+                progressBar.visibility = View.VISIBLE
+                GlobalScope.launch(Dispatchers.IO) {
 
-            /*
-                Code Attribution
-                Title: Async and Await - Kotlin Coroutines
-                Author: Philipp Lackner
-                Link: https://www.youtube.com/watch?v=t-3TOke8tq8
-                Usage: Used to see how to make async functions
-            */
-            GlobalScope.launch(Dispatchers.IO) {
-                val check = async { checkUsername(username) }
-                check.await()
-                val addUser = async { makeUser(email, password, username, name, surname) }
-                addUser.await()
+                    val email = txtEmail.text.toString()
+                    val password = txtPassword.text.toString()
+                    val username = txtUsername.text.toString()
+                    val name = txtName.text.toString()
+                    val surname = txtSurname.text.toString()
+                    val check = async { checkUsername(username) }
+                    check.await()
+                    val addUser = async { makeUser(email, password, username, name, surname) }
+                    addUser.await()
+                }
             }
         }
     }
