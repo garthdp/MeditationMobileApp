@@ -117,7 +117,7 @@ class Login : AppCompatActivity() {
                 } else {
                     Toast.makeText(
                         baseContext,
-                        "Authentication failed: ${task.exception?.message}",
+                        "Incorrect login details",
                         Toast.LENGTH_LONG
                     ).show()
                 }

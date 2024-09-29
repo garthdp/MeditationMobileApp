@@ -42,7 +42,7 @@ class Settings : AppCompatActivity() {
         val btnprofile = findViewById<Button>(R.id.btnprofile)
         btnBack.setOnClickListener {
             // Create an intent to start RegisterActivity
-            val intent = Intent(this, Profile::class.java)
+            val intent = Intent(this, DashboardActivity::class.java)
             startActivity(intent)
         }
 

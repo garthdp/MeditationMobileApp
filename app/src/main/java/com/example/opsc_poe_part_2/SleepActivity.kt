@@ -18,7 +18,7 @@ class SleepActivity : AppCompatActivity() {
         )
         val descriptions = listOf(
             "Sleep meditation sounds",
-            "WHale sounds to help you fall asleep"
+            "Whale sounds to help you fall asleep"
         )
 
         // Find the back button in the layout
