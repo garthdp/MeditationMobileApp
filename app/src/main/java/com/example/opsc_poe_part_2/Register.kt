@@ -84,15 +84,18 @@ class Register : AppCompatActivity() {
             }
         }
     }
+    // checks if username is in use
     fun checkUsername(username: String){
         val txtUsername = findViewById<EditText>(R.id.editTextUsername)
         val executor = Executors.newSingleThreadExecutor()
 
         executor.execute {
-            val url =
-                URL("https://opscmeditationapi.azurewebsites.net/api/users/CheckUsername?username=${username}")
+            // request url
+            val url = URL("https://opscmeditationapi.azurewebsites.net/api/users/CheckUsername?username=${username}")
             val json = url.readText()
+            // saves response
             val res = Gson().fromJson(json, Response::class.java)
+            // if user exsists return error if not allows the makeUser to go through
             if (res.message == "Username fine") {
                 checkUser = true
                 Log.d("Message", "Please be fine ${checkUser.toString()}")
@@ -104,15 +107,19 @@ class Register : AppCompatActivity() {
         }
         Log.d("log", "2")
     }
+    // makes user
     suspend fun makeUser(email: String, password: String, username: String, name : String, surname: String){
+        // delays request to make sure the username check goes through
         delay(3000)
         Log.d("log", "3")
         Log.d("log", checkUser.toString())
         val txtEmail = findViewById<EditText>(R.id.editTextEmail)
+        // if check is fine it attempts to make profile
         if(checkUser){
             Log.d("CHECK", "TEST")
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
+                    // if successful it makes profile
                     if (task.isSuccessful) {
                         Toast.makeText(
                             baseContext,
@@ -125,6 +132,7 @@ class Register : AppCompatActivity() {
                             try {
                                 val client = OkHttpClient()
 
+                                //url for request and its parameters
                                 val url = "https://opscmeditationapi.azurewebsites.net/api/users/createUser".toHttpUrlOrNull()!!.newBuilder()
                                     .addQueryParameter("email", email)
                                     .addQueryParameter("name", name)
@@ -132,12 +140,12 @@ class Register : AppCompatActivity() {
                                     .addQueryParameter("username", username)
                                     .build()
 
-
-                                // Create a dummy request body as PATCH requires a body, even if it's empty
                                 val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), "")
 
+                                // builds request
                                 val request = Request.Builder().url(url).post(requestBody).build()
 
+                                // makes request and logs outcome
                                 client.newCall(request).enqueue(object : Callback {
                                     override fun onFailure(call: Call, e: IOException) {
                                         Log.d("Patch Response", "Failure")
@@ -161,6 +169,7 @@ class Register : AppCompatActivity() {
 
                         val intent = Intent(this, Login::class.java)
                         startActivity(intent)
+                        //returns error on failure
                     } else {
                         Toast.makeText(
                             baseContext,
