@@ -10,51 +10,48 @@
         android:id="@+id/whalequest_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="111dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="27dp"
         android:text="Whale Quest"
         android:textColor="@android:color/white"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/logo"
+        app:layout_constraintBottom_toTopOf="@+id/semi_circle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/semi_circle"
-        android:layout_width="422dp"
-        android:layout_height="551dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:contentDescription="Semi-Circle Shape"
         android:src="@drawable/semi_circle_shape"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/whalequest_id"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/whalequest_id" />
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="209dp"
-        android:layout_height="182dp"
-        android:layout_marginStart="62dp"
-        android:layout_marginEnd="62dp"
+        android:layout_width="245dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="203dp"
         android:layout_marginBottom="30dp"
         android:contentDescription="Logo"
         android:src="@drawable/whale_quest_logo"
         app:layout_constraintBottom_toTopOf="@+id/start_btn_id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/whalequest_id" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/start_btn_id"
-        android:layout_width="193dp"
-        android:layout_height="51dp"
-        android:layout_marginBottom="195dp"
+        android:layout_width="238dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="141dp"
         android:text="Start"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo" />
@@ -63,12 +60,14 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:menu="@menu/bottom_navigation_menu"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/start_btn_id"
+        app:menu="@menu/bottom_navigation_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 
