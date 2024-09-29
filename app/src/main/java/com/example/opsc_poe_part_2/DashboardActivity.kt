@@ -2,7 +2,6 @@ package com.example.opsc_poe_part_2
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.MediaPlayer

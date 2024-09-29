@@ -39,7 +39,14 @@ class Settings : AppCompatActivity() {
         val btnBack = findViewById<Button>(R.id.btnback)
         val btnLogout = findViewById<Button>(R.id.btnLogout)
         val btnDelete = findViewById<Button>(R.id.btnDelete)
+        val btnprofile = findViewById<Button>(R.id.btnprofile)
         btnBack.setOnClickListener {
+            // Create an intent to start RegisterActivity
+            val intent = Intent(this, Profile::class.java)
+            startActivity(intent)
+        }
+
+        btnprofile.setOnClickListener {
             // Create an intent to start RegisterActivity
             val intent = Intent(this, Profile::class.java)
             startActivity(intent)
