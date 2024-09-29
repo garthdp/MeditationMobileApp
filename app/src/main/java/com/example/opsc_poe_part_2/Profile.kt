@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ProgressBar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +37,9 @@ class Profile : AppCompatActivity() {
             insets
         }
         getUser()
+        // Find the back button in the layout
+        val btnback1 = findViewById<Button>(R.id.btnback1)
+
         // Initialize BottomNavigationView and set up item selection listener
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
@@ -80,7 +84,13 @@ class Profile : AppCompatActivity() {
        //     txtSelectedGoals.text = "No goals selected."
        // }
 
-
+        //  OnClickListener on the back button
+        btnback1.setOnClickListener {
+            // Navigate back to dashboard page
+            val intent = Intent(this, DashboardActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         val btnSettings = findViewById<Button>(R.id.btnSetting)
         btnSettings.setOnClickListener {
