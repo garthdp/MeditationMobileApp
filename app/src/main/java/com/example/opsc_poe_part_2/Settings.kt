@@ -35,11 +35,7 @@ class Settings : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_settings)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
         val btnBack = findViewById<Button>(R.id.btnback)
         val btnLogout = findViewById<Button>(R.id.btnLogout)
         val btnDelete = findViewById<Button>(R.id.btnDelete)
