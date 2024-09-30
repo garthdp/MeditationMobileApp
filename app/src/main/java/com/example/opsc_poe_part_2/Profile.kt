@@ -6,11 +6,13 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -41,6 +43,8 @@ class Profile : AppCompatActivity() {
         getUser()
         // Find the back button in the layout
         val btnback1 = findViewById<Button>(R.id.btnback1)
+
+
 
         // Initialize BottomNavigationView and set up item selection listener
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
@@ -101,16 +105,39 @@ class Profile : AppCompatActivity() {
             startActivity(intent)
         }
 
-      //  val btnpicChanger = findViewById<Button>(R.id.btnchangepfp)
-      //  btnpicChanger.setOnClickListener {
+        val imgpfp = findViewById<ImageView>(R.id.imgpfp)
+        val btnpicChanger = findViewById<Button>(R.id.btnchangepfp)
+        btnpicChanger.setOnClickListener {
             // Create an intent to start RegisterActivity
-       //
-      //  }
-
+            val options = arrayOf("Take Photo", "Choose from Gallery")
+            val builder = android.app.AlertDialog.Builder(this)
+            builder.setTitle("Select Option")
+            builder.setItems(options) { _, which ->
+                when (which) {
+                    0 -> openCamera() // Take a photo
+                    1 -> openGallery() // Choose from gallery
+                }
+                imgpfp.setImageResource(R.drawable.emoji2)
+            }
+            builder.show()
+        }
         // Set the graph data
         graph2 = findViewById(R.id.graph2)
         setGraphData()
     }
+    private val CAMERA_REQUEST_CODE = 100
+    private val GALLERY_REQUEST_CODE = 200
+
+    private fun openCamera() {
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE)
+    }
+
+    private fun openGallery() {
+        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE)
+    }
+
     fun getUser(){
         val progressBar : ProgressBar = findViewById(R.id.progressBar)
         progressBar.visibility = View.VISIBLE

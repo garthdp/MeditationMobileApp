@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView13"
+        android:id="@+id/imgpfp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -67,7 +67,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView13" />
+        app:layout_constraintTop_toBottomOf="@+id/imgpfp" />
 
     <TextView
         android:id="@+id/textView15"
@@ -248,12 +248,16 @@
         android:id="@+id/btnSetting"
         android:layout_width="74dp"
         android:layout_height="54dp"
+        android:layout_marginStart="323dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="648dp"
         app:icon="@drawable/ic_settings"
         app:iconGravity="textEnd"
         app:iconSize="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
@@ -280,10 +284,16 @@
         android:id="@+id/btnchangepfp"
         android:layout_width="59dp"
         android:layout_height="57dp"
+        android:layout_marginStart="138dp"
+        android:layout_marginTop="143dp"
+        android:layout_marginEnd="216dp"
+        android:layout_marginBottom="530dp"
         android:backgroundTint="#192878"
         android:text="+"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="138dp"
-        tools:layout_editor_absoluteY="143dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
