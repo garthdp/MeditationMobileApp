@@ -61,7 +61,7 @@ class AddDiaryEntry : AppCompatActivity() {
         val emojiButton = findViewById<ImageButton>(R.id.emojiButton)
         val changeColorButton = findViewById<Button>(R.id.changeColorButton)
         val cameraButton = findViewById<ImageButton>(R.id.cameraButton)
-        val imageView = findViewById<ImageView>(R.id.imgPreview)
+       // val imageView = findViewById<ImageView>(R.id.imgPreview)
 
         // Initialize the dateTextView
         dateTextView = findViewById(R.id.dateTextView)

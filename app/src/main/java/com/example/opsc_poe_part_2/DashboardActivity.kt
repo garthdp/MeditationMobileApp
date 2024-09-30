@@ -14,7 +14,6 @@ import android.widget.Toast
 import android.widget.VideoView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.BarGraphSeries
 import com.jjoe64.graphview.series.DataPoint
@@ -54,7 +53,7 @@ class DashboardActivity : AppCompatActivity() {
         setContentView(R.layout.activity_dashboard)
 
         // Initialize SharedPreferences
-        sharedPreferences = getSharedPreferences("ThemePrefs", MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("AppUsagePrefs", MODE_PRIVATE)
 
         // Initialize VideoView for background video
         val videoView = findViewById<VideoView>(R.id.backgroundVideoView)
@@ -100,12 +99,7 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
 
-        // Profile and settings icons
-//        val profileIcon = findViewById<ImageButton>(R.id.profile_icon)
-//        profileIcon.setOnClickListener {
-//            startActivity(Intent(this, Profile::class.java))
-//        }
-
+        // Settings icon
         val settingsIcon = findViewById<ImageButton>(R.id.ic_settings)
         settingsIcon.setOnClickListener {
             startActivity(Intent(this, Settings::class.java))
@@ -137,23 +131,8 @@ class DashboardActivity : AppCompatActivity() {
         }
         bottomNavigationView.selectedItemId = R.id.nav_dashboard
 
+        // Store session start time
         sessionStartTime = System.currentTimeMillis()
-
-        // Theme toggle
-//        val themeToggleButton = findViewById<ImageButton>(R.id.theme_toggle_button)
-//        val isDarkMode = loadThemePreference()
-//        toggleTheme(isDarkMode)
-//        themeToggleButton.setOnClickListener {
-//            val newIsDarkMode = !isDarkMode
-//            saveThemePreference(newIsDarkMode)
-//            toggleTheme(newIsDarkMode)
-//        }
-
-        // Logout button
-        val logout = findViewById<ImageButton>(R.id.logout_icon)
-        logout.setOnClickListener {
-            handleLogout()
-        }
 
         // Set the graph data
         graph = findViewById(R.id.graph)
@@ -178,45 +157,27 @@ class DashboardActivity : AppCompatActivity() {
         currentQuoteIndex = (currentQuoteIndex + 1) % quoteImages.size
     }
 
-    // Logic for logging out
-    private fun handleLogout() {
-        AlertDialog.Builder(this)
-            .setTitle("Logout")
-            .setMessage("Are you sure you want to log out?")
-            .setPositiveButton("Yes") { _, _ ->
-                sharedPreferences.edit().clear().apply()
-                FirebaseAuth.getInstance().signOut()
-                startActivity(Intent(this, MainActivity::class.java))
-                Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
-            }
-            .setNegativeButton("No", null)
-            .show()
-    }
+    override fun onStop() {
+        super.onStop()
+        // Calculate session duration
+        val sessionEndTime = System.currentTimeMillis()
+        val sessionDuration = (sessionEndTime - sessionStartTime) / 60000 // in minutes
 
-    // Toggle between dark/light mode
-   // private fun toggleTheme(isDarkMode: Boolean) {
-//        val themeToggleButton = findViewById<ImageButton>(R.id.theme_toggle_button)
-//        if (isDarkMode) {
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-//            themeToggleButton.setImageResource(R.drawable.ic_light)
-//        } else {
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-//            themeToggleButton.setImageResource(R.drawable.ic_dark)
-//        }
-//    }
-//
-//    private fun loadThemePreference(): Boolean {
-//        return sharedPreferences.getBoolean("isDarkMode", false)
-//    }
-//
-//    private fun saveThemePreference(isDarkMode: Boolean) {
-//        sharedPreferences.edit().putBoolean("isDarkMode", isDarkMode).apply()
-//    }
+        // Store session time for the current day
+        val calendar = Calendar.getInstance()
+        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1 // Sunday = 1, so shift to 0-based index
+
+        val previousTime = sharedPreferences.getLong("day_$dayOfWeek", 0)
+        val updatedTime = previousTime + sessionDuration
+
+        // Save updated time in SharedPreferences
+        sharedPreferences.edit().putLong("day_$dayOfWeek", updatedTime).apply()
+    }
 
     // Set the graph data
     private fun setGraphData() {
         val dataPoints = ArrayList<DataPoint>()
-        val dayLabels = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+        val dayLabels = arrayOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
 
         for (i in 0 until 7) {
             val timeSpentInMinutes = sharedPreferences.getLong("day_$i", 0).toDouble()
@@ -228,7 +189,7 @@ class DashboardActivity : AppCompatActivity() {
         graph.removeAllSeries()
         graph.addSeries(series)
 
-        graph.title = "Weekly Sessions"
+        graph.title = "Weekly App Usage"
         graph.gridLabelRenderer.verticalAxisTitle = "Time Spent (Hours)"
         graph.gridLabelRenderer.horizontalAxisTitle = "Days"
 
@@ -258,14 +219,6 @@ class DashboardActivity : AppCompatActivity() {
         series.spacing = 50
         series.color = Color.parseColor("#6B8072")
         graph.gridLabelRenderer.padding = 50
-    }
-
-    private fun getImage() {
-        val executor = Executors.newSingleThreadExecutor()
-
-        executor.execute {
-            // Load image in background task here
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
