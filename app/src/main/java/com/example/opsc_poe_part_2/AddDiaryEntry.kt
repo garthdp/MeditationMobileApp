@@ -103,7 +103,8 @@ class AddDiaryEntry : AppCompatActivity() {
             levelUp()
             postRequest(content, title, emojiIndex)
 
-            finish()
+            val intent = Intent(this, DashboardActivity::class.java)
+            startActivity(intent)
         }
 
         // Change background color
