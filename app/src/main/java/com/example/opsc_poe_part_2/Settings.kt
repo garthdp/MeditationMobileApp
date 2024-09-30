@@ -2,16 +2,19 @@ package com.example.opsc_poe_part_2
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -30,18 +33,35 @@ import java.net.URL
 import java.util.concurrent.Executors
 
 class Settings : AppCompatActivity() {
+    private lateinit var sharedPreferences: SharedPreferences
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_settings)
 
+
         val btnBack = findViewById<Button>(R.id.btnback)
         val btnLogout = findViewById<Button>(R.id.btnLogout)
         val btnDelete = findViewById<Button>(R.id.btnDelete)
+        val btnprofile = findViewById<Button>(R.id.btnprofile)
         btnBack.setOnClickListener {
             // Create an intent to start RegisterActivity
             val intent = Intent(this, DashboardActivity::class.java)
+            startActivity(intent)
+        }
+
+        val btnThemeSwap = findViewById<Button>(R.id.btnThemeSwap)
+        btnThemeSwap.setOnClickListener {
+            // Create an intent to start RegisterActivity
+            toggleTheme(loadThemePreference());
+            saveThemePreference(loadThemePreference())
+        }
+
+        btnprofile.setOnClickListener {
+            // Create an intent to start RegisterActivity
+            val intent = Intent(this, Profile::class.java)
             startActivity(intent)
         }
         // Initialize BottomNavigationView and set up item selection listener
@@ -143,4 +163,28 @@ class Settings : AppCompatActivity() {
             }
         } )
     }
+
+
+    // Toggle between dark/light mode
+
+    private fun toggleTheme(isDarkMode: Boolean) {
+        val themeToggleButton = findViewById<ImageButton>(R.id.theme_toggle_button)
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            themeToggleButton.setImageResource(R.drawable.ic_light)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            themeToggleButton.setImageResource(R.drawable.ic_dark)
+        }
+    }
+
+    private fun loadThemePreference(): Boolean {
+        return sharedPreferences.getBoolean("isDarkMode", false)
+    }
+
+    private fun saveThemePreference(isDarkMode: Boolean) {
+        sharedPreferences.edit().putBoolean("isDarkMode", isDarkMode).apply()
+    }
+
+
 }
