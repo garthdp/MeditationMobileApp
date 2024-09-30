@@ -17,7 +17,7 @@ class SleepActivity : AppCompatActivity() {
             R.raw.whale_sound_one
         )
         val descriptions = listOf(
-            "Sleep meditation sounds",
+            "Sleep meditation guide",
             "Whale sounds to help you fall asleep"
         )
 

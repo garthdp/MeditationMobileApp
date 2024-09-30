@@ -134,7 +134,7 @@ class Profile : AppCompatActivity() {
                 txtEmail.text = res.Email
                 txtSurname.text = res.Surname
                 txtLevel.text = res.Level.toString()
-                txtExperience.text = res.Level.toString()
+                txtExperience.text = res.Experience.toString()
 
                 progressBar.visibility = View.INVISIBLE
             }
