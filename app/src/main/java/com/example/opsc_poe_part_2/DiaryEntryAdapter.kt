@@ -12,7 +12,6 @@ class DiaryEntryAdapter(private var entries: Array<DiaryEntry>) : RecyclerView.A
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val entryText: TextView = view.findViewById(R.id.entryTitle)
-        val emojiView: ImageView = view.findViewById(R.id.emojiView)
         val entryContent: TextView = view.findViewById(R.id.entryContent)
         val date: TextView = view.findViewById(R.id.entryDate)
     }
@@ -29,7 +28,6 @@ class DiaryEntryAdapter(private var entries: Array<DiaryEntry>) : RecyclerView.A
         holder.entryText.text = entry.Title
         holder.entryContent.text = entry.Content
         holder.date.text = "DATE: ${entry.Date}"
-        holder.emojiView.setImageResource(entry.emoji)
     }
 
     fun updateEntries(newEntries: Array<DiaryEntry>) {
