@@ -7,19 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".Profile">
 
-    <com.jjoe64.graphview.GraphView
-        android:id="@+id/graph2"
-        android:layout_width="284dp"
-        android:layout_height="174dp"
-        android:layout_marginStart="63dp"
-        android:layout_marginTop="466dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginBottom="91dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
@@ -46,16 +33,29 @@
 
     <ImageView
         android:id="@+id/semi_circle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="412dp"
+        android:layout_height="436dp"
+        android:layout_marginTop="216dp"
+        android:layout_marginBottom="79dp"
         android:contentDescription="Semi-Circle Shape"
         android:src="@drawable/semi_circle_shape"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView13"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph2"
+        android:layout_width="284dp"
+        android:layout_height="174dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="476dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/lblUsername"
@@ -73,13 +73,17 @@
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="133dp"
+        android:layout_marginTop="239dp"
+        android:layout_marginEnd="145dp"
+        android:layout_marginBottom="465dp"
         android:text="INFORMATION"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblUsername" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvName"
@@ -271,4 +275,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
+
+    <Button
+        android:id="@+id/btnchangepfp"
+        android:layout_width="59dp"
+        android:layout_height="57dp"
+        android:backgroundTint="#192878"
+        android:text="+"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="138dp"
+        tools:layout_editor_absoluteY="143dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

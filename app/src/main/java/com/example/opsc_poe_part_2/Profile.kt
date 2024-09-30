@@ -101,6 +101,12 @@ class Profile : AppCompatActivity() {
             startActivity(intent)
         }
 
+      //  val btnpicChanger = findViewById<Button>(R.id.btnchangepfp)
+      //  btnpicChanger.setOnClickListener {
+            // Create an intent to start RegisterActivity
+       //
+      //  }
+
         // Set the graph data
         graph2 = findViewById(R.id.graph2)
         setGraphData()
@@ -186,4 +192,5 @@ class Profile : AppCompatActivity() {
         series.color = Color.parseColor("#6B8072")
         graph2.gridLabelRenderer.padding = 50
     }
+
 }
