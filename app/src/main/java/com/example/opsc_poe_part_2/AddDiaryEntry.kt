@@ -8,15 +8,28 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import java.util.*
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.Response
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
 
 class AddDiaryEntry : AppCompatActivity() {
 
@@ -73,7 +86,23 @@ class AddDiaryEntry : AppCompatActivity() {
 
         val saveButton = findViewById<Button>(R.id.saveButton)
         saveButton.setOnClickListener {
-            val selectedEmoji = emojiImages[emojiIndex]
+            val titleEditText = findViewById<EditText>(R.id.titleText)
+            val contentEditText = findViewById<EditText>(R.id.contentText)
+            val title = titleEditText.text.toString()
+            val content = contentEditText.text.toString()
+
+            // Create a new DiaryEntry object
+            //val newEntry = DiaryEntry(title, content, selectedEmojiResId)
+
+            // Save to a static list
+            //DiaryEntries.entries.add(newEntry)
+
+            // Set result to OK and pass back the new entry (optional)
+            setResult(RESULT_OK)
+
+            levelUp()
+            postRequest(content, title, emojiIndex)
+
             finish()
         }
 
@@ -148,5 +177,62 @@ class AddDiaryEntry : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Action canceled", Toast.LENGTH_SHORT).show()
         }
+    }
+    fun levelUp() {
+        /*
+            Code Attribution
+            Title: How to use OKHTTP to make a post request in Kotlin?
+            Author: heX
+            Author Link: https://stackoverflow.com/users/11740298/hex
+            Post Link: https://stackoverflow.com/questions/56893945/how-to-use-okhttp-to-make-a-post-request-in-kotlin
+            Usage: learned how to make patch api requests
+        */
+        val client = OkHttpClient()
+        // gets url and adds parameters
+        val url = "https://opscmeditationapi.azurewebsites.net/api/users/updateLevel".toHttpUrlOrNull()!!.newBuilder()
+            .addQueryParameter("email", userEmail)
+            .addQueryParameter("experience", "50")
+            .build()
+        val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), "")
+        // builds request
+        val request = Request.Builder().url(url).patch(requestBody).build()
+        //makes call
+        client.newCall(request).enqueue(object : Callback{
+            override fun onFailure(call: Call, e: IOException) {
+                Log.d("Patch Response", "Failure")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                Log.d("Patch Response", "Success")
+            }
+        } )
+    }
+
+    // adds diary
+    fun postRequest(content: String, title: String, emoji: Int) {
+        val client = OkHttpClient()
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        val currentDate = sdf.format(Date())
+        // gets url and adds parameters
+        val url = "https://opscmeditationapi.azurewebsites.net/api/Journal".toHttpUrlOrNull()!!.newBuilder()
+            .addQueryParameter("email", userEmail)
+            .addQueryParameter("date", currentDate)
+            .addQueryParameter("content", content)
+            .addQueryParameter("emoji", emoji.toString())
+            .addQueryParameter("title", title)
+            .build()
+        val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), "")
+        // builds request
+        val request = Request.Builder().url(url).post(requestBody).build()
+        // does request
+        client.newCall(request).enqueue(object : Callback{
+            override fun onFailure(call: Call, e: IOException) {
+                Log.d("Patch Response", "Failure")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                Log.d("Patch Response", "Success")
+            }
+        } )
     }
 }

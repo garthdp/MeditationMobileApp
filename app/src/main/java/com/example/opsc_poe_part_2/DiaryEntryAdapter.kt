@@ -26,9 +26,9 @@ class DiaryEntryAdapter(private var entries: Array<DiaryEntry>) : RecyclerView.A
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val entry = entries[position]
-        holder.entryText.text = entry.title
-        holder.entryContent.text = entry.content
-        holder.date.text = "DATE: ${entry.date}"
+        holder.entryText.text = entry.Title
+        holder.entryContent.text = entry.Content
+        holder.date.text = "DATE: ${entry.Date}"
         holder.emojiView.setImageResource(entry.emoji)
     }
 

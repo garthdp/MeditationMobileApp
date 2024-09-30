@@ -41,6 +41,7 @@ class Settings : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_settings)
 
+        sharedPreferences = getSharedPreferences("ThemePrefs", MODE_PRIVATE)
 
         val btnBack = findViewById<Button>(R.id.btnback)
         val btnLogout = findViewById<Button>(R.id.btnLogout)
@@ -53,10 +54,13 @@ class Settings : AppCompatActivity() {
         }
 
         val btnThemeSwap = findViewById<Button>(R.id.btnThemeSwap)
+        val isDarkMode = loadThemePreference()
+        toggleTheme(isDarkMode)
         btnThemeSwap.setOnClickListener {
             // Create an intent to start RegisterActivity
-            toggleTheme(loadThemePreference());
-            saveThemePreference(loadThemePreference())
+            val newIsDarkMode = !isDarkMode
+            saveThemePreference(newIsDarkMode)
+            toggleTheme(newIsDarkMode)
         }
 
         btnprofile.setOnClickListener {
@@ -168,13 +172,10 @@ class Settings : AppCompatActivity() {
     // Toggle between dark/light mode
 
     private fun toggleTheme(isDarkMode: Boolean) {
-        val themeToggleButton = findViewById<ImageButton>(R.id.theme_toggle_button)
         if (isDarkMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            themeToggleButton.setImageResource(R.drawable.ic_light)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            themeToggleButton.setImageResource(R.drawable.ic_dark)
         }
     }
 

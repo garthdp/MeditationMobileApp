@@ -15,7 +15,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import java.io.IOException
 import java.net.URL
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.concurrent.Executors
 import kotlin.math.log
 
@@ -91,9 +101,8 @@ class Dairy : AppCompatActivity() {
                     }
                 }
             } catch (e: Exception) {
-                Log.d("Error", "Fetch error occured")
+                Log.d("Error", e.message.toString())
             }
         }
-
     }
 }
