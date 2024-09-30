@@ -7,112 +7,87 @@
     android:layout_height="match_parent"
     tools:context=".DashboardActivity">
 
+    <!-- Background VideoView -->
     <VideoView
         android:id="@+id/backgroundVideoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Sound Icon (Top-Right Corner, Next to Settings) -->
+    <ImageButton
+        android:id="@+id/play_sound_icon"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Play Background Sound"
+        android:src="@drawable/ic_sound"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ic_settings"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp" />
 
+    <!-- Settings Icon (Top-Right Corner) -->
 
-    <!-- ImageView for Quotes -->
+    <!-- Logout Icon (Top-Left Corner) -->
+    <ImageButton
+        android:id="@+id/ic_settings"
+        android:layout_width="75dp"
+        android:layout_height="77dp"
+        android:layout_margin="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Settings"
+        android:src="@drawable/ic_settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- GraphView -->
+    <!-- ImageView for Quotes, positioned below ic_sound -->
+    <ImageButton
+        android:id="@+id/logout_icon"
+        android:layout_width="49dp"
+        android:layout_height="79dp"
+        android:layout_margin="10dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Logout"
+        android:src="@drawable/ic_logout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imgQuote"
-        android:layout_width="300dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        android:layout_width="284dp"
+        android:layout_height="216dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/play_sound_icon"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- GraphView, positioned below the quotes -->
     <com.jjoe64.graphview.GraphView
         android:id="@+id/graph"
         android:layout_width="351dp"
         android:layout_height="229dp"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/imgQuote"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgQuote" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Bottom Navigation Bar -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:menu="@menu/bottom_navigation_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/backgroundVideoView">
-        <!-- Top Icons (Logout, Play Sound, Light/Dark Mode, Settings, Profile) -->
-        <!-- Logout Icon -->
-        <!-- Logout Icon -->
-        <ImageButton
-            android:id="@+id/logout_icon"
-            android:layout_width="57dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Logout"
-            android:src="@drawable/ic_logout" />
-
-        <!-- Play Sound Icon -->
-        <ImageButton
-            android:id="@+id/play_sound_icon"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="5dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Play Background Sound"
-            android:src="@drawable/ic_sound" />
-
-        <!-- Theme Toggle Button -->
-        <ImageButton
-            android:id="@+id/theme_toggle_button"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="5dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Theme Toggle Button"
-            android:padding="8dp"
-            android:src="@drawable/ic_dark" />
-
-        <!-- Settings Icon -->
-        <ImageButton
-            android:id="@+id/ic_settings"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="5dp"
-            android:layout_marginTop="5dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Settings"
-            android:src="@drawable/ic_settings" />
-
-        <!-- Profile Icon -->
-        <ImageButton
-            android:id="@+id/profile_icon"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="5dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Profile"
-            android:src="@drawable/ic_profile" />
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

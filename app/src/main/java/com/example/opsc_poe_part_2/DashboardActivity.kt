@@ -101,10 +101,10 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         // Profile and settings icons
-        val profileIcon = findViewById<ImageButton>(R.id.profile_icon)
-        profileIcon.setOnClickListener {
-            startActivity(Intent(this, Profile::class.java))
-        }
+//        val profileIcon = findViewById<ImageButton>(R.id.profile_icon)
+//        profileIcon.setOnClickListener {
+//            startActivity(Intent(this, Profile::class.java))
+//        }
 
         val settingsIcon = findViewById<ImageButton>(R.id.ic_settings)
         settingsIcon.setOnClickListener {
@@ -140,14 +140,14 @@ class DashboardActivity : AppCompatActivity() {
         sessionStartTime = System.currentTimeMillis()
 
         // Theme toggle
-        val themeToggleButton = findViewById<ImageButton>(R.id.theme_toggle_button)
-        val isDarkMode = loadThemePreference()
-        toggleTheme(isDarkMode)
-        themeToggleButton.setOnClickListener {
-            val newIsDarkMode = !isDarkMode
-            saveThemePreference(newIsDarkMode)
-            toggleTheme(newIsDarkMode)
-        }
+//        val themeToggleButton = findViewById<ImageButton>(R.id.theme_toggle_button)
+//        val isDarkMode = loadThemePreference()
+//        toggleTheme(isDarkMode)
+//        themeToggleButton.setOnClickListener {
+//            val newIsDarkMode = !isDarkMode
+//            saveThemePreference(newIsDarkMode)
+//            toggleTheme(newIsDarkMode)
+//        }
 
         // Logout button
         val logout = findViewById<ImageButton>(R.id.logout_icon)
@@ -194,24 +194,24 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     // Toggle between dark/light mode
-    private fun toggleTheme(isDarkMode: Boolean) {
-        val themeToggleButton = findViewById<ImageButton>(R.id.theme_toggle_button)
-        if (isDarkMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            themeToggleButton.setImageResource(R.drawable.ic_light)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            themeToggleButton.setImageResource(R.drawable.ic_dark)
-        }
-    }
-
-    private fun loadThemePreference(): Boolean {
-        return sharedPreferences.getBoolean("isDarkMode", false)
-    }
-
-    private fun saveThemePreference(isDarkMode: Boolean) {
-        sharedPreferences.edit().putBoolean("isDarkMode", isDarkMode).apply()
-    }
+   // private fun toggleTheme(isDarkMode: Boolean) {
+//        val themeToggleButton = findViewById<ImageButton>(R.id.theme_toggle_button)
+//        if (isDarkMode) {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+//            themeToggleButton.setImageResource(R.drawable.ic_light)
+//        } else {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+//            themeToggleButton.setImageResource(R.drawable.ic_dark)
+//        }
+//    }
+//
+//    private fun loadThemePreference(): Boolean {
+//        return sharedPreferences.getBoolean("isDarkMode", false)
+//    }
+//
+//    private fun saveThemePreference(isDarkMode: Boolean) {
+//        sharedPreferences.edit().putBoolean("isDarkMode", isDarkMode).apply()
+//    }
 
     // Set the graph data
     private fun setGraphData() {
