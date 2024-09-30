@@ -19,7 +19,7 @@ class MusicActivity : AppCompatActivity() {
         )
 
         val descriptions = listOf(
-            "Atlantis sounds",
+            "Put in your earphones and enjoy: 'Atlantis sounds'",
             "Relaxing sea symphony",
             "Mystical mermaid tunes"
         )

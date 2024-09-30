@@ -18,7 +18,7 @@ class FocusActivity: AppCompatActivity() {
             R.raw.sea_harmony
         )
         val descriptions = listOf(
-            "Music to help you focus",
+            "A short guide to help you focus",
             "Mystical siren sounds",
             "Sea harmony tunes"
         )
