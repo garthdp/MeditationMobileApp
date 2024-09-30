@@ -30,11 +30,13 @@ import java.util.concurrent.Executors
 class Profile : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var txtSelectedGoals: TextView
+    private lateinit var graph2: GraphView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_profile)
+        sharedPreferences = getSharedPreferences("ThemePrefs", MODE_PRIVATE)
 
         getUser()
         // Find the back button in the layout
@@ -99,6 +101,9 @@ class Profile : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // Set the graph data
+        graph2 = findViewById(R.id.graph2)
+        setGraphData()
     }
     fun getUser(){
         val progressBar : ProgressBar = findViewById(R.id.progressBar)
@@ -130,9 +135,7 @@ class Profile : AppCompatActivity() {
         }
     }
 
-
     //Setup for the graph
-    val graph2 = findViewById<GraphView>(R.id.graph2)
     private fun setGraphData() {
         val dataPoints = ArrayList<DataPoint>()
         val dayLabels = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")

@@ -61,7 +61,7 @@
             android:layout_height="48dp"
             android:layout_marginLeft="290dp"
             android:layout_marginTop="35dp"
-            android:src="@drawable/sademoji" />
+            android:src="@drawable/emoji4" />
 
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
