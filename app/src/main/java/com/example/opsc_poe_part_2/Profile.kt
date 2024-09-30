@@ -105,22 +105,22 @@ class Profile : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val imgpfp = findViewById<ImageView>(R.id.imgpfp)
-        val btnpicChanger = findViewById<Button>(R.id.btnchangepfp)
-        btnpicChanger.setOnClickListener {
-            // Create an intent to start RegisterActivity
-            val options = arrayOf("Take Photo", "Choose from Gallery")
-            val builder = android.app.AlertDialog.Builder(this)
-            builder.setTitle("Select Option")
-            builder.setItems(options) { _, which ->
-                when (which) {
-                    0 -> openCamera() // Take a photo
-                    1 -> openGallery() // Choose from gallery
-                }
-                imgpfp.setImageResource(R.drawable.emoji2)
-            }
-            builder.show()
-        }
+//        val imgpfp = findViewById<ImageView>(R.id.imageView13)
+//        val btnpicChanger = findViewById<Button>(R.id.btnchangepfp)
+//        btnpicChanger.setOnClickListener {
+//            // Create an intent to start RegisterActivity
+//            val options = arrayOf("Take Photo", "Choose from Gallery")
+//            val builder = android.app.AlertDialog.Builder(this)
+//            builder.setTitle("Select Option")
+//            builder.setItems(options) { _, which ->
+//                when (which) {
+//                    0 -> openCamera() // Take a photo
+//                    1 -> openGallery() // Choose from gallery
+//                }
+//                imgpfp.setImageResource(R.drawable.emoji2)
+//            }
+//            builder.show()
+//        }
         // Set the graph data
         graph2 = findViewById(R.id.graph2)
         setGraphData()
