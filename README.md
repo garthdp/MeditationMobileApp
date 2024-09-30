@@ -1,10 +1,10 @@
 # Oceans Depth Meditation App
-## Overview
+## Overview:
 Oceans Depth is a meditation app designed to promote mindfulness, help users focus, and track their personal progress. This app offers features like diary entries, personalized meditation sessions, breathing exercises, and goal tracking, all while allowing users to switch between light and dark modes for a customizable experience. The app also rewards users with points, helping them to level up as they achieve their daily goals.
 
 API LINK = https://opscmeditationapi.azurewebsites.net/swagger/index.html
 
-## Features
+## Features:
 ### 1. User Registration & Login
 User Registration: Users can sign up with their details (name, email, etc.), which are stored in their profile.
 Login: Registered users can log in securely to access their personalized meditation content.
@@ -36,7 +36,7 @@ Theme Switching: Users can switch between light mode and dark mode according to 
 Log Out: Users can securely log out of their account through the settings.
 Theme Settings: Customize the appearance of the app by choosing between light and dark modes.
 
-## Usage Instructions
+## Usage Instructions:
 Register:
 
 Open the app and fill in the registration form with your details (name, email, password, etc.).
