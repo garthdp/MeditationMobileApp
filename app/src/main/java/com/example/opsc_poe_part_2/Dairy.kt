@@ -87,6 +87,7 @@ class Dairy : AppCompatActivity() {
                 val json = url.readText()
                 // if null on response log error
                 if(json.equals("null")){
+                    progressBar.visibility = View.INVISIBLE
                     Log.d("Error", "Nothing found")
                 }
                 else{
@@ -101,6 +102,7 @@ class Dairy : AppCompatActivity() {
                     }
                 }
             } catch (e: Exception) {
+                progressBar.visibility = View.INVISIBLE
                 Log.d("Error", e.message.toString())
             }
         }
