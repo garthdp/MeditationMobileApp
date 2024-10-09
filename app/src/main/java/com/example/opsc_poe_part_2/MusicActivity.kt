@@ -13,6 +13,8 @@ class MusicActivity : AppCompatActivity() {
         setContentView(R.layout.activity_music)
 
         val videoList = listOf(
+            //references videos from youtube:
+            //https://youtu.be/YIVUPknhUWs?si=6NbKQl2Ekm4STUh7
             R.raw.atlantis,
             R.raw.sea_symphony,
             R.raw.mermaid

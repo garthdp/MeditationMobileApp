@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textPrivacyPolicy" />
+        app:layout_constraintTop_toBottomOf="@+id/btnPrivacyPolicy" />
 
     <ImageView
         android:id="@+id/semi_circle6"
@@ -95,17 +95,16 @@
         app:layout_constraintStart_toEndOf="@+id/textView9"
         app:layout_constraintTop_toBottomOf="@+id/btnback" />
 
-    <TextView
-        android:id="@+id/textPrivacyPolicy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="270dp"
+    <Button
+        android:id="@+id/btnPrivacyPolicy"
+        android:layout_width="145dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@android:color/holo_red_light"
         android:text="Privacy Policy"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 

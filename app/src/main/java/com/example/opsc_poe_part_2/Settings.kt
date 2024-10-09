@@ -47,6 +47,7 @@ class Settings : AppCompatActivity() {
         val btnLogout = findViewById<Button>(R.id.btnLogout)
         val btnDelete = findViewById<Button>(R.id.btnDelete)
         val btnprofile = findViewById<Button>(R.id.btnprofile)
+        val btnPrivacyPolicy = findViewById<Button>(R.id.btnPrivacyPolicy)
         btnBack.setOnClickListener {
             // Create an intent to start RegisterActivity
             val intent = Intent(this, DashboardActivity::class.java)
@@ -67,6 +68,9 @@ class Settings : AppCompatActivity() {
             // Create an intent to start RegisterActivity
             val intent = Intent(this, Profile::class.java)
             startActivity(intent)
+        }
+        btnPrivacyPolicy.setOnClickListener {
+            showPrivacyPolicyDialog() //  function to show the privacy policy dialog
         }
         // Initialize BottomNavigationView and set up item selection listener
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
@@ -103,6 +107,20 @@ class Settings : AppCompatActivity() {
             handleAccountDelete()
         }
     }
+    private fun showPrivacyPolicyDialog() {
+        val privacyPolicyText = "Here at Oceans Depth your privacy is very important to us.\n" +
+                "\n" +
+                "Unless you choose to give it to us, our meditation app does not collect you r personal data without your consent. However to improve the app for your use we may collect usage data but this data is anonymized. Third parties do not have access to your data. PLease feel free to send our team a message via email so we can come back to you if you have any concerns or quarries.\n" +
+                "\n" +
+                "Thank you for using Oceans depth!"
+        AlertDialog.Builder(this)
+            .setTitle("Privacy Policy")
+            .setMessage(privacyPolicyText)
+            .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+            .create()
+            .show()
+    }
+
     private fun handleLogout() {
         AlertDialog.Builder(this)
             .setTitle("Logout")

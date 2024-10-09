@@ -13,7 +13,10 @@ class SleepActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sleep)
 
         val videoList = listOf(
+            //references videos from youtube:
+            //https://youtu.be/o646ovhy66o?si=n1EyAgX2p3e3JNWf
             R.raw.sleep_meditate,
+            //https://youtu.be/6If7zcLsEV4?feature=shared
             R.raw.whale_sound_one
         )
         val descriptions = listOf(

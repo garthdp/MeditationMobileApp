@@ -13,7 +13,10 @@ class MeditateActivity : AppCompatActivity() {
         setContentView(R.layout.activity_meditate)
 
         val videoList = listOf(
+            //references videos from youtube:
+            //https://youtu.be/YIVUPknhUWs?si=6NbKQl2Ekm4STUh7
             R.raw.meditation,
+            //https://youtu.be/DbDoBzGY3vo?si=yf6O7P2FSCutmfCX
             R.raw.sea_meditation
         )
 

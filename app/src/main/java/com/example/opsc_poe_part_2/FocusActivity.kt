@@ -13,6 +13,8 @@ class FocusActivity: AppCompatActivity() {
         setContentView(R.layout.activity_focus)
 
         val videoList = listOf(
+            //references videos from youtube:
+            //https://youtu.be/Uo-GK0-Qh0Y?si=MkW0f9pEWw1GSU5A
             R.raw.focus,
             R.raw.siren,
             R.raw.sea_harmony
