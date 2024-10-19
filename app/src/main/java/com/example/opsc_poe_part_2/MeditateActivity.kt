@@ -12,7 +12,6 @@ import androidx.viewpager2.widget.ViewPager2
 
 class MeditateActivity : AppCompatActivity() {
     private lateinit var swipeInstructionTextView: TextView
-    private lateinit var arrowIndicator: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +38,6 @@ class MeditateActivity : AppCompatActivity() {
         //TextView for descriptions and swipe instruction
         val descriptionTextView = findViewById<TextView>(R.id.videoDescription)
         swipeInstructionTextView = findViewById(R.id.swipeInstruction)
-        arrowIndicator = findViewById(R.id.arrowIndicator) // Initialize arrow ImageView
         val videoCounterTextView = findViewById<TextView>(R.id.videoCounter)
 
         // Set up the initial description and video counter
@@ -69,25 +67,8 @@ class MeditateActivity : AppCompatActivity() {
             finish()
         }
 
-        // Start pulsing animation on the arrow indicator
-        startPulsingAnimation()
+
     }
 
-    private fun startPulsingAnimation() {
-        // Create and start the scaling animation for the arrow
-        val pulseAnimatorX = ObjectAnimator.ofFloat(arrowIndicator, "scaleX", 1f, 1.1f, 1f)
-        val pulseAnimatorY = ObjectAnimator.ofFloat(arrowIndicator, "scaleY", 1f, 1.1f, 1f)
 
-        pulseAnimatorX.duration = 500 // Duration of one pulse
-        pulseAnimatorX.repeatCount = ObjectAnimator.INFINITE // Repeat indefinitely
-        pulseAnimatorX.repeatMode = ObjectAnimator.REVERSE // Scale back to original size
-
-        pulseAnimatorY.duration = 500 // Duration of one pulse
-        pulseAnimatorY.repeatCount = ObjectAnimator.INFINITE // Repeat indefinitely
-        pulseAnimatorY.repeatMode = ObjectAnimator.REVERSE // Scale back to original size
-
-        // Start both animations
-        pulseAnimatorX.start()
-        pulseAnimatorY.start()
-    }
 }

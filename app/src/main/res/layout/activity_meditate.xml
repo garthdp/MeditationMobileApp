@@ -124,15 +124,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageView
-        android:id="@+id/arrowIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:src="@drawable/ic_arrow_right"
-        app:layout_constraintBottom_toBottomOf="@id/videoCounter"
-        app:layout_constraintStart_toEndOf="@id/videoCounter"
-        app:layout_constraintTop_toBottomOf="@id/viewPager"
-        app:layout_constraintVertical_bias="0.571" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
