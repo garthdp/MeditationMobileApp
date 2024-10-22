@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         //add video loop
         // Adjust padding for edge-to-edge display
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.lbltest)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -64,5 +64,8 @@ class MainActivity : AppCompatActivity() {
             videoView.start()
     }
 }
+
+
+
 }
 
