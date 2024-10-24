@@ -14,6 +14,10 @@ import android.widget.Toast
 import android.widget.VideoView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import com.example.opsc_poe_part_2.BiometricPromptManager.*
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.BarGraphSeries
 import com.jjoe64.graphview.series.DataPoint
@@ -138,7 +142,6 @@ class DashboardActivity : AppCompatActivity() {
         graph = findViewById(R.id.graph)
         setGraphData()
     }
-
     // Function to start image loop
     private fun startImageLoop() {
         handler = Handler(Looper.getMainLooper())
