@@ -1,9 +1,13 @@
 package com.example.opsc_poe_part_2
 
 import android.Manifest
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -15,6 +19,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
+import com.google.gson.Gson
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
@@ -24,6 +30,7 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.Response
 import java.io.IOException
+import java.time.LocalDateTime
 
 class DailyGoals : AppCompatActivity() {
 
@@ -32,26 +39,31 @@ class DailyGoals : AppCompatActivity() {
     private lateinit var goalDescriptionEditText: EditText
     private lateinit var saveGoalButton: Button
     private lateinit var goalsListView: ListView
+    private lateinit var goalAlarmScheduler: GoalAlarmScheduler
 
     private val goalsList = mutableListOf<String>()
+    private val alarmList = mutableListOf<AlarmItem>()
     private lateinit var adapter: ArrayAdapter<String>
+    private lateinit var sharedPreferences: SharedPreferences
 
+    private val gson = Gson()
     private val REQUEST_NOTIFICATION_PERMISSION = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_daily_goals)
+        sharedPreferences = getSharedPreferences("GoalPrefs", Context.MODE_PRIVATE)
 
         // Check for notification permission
         checkNotificationPermission()
 
-        Log.d("Test", "Test")
         // Initialize views
         goalTypeSpinner = findViewById(R.id.spinner_goal_type)
         troubleSpinner = findViewById(R.id.spinner_trouble)
         goalDescriptionEditText = findViewById(R.id.goal_description)
         saveGoalButton = findViewById(R.id.save_goal_button)
         goalsListView = findViewById(R.id.goals_list_view)
+        goalAlarmScheduler = GoalAlarmScheduler(this)
 
         // Populate Spinners
         val goalTypes = listOf("Meditation", "Focus", "Sleep")
@@ -65,6 +77,9 @@ class DailyGoals : AppCompatActivity() {
         goalsListView.adapter = adapter
         goalsListView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
 
+        // loads lists from shared preferences
+        loadGoalsAndAlarms()
+
         // Save Goal Button action
         saveGoalButton.setOnClickListener {
             val selectedGoalType = goalTypeSpinner.selectedItem.toString()
@@ -75,8 +90,15 @@ class DailyGoals : AppCompatActivity() {
                 val goal = "$selectedGoalType - $selectedTrouble: $goalDescription"
                 goalsList.add(goal)
                 adapter.notifyDataSetChanged()
-                showNotification(goal)  // Display notification
+                // sets alarm for 1 hr
+                val seconds = LocalDateTime.now().plusSeconds(60 * 60)
+                val alarmItem = AlarmItem(goal, seconds)
+                // save alarmitems to list
+                alarmList.add(alarmItem)
+                // schedules alarms
+                goalAlarmScheduler.schedule(alarmItem)
                 goalDescriptionEditText.text.clear()  // Clear the text box
+                saveGoalsAndAlarms()
             } else {
                 Toast.makeText(this, "Please enter a goal description", Toast.LENGTH_SHORT).show()
             }
@@ -112,8 +134,46 @@ class DailyGoals : AppCompatActivity() {
         // Mark goals as completed by checking them off in the list
         goalsListView.setOnItemClickListener { _, _, position, _ ->
             levelUp()
+            // finds alarm item and cancels notification
+            val alarmItemFound = alarmList[position]
+            goalAlarmScheduler.cancel(alarmItemFound)
             goalsList.removeAt(position)
             adapter.notifyDataSetChanged()
+            saveGoalsAndAlarms()
+        }
+    }
+
+    /*
+    Code Attribution
+    Title: Storing Array List Object in SharedPreferences
+    Author: Sinan Kozak
+    author link : https://stackoverflow.com/users/1577792/sinan-kozak
+    Post Link: https://stackoverflow.com/questions/22984696/storing-array-list-object-in-sharedpreferences
+    Usage: learned to save list in sharedpreferences
+    */
+
+    // saves lists to shared preferences
+    private fun saveGoalsAndAlarms() {
+        val goalsJson = gson.toJson(goalsList)
+        sharedPreferences.edit().putString("goals", goalsJson).apply()
+
+        val alarmsJson = gson.toJson(alarmList)
+        sharedPreferences.edit().putString("alarms", alarmsJson).apply()
+    }
+
+    // loads lists from shared preferences and saves them to lists
+    private fun loadGoalsAndAlarms() {
+        val goalsJson = sharedPreferences.getString("goals", null)
+        if (goalsJson != null) {
+            val goalsType = object : TypeToken<MutableList<String>>() {}.getType()
+            goalsList.addAll(gson.fromJson(goalsJson, goalsType))
+            adapter.notifyDataSetChanged()
+        }
+
+        val alarmsJson = sharedPreferences.getString("alarms", null)
+        if (alarmsJson != null) {
+            val alarmsType = object : TypeToken<MutableList<AlarmItem>>() {}.type
+            alarmList.addAll(gson.fromJson(alarmsJson, alarmsType))
         }
     }
 
@@ -163,33 +223,6 @@ class DailyGoals : AppCompatActivity() {
                 Log.d("Patch Response", "Success")
             }
         } )
-    }
-
-    // Show a notification to remind the user of the goal
-    private fun showNotification(goal: String) {
-        val notificationId = 1
-        val channelId = "goal_reminder_channel"
-
-        // Create notification channel (for Android O and above)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Goal Reminders"
-            val descriptionText = "Reminders for your daily goals"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(channelId, name, importance).apply {
-                description = descriptionText
-            }
-            val notificationManager: NotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-
-        // Build and show the notification
-        val builder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.sademoji)  // Ensure ic_goal exists
-            .setContentTitle("Goal Reminder")
-            .setContentText("Reminder: $goal")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-
     }
 
     // Handle the result of the permission request
