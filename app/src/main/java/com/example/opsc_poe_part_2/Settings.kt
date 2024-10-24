@@ -10,11 +10,15 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.core.os.LocaleListCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -48,6 +52,10 @@ class Settings : AppCompatActivity() {
         val btnDelete = findViewById<Button>(R.id.btnDelete)
         val btnprofile = findViewById<Button>(R.id.btnprofile)
         val btnPrivacyPolicy = findViewById<Button>(R.id.btnPrivacyPolicy)
+
+       // LanguageTst()
+        //language test that breaks
+
         btnBack.setOnClickListener {
             // Create an intent to start RegisterActivity
             val intent = Intent(this, DashboardActivity::class.java)
@@ -205,5 +213,21 @@ class Settings : AppCompatActivity() {
         sharedPreferences.edit().putBoolean("isDarkMode", isDarkMode).apply()
     }
 
+    fun LanguageTst(){
 
+        val lbltest = findViewById<TextView>(R.id.lbltest)
+        lbltest.text = R.string.LanguageTest.toString()
+       // val context = LocalContext.current
+      //  val localeOptions = mapOf(
+      //      R.string.en to "en",
+      //      R.string.af to "af"
+      //  ).mapKeys { stringResource(it.key) }
+
+
+      //  AppCompatActivity.setApplicationLocales(
+     //       LocaleListCompat.forLanguageTags(
+      //         localeOptions[R.string.pick_color]
+      ///      )
+     //   )
+    }
 }
