@@ -64,8 +64,5 @@ class MainActivity : AppCompatActivity() {
             videoView.start()
     }
 }
-
-
-
 }
 
