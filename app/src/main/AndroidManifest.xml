@@ -9,10 +9,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
 
     <application
@@ -76,6 +74,9 @@
             android:exported="false" />
         <activity
             android:name=".Game"
+            android:exported="false" />
+        <activity
+            android:name=".CameraTextReader"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

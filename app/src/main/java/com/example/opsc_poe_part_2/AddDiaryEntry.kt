@@ -120,19 +120,7 @@ class AddDiaryEntry : AppCompatActivity() {
             constraintLayout.setBackgroundColor(selectedColor)
         }
 
-        // Open camera or gallery
-        cameraButton.setOnClickListener {
-            val options = arrayOf("Take Photo", "Choose from Gallery")
-            val builder = android.app.AlertDialog.Builder(this)
-            builder.setTitle("Select Option")
-            builder.setItems(options) { _, which ->
-                when (which) {
-                    0 -> openCamera() // Take a photo
-                    1 -> openGallery() // Choose from gallery
-                }
-            }
-            builder.show()
-        }
+
     }
 
     private fun openCamera() {

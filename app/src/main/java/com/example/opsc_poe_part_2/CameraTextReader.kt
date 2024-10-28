@@ -13,6 +13,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
+import android.Manifest
+import android.annotation.SuppressLint
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -114,6 +116,7 @@ class CameraTextReader : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun showInputImageDialog() {
 
     val popupMenu = PopupMenu(this, inputImageBtn)
@@ -239,7 +242,7 @@ class CameraTextReader : AppCompatActivity() {
                     val cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED
                     val storageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED
 
-                    if(cameraAccepted && storageAccepted){
+                    if(cameraAccepted || storageAccepted){
                         pickImageCamera()
                     }
                     else{
