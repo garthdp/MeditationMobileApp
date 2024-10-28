@@ -55,7 +55,9 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.androidx.ui.android)
     implementation(libs.firebase.crashlytics.buildtools)
-    implementation(libs.firebase.messaging.ktx)
+    //added text recognition
+    implementation ("com.google.android.gms:play-services-mlkit-text-recognition:18.0.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
