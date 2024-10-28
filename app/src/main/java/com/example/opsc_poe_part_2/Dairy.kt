@@ -1,5 +1,6 @@
 package com.example.opsc_poe_part_2
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -7,27 +8,14 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.ListView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
-import kotlinx.coroutines.delay
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody
-import java.io.IOException
 import java.net.URL
-import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.concurrent.Executors
-import kotlin.math.log
 
 class Dairy : AppCompatActivity() {
     private lateinit var addEntryButton: Button
@@ -75,6 +63,7 @@ class Dairy : AppCompatActivity() {
     }
 
     // gets diary entries
+    @SuppressLint("Range")
     private fun getDiaryEntries(){
         val progressBar : ProgressBar = findViewById(R.id.progressBar)
         val executor = Executors.newSingleThreadExecutor()
@@ -94,16 +83,62 @@ class Dairy : AppCompatActivity() {
                     // assigns response to array of diary entries
                     val dairyResponse = Gson().fromJson(json, Array<DiaryEntry>::class.java)
                     Log.d("Response", dairyResponse[0].toString())
+
                     Handler(Looper.getMainLooper()).post{
                         // Initialize and set the adapter
                         adapter = DiaryEntryAdapter(dairyResponse)
                         recyclerView.adapter = adapter
                         progressBar.visibility = View.INVISIBLE
                     }
+
+                    val db = DBHelper(this, null)
+
+                    db.deleteTable("diary_table")
+
+                    for(diary in dairyResponse){
+                        db.addDiary(diary.Title, diary.Content, diary.Date, diary.emoji.toString())
+                    }
                 }
             } catch (e: Exception) {
                 progressBar.visibility = View.INVISIBLE
                 Log.d("Error", e.message.toString())
+                Handler(Looper.getMainLooper()).post{
+                    val dairyResponse = ArrayList<DiaryEntry>()
+                    val db = DBHelper(this, null)
+                    val cursor = db.getEntries()
+                    cursor?.moveToFirst()
+                    var diaryTitle = cursor?.getString(cursor.getColumnIndex(DBHelper.TITLE))
+                    var diaryContent = cursor?.getString(cursor.getColumnIndex(DBHelper.CONTENT))
+                    var diaryDate = cursor?.getString(cursor.getColumnIndex(DBHelper.DATE))
+                    var diaryEmoji = cursor?.getString(cursor.getColumnIndex(DBHelper.EMOJI))
+                    var diaryId = cursor?.getString(cursor.getColumnIndex(DBHelper.ID_COL))
+                    var diaryEntry = DiaryEntry(diaryEmoji!!.toInt(), diaryId!!, diaryContent!!, diaryTitle!!, diaryDate!!)
+
+                    Log.d("firest", diaryTitle)
+                    dairyResponse.add(diaryEntry)
+
+                    while(cursor?.moveToNext() == true){
+                        diaryTitle = cursor.getString(cursor.getColumnIndex(DBHelper.TITLE))
+                        diaryContent = cursor.getString(cursor.getColumnIndex(DBHelper.CONTENT))
+                        diaryDate = cursor.getString(cursor.getColumnIndex(DBHelper.DATE))
+                        diaryEmoji = cursor.getString(cursor.getColumnIndex(DBHelper.EMOJI))
+                        diaryId = cursor.getString(cursor.getColumnIndex(DBHelper.ID_COL))
+                        diaryEntry = DiaryEntry(diaryEmoji!!.toInt(), diaryId!!, diaryContent!!, diaryTitle!!, diaryDate!!)
+                        Log.d("diary", diaryEntry.toString())
+                        dairyResponse.add(diaryEntry)
+                    }
+                    cursor?.close()
+                    val arrDairy = dairyResponse.toTypedArray()
+                    // Initialize and set the adapter
+                    if (arrDairy != null){
+                        for(diary in arrDairy){
+                            Log.d("diary", diary.Title)
+                        }
+                        adapter = DiaryEntryAdapter(arrDairy)
+                        recyclerView.adapter = adapter
+                        progressBar.visibility = View.INVISIBLE
+                    }
+                }
             }
         }
     }
