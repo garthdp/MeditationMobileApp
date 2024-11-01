@@ -48,3 +48,5 @@ I then had to change one of the functions because this code only signed a user i
 ![Screenshot 2024-11-01 134530](https://github.com/user-attachments/assets/5e15ebcf-cb70-4e4a-9766-c569abe2a48a)
 
 Firstly it does an api call to our api and checks if the user alreadly exists in the database, if the user doesnt it then runs a post request which adds the user to the database and then returns the user to the next page.
+
+I didnt use AI anywhere else because i used videos and example code from class, all things i used a video for has references in the code.
