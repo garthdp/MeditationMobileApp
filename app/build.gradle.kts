@@ -79,6 +79,5 @@ dependencies {
     implementation ("androidx.activity:activity-compose:1.6.0")
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
     implementation("androidx.biometric:biometric:1.1.0")
-
-
+    implementation("androidx.work:work-runtime-ktx:2.7.1")
 }

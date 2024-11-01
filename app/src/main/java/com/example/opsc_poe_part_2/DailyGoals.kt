@@ -18,6 +18,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.work.BackoffPolicy
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
 import com.google.gson.Gson
@@ -31,6 +38,7 @@ import okhttp3.RequestBody
 import okhttp3.Response
 import java.io.IOException
 import java.time.LocalDateTime
+import java.util.concurrent.TimeUnit
 
 class DailyGoals : AppCompatActivity() {
 
@@ -91,13 +99,13 @@ class DailyGoals : AppCompatActivity() {
                 goalsList.add(goal)
                 adapter.notifyDataSetChanged()
                 // sets alarm for 1 hr
-                val seconds = LocalDateTime.now().plusSeconds(60 * 60)
-                val alarmItem = AlarmItem(goal, seconds)
+                val seconds = LocalDateTime.now().plusSeconds(30)
+                val alarmItem = AlarmItem(goal, seconds, goalsList.size)
                 // save alarmitems to list
                 alarmList.add(alarmItem)
                 // schedules alarms
                 goalAlarmScheduler.schedule(alarmItem)
-                goalDescriptionEditText.text.clear()  // Clear the text box
+                goalDescriptionEditText.text.clear()
                 saveGoalsAndAlarms()
             } else {
                 Toast.makeText(this, "Please enter a goal description", Toast.LENGTH_SHORT).show()
@@ -138,6 +146,7 @@ class DailyGoals : AppCompatActivity() {
             val alarmItemFound = alarmList[position]
             goalAlarmScheduler.cancel(alarmItemFound)
             goalsList.removeAt(position)
+            alarmList.removeAt(position)
             adapter.notifyDataSetChanged()
             saveGoalsAndAlarms()
         }
@@ -200,29 +209,19 @@ class DailyGoals : AppCompatActivity() {
             Post Link: https://stackoverflow.com/questions/56893945/how-to-use-okhttp-to-make-a-post-request-in-kotlin
             Usage: learned how to make patch api requests
         */
-        val client = OkHttpClient()
+        val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
 
-        //gets url and adds parameters
-        val url = "https://opscmeditationapi.azurewebsites.net/api/users/updateLevel".toHttpUrlOrNull()!!.newBuilder()
-            .addQueryParameter("email", userEmail)
-            .addQueryParameter("experience", "50")
-            .build()
+        val progressData = workDataOf(LevelUpWorker.EXPERIENCE to 50.toString())
 
-        val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), "")
-
-        // builds request
-        val request = Request.Builder().url(url).patch(requestBody).build()
-
-        // does call
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.d("Patch Response", "Failure")
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                Log.d("Patch Response", "Success")
-            }
-        } )
+        Log.d("ProgressData", progressData.toString())
+        val request: OneTimeWorkRequest =
+            OneTimeWorkRequestBuilder<LevelUpWorker>()
+                .setConstraints(constraints)
+                .setInputData(progressData)
+                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 20, TimeUnit.SECONDS)
+                .build()
+        WorkManager.getInstance()
+            .enqueue(request)
     }
 
     // Handle the result of the permission request

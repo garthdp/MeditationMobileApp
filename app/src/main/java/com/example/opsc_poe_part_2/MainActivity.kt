@@ -11,14 +11,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 
-var userEmail : String? = null
-
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     public override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
-        userEmail = auth.currentUser?.email.toString()
         if (currentUser != null) {
             val intent = Intent(this, BiometricAuthActivity::class.java)
             startActivity(intent)

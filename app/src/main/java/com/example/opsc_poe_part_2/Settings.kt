@@ -38,12 +38,15 @@ import java.util.concurrent.Executors
 
 class Settings : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var auth: FirebaseAuth
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_settings)
+        auth = FirebaseAuth.getInstance()
+        val email = auth.currentUser?.email.toString()
 
         sharedPreferences = getSharedPreferences("ThemePrefs", MODE_PRIVATE)
 
@@ -112,7 +115,7 @@ class Settings : AppCompatActivity() {
             handleLogout()
         }
         btnDelete.setOnClickListener{
-            handleAccountDelete()
+            handleAccountDelete(email)
         }
     }
     private fun showPrivacyPolicyDialog() {
@@ -137,23 +140,21 @@ class Settings : AppCompatActivity() {
                 val sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE)
                 sharedPreferences.edit().clear().apply()
                 FirebaseAuth.getInstance().signOut()
-                userEmail = null
                 startActivity(Intent(this, MainActivity::class.java))
                 Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("No", null)
             .show()
     }
-    private fun handleAccountDelete() {
+    private fun handleAccountDelete(email: String) {
         AlertDialog.Builder(this)
             .setTitle("Delete")
             .setMessage("Are you sure you want to delete your account?")
             .setPositiveButton("Yes") { dialog, which ->
                 val sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE)
                 sharedPreferences.edit().clear().apply()
-                DeleteUser(userEmail)
+                DeleteUser(email)
                 FirebaseAuth.getInstance().signOut()
-                userEmail = null
                 startActivity(Intent(this, MainActivity::class.java))
                 Toast.makeText(this, "Account deleted successfully", Toast.LENGTH_SHORT).show()
             }
@@ -174,7 +175,7 @@ class Settings : AppCompatActivity() {
 
         // gets url and adds parameters
         val url = "https://opscmeditationapi.azurewebsites.net/api/users/DeleteUser".toHttpUrlOrNull()!!.newBuilder()
-            .addQueryParameter("email", userEmail)
+            .addQueryParameter("email", email)
             .build()
 
         val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), "")

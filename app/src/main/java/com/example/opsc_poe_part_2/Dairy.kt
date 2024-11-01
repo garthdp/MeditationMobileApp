@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import java.net.URL
 import java.util.concurrent.Executors
@@ -20,14 +21,20 @@ import java.util.concurrent.Executors
 class Dairy : AppCompatActivity() {
     private lateinit var addEntryButton: Button
     private lateinit var adapter: DiaryEntryAdapter
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dairy)
         addEntryButton = findViewById(R.id.button5)
         val progressBar : ProgressBar = findViewById(R.id.progressBar)
+        auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+        val email = currentUser?.email
         progressBar.visibility = View.VISIBLE
-        getDiaryEntries()
+        if (email != null) {
+            getDiaryEntries(email)
+        }
 
         // Initialize BottomNavigationView and set up item selection listener
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
@@ -64,7 +71,7 @@ class Dairy : AppCompatActivity() {
 
     // gets diary entries
     @SuppressLint("Range")
-    private fun getDiaryEntries(){
+    private fun getDiaryEntries(email: String){
         val progressBar : ProgressBar = findViewById(R.id.progressBar)
         val executor = Executors.newSingleThreadExecutor()
         val recyclerView : RecyclerView = findViewById(R.id.recycler_view_entries)
@@ -72,7 +79,7 @@ class Dairy : AppCompatActivity() {
         executor.execute {
             try {
                 //url for request
-                val url = URL("https://opscmeditationapi.azurewebsites.net/api/Journal/GetJournalEntries?email=${userEmail}")
+                val url = URL("https://opscmeditationapi.azurewebsites.net/api/Journal/GetJournalEntries?email=${email}")
                 val json = url.readText()
                 // if null on response log error
                 if(json.equals("null")){
@@ -93,7 +100,7 @@ class Dairy : AppCompatActivity() {
 
                     val db = DBHelper(this, null)
 
-                    db.deleteTable("diary_table")
+                    db.deleteDiaries()
 
                     for(diary in dairyResponse){
                         db.addDiary(diary.Title, diary.Content, diary.Date, diary.emoji.toString())
