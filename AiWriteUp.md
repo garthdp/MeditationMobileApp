@@ -18,7 +18,7 @@ The next time i used AI was when trying to implement SSO from a video (https://w
 
 First i ask AI to take the GoogleAuthUiClient which i made with help of the video and i told ai to implement it to the main activity so that when the user signs in it will use the functions i got from the video.
 
-First screenshot of the videos code which i couldnt use because out main activity was set up differently.
+First screenshot of the videos code which i couldnt use because our main activity was set up differently.
 
 ![Screenshot 2024-11-01 133824](https://github.com/user-attachments/assets/ccde3f75-4705-4ad8-bf7f-73d2e66d6bbb)
 
