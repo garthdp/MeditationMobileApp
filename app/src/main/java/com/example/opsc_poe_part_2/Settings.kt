@@ -3,6 +3,7 @@ package com.example.opsc_poe_part_2
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -38,12 +39,15 @@ import java.util.concurrent.Executors
 
 class Settings : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var auth: FirebaseAuth
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_settings)
+        auth = FirebaseAuth.getInstance()
+        val email = auth.currentUser?.email.toString()
 
         sharedPreferences = getSharedPreferences("ThemePrefs", MODE_PRIVATE)
 
@@ -52,9 +56,14 @@ class Settings : AppCompatActivity() {
         val btnDelete = findViewById<Button>(R.id.btnDelete)
         val btnprofile = findViewById<Button>(R.id.btnprofile)
         val btnPrivacyPolicy = findViewById<Button>(R.id.btnPrivacyPolicy)
+        val notificationButton = findViewById<Button>(R.id.notificationButton)
 
-       // LanguageTst()
+        // LanguageTst()
         //language test that breaks
+
+        notificationButton.setOnClickListener {
+            openNotificationSettings()
+        }
 
         btnBack.setOnClickListener {
             // Create an intent to start RegisterActivity
@@ -112,7 +121,7 @@ class Settings : AppCompatActivity() {
             handleLogout()
         }
         btnDelete.setOnClickListener{
-            handleAccountDelete()
+            handleAccountDelete(email)
         }
     }
     private fun showPrivacyPolicyDialog() {
@@ -137,29 +146,42 @@ class Settings : AppCompatActivity() {
                 val sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE)
                 sharedPreferences.edit().clear().apply()
                 FirebaseAuth.getInstance().signOut()
-                userEmail = null
                 startActivity(Intent(this, MainActivity::class.java))
                 Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("No", null)
             .show()
     }
-    private fun handleAccountDelete() {
+    private fun handleAccountDelete(email: String) {
         AlertDialog.Builder(this)
             .setTitle("Delete")
             .setMessage("Are you sure you want to delete your account?")
             .setPositiveButton("Yes") { dialog, which ->
                 val sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE)
                 sharedPreferences.edit().clear().apply()
-                DeleteUser(userEmail)
+                DeleteUser(email)
                 FirebaseAuth.getInstance().signOut()
-                userEmail = null
                 startActivity(Intent(this, MainActivity::class.java))
                 Toast.makeText(this, "Account deleted successfully", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("No", null)
             .show()
     }
+    private fun openNotificationSettings() {
+        /*
+            Code Attribution
+            Title: Open the notification channel settings
+            Author: Android Developer
+            Post Link: https://developer.android.com/develop/ui/views/notifications/channels#kotlin
+            Usage: Learned to open notifications page
+        */
+        val intent = Intent(android.provider.Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
+            putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, packageName)
+            putExtra(android.provider.Settings.EXTRA_CHANNEL_ID,"goal_reminder_channel")
+        }
+        startActivity(intent)
+    }
+
     fun DeleteUser(email : String?) {
         /*
             Code Attribution
@@ -174,7 +196,7 @@ class Settings : AppCompatActivity() {
 
         // gets url and adds parameters
         val url = "https://opscmeditationapi.azurewebsites.net/api/users/DeleteUser".toHttpUrlOrNull()!!.newBuilder()
-            .addQueryParameter("email", userEmail)
+            .addQueryParameter("email", email)
             .build()
 
         val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), "")
@@ -217,17 +239,17 @@ class Settings : AppCompatActivity() {
 
         val lbltest = findViewById<TextView>(R.id.lbltest)
         lbltest.text = R.string.LanguageTest.toString()
-       // val context = LocalContext.current
-      //  val localeOptions = mapOf(
-      //      R.string.en to "en",
-      //      R.string.af to "af"
-      //  ).mapKeys { stringResource(it.key) }
+        // val context = LocalContext.current
+        //  val localeOptions = mapOf(
+        //      R.string.en to "en",
+        //      R.string.af to "af"
+        //  ).mapKeys { stringResource(it.key) }
 
 
-      //  AppCompatActivity.setApplicationLocales(
-     //       LocaleListCompat.forLanguageTags(
-      //         localeOptions[R.string.pick_color]
-      ///      )
-     //   )
+        //  AppCompatActivity.setApplicationLocales(
+        //       LocaleListCompat.forLanguageTags(
+        //         localeOptions[R.string.pick_color]
+        ///      )
+        //   )
     }
 }
