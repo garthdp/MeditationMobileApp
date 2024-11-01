@@ -98,12 +98,14 @@ class Dairy : AppCompatActivity() {
                         progressBar.visibility = View.INVISIBLE
                     }
 
-                    val db = DBHelper(this, null)
+                    if(dairyResponse.size != 0){
+                        val db = DBHelper(this, null)
 
-                    db.deleteDiaries()
+                        db.deleteDiaries()
 
-                    for(diary in dairyResponse){
-                        db.addDiary(diary.Title, diary.Content, diary.Date, diary.emoji.toString())
+                        for(diary in dairyResponse){
+                            db.addDiary(diary.Title, diary.Content, diary.Date, diary.emoji.toString())
+                        }
                     }
                 }
             } catch (e: Exception) {
@@ -113,37 +115,40 @@ class Dairy : AppCompatActivity() {
                     val dairyResponse = ArrayList<DiaryEntry>()
                     val db = DBHelper(this, null)
                     val cursor = db.getEntries()
-                    cursor?.moveToFirst()
-                    var diaryTitle = cursor?.getString(cursor.getColumnIndex(DBHelper.TITLE))
-                    var diaryContent = cursor?.getString(cursor.getColumnIndex(DBHelper.CONTENT))
-                    var diaryDate = cursor?.getString(cursor.getColumnIndex(DBHelper.DATE))
-                    var diaryEmoji = cursor?.getString(cursor.getColumnIndex(DBHelper.EMOJI))
-                    var diaryId = cursor?.getString(cursor.getColumnIndex(DBHelper.ID_COL))
-                    var diaryEntry = DiaryEntry(diaryEmoji!!.toInt(), diaryId!!, diaryContent!!, diaryTitle!!, diaryDate!!)
+                    if (cursor?.count != 0){
+                        cursor?.moveToFirst()
+                        var diaryTitle = cursor?.getString(cursor.getColumnIndex(DBHelper.TITLE))
+                        var diaryContent = cursor?.getString(cursor.getColumnIndex(DBHelper.CONTENT))
+                        var diaryDate = cursor?.getString(cursor.getColumnIndex(DBHelper.DATE))
+                        var diaryEmoji = cursor?.getString(cursor.getColumnIndex(DBHelper.EMOJI))
+                        var diaryId = cursor?.getString(cursor.getColumnIndex(DBHelper.ID_COL))
+                        var diaryEntry = DiaryEntry(diaryEmoji!!.toInt(), diaryId!!, diaryContent!!, diaryTitle!!, diaryDate!!)
 
-                    Log.d("firest", diaryTitle)
-                    dairyResponse.add(diaryEntry)
-
-                    while(cursor?.moveToNext() == true){
-                        diaryTitle = cursor.getString(cursor.getColumnIndex(DBHelper.TITLE))
-                        diaryContent = cursor.getString(cursor.getColumnIndex(DBHelper.CONTENT))
-                        diaryDate = cursor.getString(cursor.getColumnIndex(DBHelper.DATE))
-                        diaryEmoji = cursor.getString(cursor.getColumnIndex(DBHelper.EMOJI))
-                        diaryId = cursor.getString(cursor.getColumnIndex(DBHelper.ID_COL))
-                        diaryEntry = DiaryEntry(diaryEmoji!!.toInt(), diaryId!!, diaryContent!!, diaryTitle!!, diaryDate!!)
-                        Log.d("diary", diaryEntry.toString())
+                        Log.d("firest", diaryTitle)
                         dairyResponse.add(diaryEntry)
-                    }
-                    cursor?.close()
-                    val arrDairy = dairyResponse.toTypedArray()
-                    // Initialize and set the adapter
-                    if (arrDairy != null){
-                        for(diary in arrDairy){
-                            Log.d("diary", diary.Title)
+
+                        while(cursor?.moveToNext() == true){
+                            diaryTitle = cursor.getString(cursor.getColumnIndex(DBHelper.TITLE))
+                            diaryContent = cursor.getString(cursor.getColumnIndex(DBHelper.CONTENT))
+                            diaryDate = cursor.getString(cursor.getColumnIndex(DBHelper.DATE))
+                            diaryEmoji = cursor.getString(cursor.getColumnIndex(DBHelper.EMOJI))
+                            diaryId = cursor.getString(cursor.getColumnIndex(DBHelper.ID_COL))
+                            diaryEntry = DiaryEntry(diaryEmoji!!.toInt(), diaryId!!, diaryContent!!, diaryTitle!!, diaryDate!!)
+                            Log.d("diary", diaryEntry.toString())
+                            dairyResponse.add(diaryEntry)
                         }
-                        adapter = DiaryEntryAdapter(arrDairy)
-                        recyclerView.adapter = adapter
-                        progressBar.visibility = View.INVISIBLE
+                        cursor?.close()
+                        val arrDairy = dairyResponse.toTypedArray()
+                        // Initialize and set the adapter
+                        if (arrDairy != null){
+                            for(diary in arrDairy){
+                                Log.d("diary", diary.Title)
+                            }
+                            adapter = DiaryEntryAdapter(arrDairy)
+                            recyclerView.adapter = adapter
+                            progressBar.visibility = View.INVISIBLE
+                        }
+
                     }
                 }
             }

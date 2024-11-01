@@ -3,6 +3,7 @@ package com.example.opsc_poe_part_2
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -11,6 +12,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -141,11 +143,11 @@ class Profile : AppCompatActivity() {
         val progressBar : ProgressBar = findViewById(R.id.progressBar)
         progressBar.visibility = View.VISIBLE
         auth = FirebaseAuth.getInstance()
+        val picture = auth.currentUser?.photoUrl.toString()
         val email = auth.currentUser?.email
-        val txtUsername = findViewById<TextView>(R.id.lblUsername)
+        val profilePic = findViewById<ImageView>(R.id.imageView13)
         val txtName = findViewById<TextView>(R.id.lblName)
         val txtEmail = findViewById<TextView>(R.id.lblEmail)
-        val txtSurname = findViewById<TextView>(R.id.lblSurname)
         val txtLevel = findViewById<TextView>(R.id.lblLevel)
         val txtExperience = findViewById<TextView>(R.id.lblExperience)
         val executor = Executors.newSingleThreadExecutor()
@@ -153,6 +155,8 @@ class Profile : AppCompatActivity() {
         executor.execute {
             try {
                 val url = URL("https://opscmeditationapi.azurewebsites.net/api/users?email=${email}")
+                val `in` = java.net.URL(picture).openStream()
+                val decodePicture = BitmapFactory.decodeStream(`in`)
                 val json = url.readText()
                 val res = Gson().fromJson(json, User::class.java)
 
@@ -160,15 +164,14 @@ class Profile : AppCompatActivity() {
 
                 db.deleteDiaries()
 
-                db.addUser(res.Name, res.Surname, res.Level.toString(), res.Experience.toString(), res.Email, res.Username)
+                db.addUser(res.Name, res.Level.toString(), res.Experience.toString(), res.Email)
                 Log.d("Res", json)
                 Handler(Looper.getMainLooper()).post {
-                    txtUsername.text = res.Username
                     txtName.text = res.Name
                     txtEmail.text = res.Email
-                    txtSurname.text = res.Surname
                     txtLevel.text = res.Level.toString()
                     txtExperience.text = res.Experience.toString()
+                    profilePic.setImageBitmap(decodePicture)
 
                     progressBar.visibility = View.INVISIBLE
                 }
@@ -180,17 +183,13 @@ class Profile : AppCompatActivity() {
                     val cursor = db.getUser()
                     cursor?.moveToFirst()
                     val name = cursor?.getString(cursor.getColumnIndex(DBHelper.NAME))
-                    val surname = cursor?.getString(cursor.getColumnIndex(DBHelper.SURNAME))
-                    val email = cursor?.getString(cursor.getColumnIndex(DBHelper.EMAIL))
+                    val dbEmail = cursor?.getString(cursor.getColumnIndex(DBHelper.EMAIL))
                     val level = cursor?.getString(cursor.getColumnIndex(DBHelper.LEVEL))
                     val experience = cursor?.getString(cursor.getColumnIndex(DBHelper.EXPERIENCE))
-                    val username = cursor?.getString(cursor.getColumnIndex(DBHelper.USERNAME))
-                    val user = User(experience!!.toInt(), level!!.toInt(), username!!, email!!, name!!, surname!!)
+                    val user = User(experience!!.toInt(), level!!.toInt(), dbEmail!!, name!!)
 
-                    txtUsername.text = user.Username
                     txtName.text = user.Name
                     txtEmail.text = user.Email
-                    txtSurname.text = user.Surname
                     txtLevel.text = user.Level.toString()
                     txtExperience.text = user.Experience.toString()
                     cursor?.close()

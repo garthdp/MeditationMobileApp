@@ -59,6 +59,7 @@ dependencies {
     implementation ("com.google.android.gms:play-services-mlkit-text-recognition:18.0.0")
     implementation(libs.play.services.mlkit.text.recognition.common)
     implementation(libs.firebase.messaging.ktx)
+    implementation(libs.play.services.auth)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -80,4 +81,8 @@ dependencies {
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
     implementation("androidx.biometric:biometric:1.1.0")
     implementation("androidx.work:work-runtime-ktx:2.7.1")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0")
+    implementation ("androidx.lifecycle:lifecycle-runtime-compose:2.6.0")
+    implementation ("androidx.navigation:navigation-compose:2.5.3")
+    implementation ("io.coil-kt:coil-compose:2.2.2")
 }

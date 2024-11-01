@@ -22,8 +22,6 @@ class DBHelper(context: Context, factory : SQLiteDatabase.CursorFactory?) :
         val query2 = ("CREATE TABLE " + TABLE_NAME2 + " ("
                 + ID_COL + " INTEGER PRIMARY KEY, " +
                 NAME + " TEXT," +
-                SURNAME + " TEXT," +
-                USERNAME + " TEXT," +
                 EMAIL + " TEXT," +
                 LEVEL + " TEXT," +
                 EXPERIENCE + " TEXT" + ")")
@@ -77,7 +75,7 @@ class DBHelper(context: Context, factory : SQLiteDatabase.CursorFactory?) :
     }
 
     //this method is for adding data in our database
-    fun addUser(name: String, surname : String, level: String, experience: String, email: String, username: String){
+    fun addUser(name: String, level: String, experience: String, email: String){
 
         //below we are creating
         // a content values variable
@@ -86,8 +84,6 @@ class DBHelper(context: Context, factory : SQLiteDatabase.CursorFactory?) :
         //we are inserting our values
         // in the form of key-value pair
         values.put(NAME, name)
-        values.put(SURNAME, surname)
-        values.put(USERNAME, username)
         values.put(EMAIL, email)
         values.put(LEVEL, level)
         values.put(EXPERIENCE, experience)
@@ -136,7 +132,7 @@ class DBHelper(context: Context, factory : SQLiteDatabase.CursorFactory?) :
         private val DATABASE_NAME = "SQL_LIGHT"
 
         //below is the variable for database version
-        private val DATABASE_VERSION = 5
+        private val DATABASE_VERSION = 6
 
         // below is the variable for table name
         val TABLE_NAME1 = "diary_table"
@@ -157,13 +153,8 @@ class DBHelper(context: Context, factory : SQLiteDatabase.CursorFactory?) :
         val EMOJI = "emoji"
 
         //below is the variable for id column
-        val USERNAME = "username"
-
-        //below is the variable for id column
         val NAME = "name"
 
-        // below is the variable for name column
-        val SURNAME = "surname"
 
         // below is the variable for age column
         val EMAIL = "email"
