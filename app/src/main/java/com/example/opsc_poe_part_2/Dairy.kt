@@ -13,21 +13,31 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import java.net.URL
 import java.util.concurrent.Executors
 
+var currentDiary: DiaryEntry? = null
+
 class Dairy : AppCompatActivity() {
     private lateinit var addEntryButton: Button
     private lateinit var adapter: DiaryEntryAdapter
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dairy)
         addEntryButton = findViewById(R.id.button5)
         val progressBar : ProgressBar = findViewById(R.id.progressBar)
+        auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+        val email = currentUser?.email
+
         progressBar.visibility = View.VISIBLE
-        getDiaryEntries()
+        if (email != null) {
+            getDiaryEntries(email)
+        }
 
         // Initialize BottomNavigationView and set up item selection listener
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
@@ -60,11 +70,13 @@ class Dairy : AppCompatActivity() {
             val intent = Intent(this, AddDiaryEntry::class.java)
             startActivity(intent)
         }
+
+
     }
 
     // gets diary entries
     @SuppressLint("Range")
-    private fun getDiaryEntries(){
+    private fun getDiaryEntries(email: String){
         val progressBar : ProgressBar = findViewById(R.id.progressBar)
         val executor = Executors.newSingleThreadExecutor()
         val recyclerView : RecyclerView = findViewById(R.id.recycler_view_entries)
@@ -72,7 +84,7 @@ class Dairy : AppCompatActivity() {
         executor.execute {
             try {
                 //url for request
-                val url = URL("https://opscmeditationapi.azurewebsites.net/api/Journal/GetJournalEntries?email=${userEmail}")
+                val url = URL("https://opscmeditationapi.azurewebsites.net/api/Journal/GetJournalEntries?email=${email}")
                 val json = url.readText()
                 // if null on response log error
                 if(json.equals("null")){
@@ -89,54 +101,73 @@ class Dairy : AppCompatActivity() {
                         adapter = DiaryEntryAdapter(dairyResponse)
                         recyclerView.adapter = adapter
                         progressBar.visibility = View.INVISIBLE
+
+                        adapter.setOnClickListener(object : DiaryEntryAdapter.OnClickListener{
+                            override fun onClick(position: Int, model: DiaryEntry) {
+                                currentDiary = model
+                                val intent = Intent(this@Dairy, ViewDiaryEntry::class.java)
+                                startActivity(intent)
+                            }
+                        })
                     }
 
                     val db = DBHelper(this, null)
 
-                    db.deleteTable("diary_table")
+                    db.deleteDiaries()
 
                     for(diary in dairyResponse){
-                        db.addDiary(diary.Title, diary.Content, diary.Date, diary.emoji.toString())
+                        db.addDiary(diary.Title, diary.Content, diary.Date, diary.Color)
                     }
                 }
             } catch (e: Exception) {
                 progressBar.visibility = View.INVISIBLE
-                Log.d("Error", e.message.toString())
                 Handler(Looper.getMainLooper()).post{
                     val dairyResponse = ArrayList<DiaryEntry>()
                     val db = DBHelper(this, null)
                     val cursor = db.getEntries()
-                    cursor?.moveToFirst()
-                    var diaryTitle = cursor?.getString(cursor.getColumnIndex(DBHelper.TITLE))
-                    var diaryContent = cursor?.getString(cursor.getColumnIndex(DBHelper.CONTENT))
-                    var diaryDate = cursor?.getString(cursor.getColumnIndex(DBHelper.DATE))
-                    var diaryEmoji = cursor?.getString(cursor.getColumnIndex(DBHelper.EMOJI))
-                    var diaryId = cursor?.getString(cursor.getColumnIndex(DBHelper.ID_COL))
-                    var diaryEntry = DiaryEntry(diaryEmoji!!.toInt(), diaryId!!, diaryContent!!, diaryTitle!!, diaryDate!!)
+                    if (cursor!!.count > 0){
+                        cursor.moveToFirst()
+                        var diaryTitle = cursor.getString(cursor.getColumnIndex(DBHelper.TITLE))
+                        var diaryContent = cursor.getString(cursor.getColumnIndex(DBHelper.CONTENT))
+                        var diaryDate = cursor.getString(cursor.getColumnIndex(DBHelper.DATE))
+                        var diaryId = cursor.getString(cursor.getColumnIndex(DBHelper.ID_COL))
+                        var color = cursor.getString(cursor.getColumnIndex(DBHelper.COLOR))
+                        var diaryEntry = DiaryEntry(diaryId!!, diaryContent!!, diaryTitle!!, color!!, diaryDate!!)
 
-                    Log.d("firest", diaryTitle)
-                    dairyResponse.add(diaryEntry)
-
-                    while(cursor?.moveToNext() == true){
-                        diaryTitle = cursor.getString(cursor.getColumnIndex(DBHelper.TITLE))
-                        diaryContent = cursor.getString(cursor.getColumnIndex(DBHelper.CONTENT))
-                        diaryDate = cursor.getString(cursor.getColumnIndex(DBHelper.DATE))
-                        diaryEmoji = cursor.getString(cursor.getColumnIndex(DBHelper.EMOJI))
-                        diaryId = cursor.getString(cursor.getColumnIndex(DBHelper.ID_COL))
-                        diaryEntry = DiaryEntry(diaryEmoji!!.toInt(), diaryId!!, diaryContent!!, diaryTitle!!, diaryDate!!)
-                        Log.d("diary", diaryEntry.toString())
+                        Log.d("firest", diaryTitle)
                         dairyResponse.add(diaryEntry)
-                    }
-                    cursor?.close()
-                    val arrDairy = dairyResponse.toTypedArray()
-                    // Initialize and set the adapter
-                    if (arrDairy != null){
+                        Log.d("Error DB", diaryEntry.toString())
+
+                        while(cursor.moveToNext() == true){
+                            diaryTitle = cursor.getString(cursor.getColumnIndex(DBHelper.TITLE))
+                            diaryContent = cursor.getString(cursor.getColumnIndex(DBHelper.CONTENT))
+                            diaryDate = cursor.getString(cursor.getColumnIndex(DBHelper.DATE))
+                            diaryId = cursor.getString(cursor.getColumnIndex(DBHelper.ID_COL))
+                            color = cursor.getString(cursor.getColumnIndex(DBHelper.COLOR))
+                            diaryEntry = DiaryEntry(diaryId!!, diaryContent!!, diaryTitle!!, color!!, diaryDate!!)
+                            Log.d("diary", diaryEntry.toString())
+                            dairyResponse.add(diaryEntry)
+                        }
+                        cursor.close()
+                        val arrDairy = dairyResponse.toTypedArray()
+                        // Initialize and set the adapter
                         for(diary in arrDairy){
                             Log.d("diary", diary.Title)
                         }
-                        adapter = DiaryEntryAdapter(arrDairy)
-                        recyclerView.adapter = adapter
-                        progressBar.visibility = View.INVISIBLE
+                        Handler(Looper.getMainLooper()).post{
+                            // Initialize and set the adapter
+                            adapter = DiaryEntryAdapter(arrDairy)
+                            recyclerView.adapter = adapter
+                            progressBar.visibility = View.INVISIBLE
+
+                            adapter.setOnClickListener(object : DiaryEntryAdapter.OnClickListener{
+                                override fun onClick(position: Int, model: DiaryEntry) {
+                                    currentDiary = model
+                                    val intent = Intent(this@Dairy, ViewDiaryEntry::class.java)
+                                    startActivity(intent)
+                                }
+                            })
+                        }
                     }
                 }
             }

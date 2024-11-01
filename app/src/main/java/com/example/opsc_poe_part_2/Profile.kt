@@ -1,7 +1,9 @@
 package com.example.opsc_poe_part_2
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -10,16 +12,13 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.jjoe64.graphview.DefaultLabelFormatter
 import com.jjoe64.graphview.GraphView
@@ -33,6 +32,7 @@ class Profile : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var txtSelectedGoals: TextView
     private lateinit var graph2: GraphView
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,32 +138,62 @@ class Profile : AppCompatActivity() {
         startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE)
     }
 
+    @SuppressLint("Range")
     fun getUser(){
         val progressBar : ProgressBar = findViewById(R.id.progressBar)
         progressBar.visibility = View.VISIBLE
-        val txtUsername = findViewById<TextView>(R.id.lblUsername)
+        auth = FirebaseAuth.getInstance()
+        val picture = auth.currentUser?.photoUrl.toString()
+        val email = auth.currentUser?.email
+        val profilePic = findViewById<ImageView>(R.id.imageView13)
         val txtName = findViewById<TextView>(R.id.lblName)
         val txtEmail = findViewById<TextView>(R.id.lblEmail)
-        val txtSurname = findViewById<TextView>(R.id.lblSurname)
         val txtLevel = findViewById<TextView>(R.id.lblLevel)
         val txtExperience = findViewById<TextView>(R.id.lblExperience)
         val executor = Executors.newSingleThreadExecutor()
 
         executor.execute {
-            val url =
-                URL("https://opscmeditationapi.azurewebsites.net/api/users?email=${userEmail}")
-            val json = url.readText()
-            val res = Gson().fromJson(json, User::class.java)
-            Log.d("Res", json)
-            Handler(Looper.getMainLooper()).post {
-                txtUsername.text = res.Username
-                txtName.text = res.Name
-                txtEmail.text = res.Email
-                txtSurname.text = res.Surname
-                txtLevel.text = res.Level.toString()
-                txtExperience.text = res.Experience.toString()
+            try {
+                val url = URL("https://opscmeditationapi.azurewebsites.net/api/users?email=${email}")
+                val `in` = java.net.URL(picture).openStream()
+                val decodePicture = BitmapFactory.decodeStream(`in`)
+                val json = url.readText()
+                val res = Gson().fromJson(json, User::class.java)
 
+                val db = DBHelper(this, null)
+
+                db.deleteDiaries()
+
+                db.addUser(res.Name, res.Level.toString(), res.Experience.toString(), res.Email)
+                Log.d("Res", json)
+                Handler(Looper.getMainLooper()).post {
+                    txtName.text = res.Name
+                    txtEmail.text = res.Email
+                    txtLevel.text = res.Level.toString()
+                    txtExperience.text = res.Experience.toString()
+                    profilePic.setImageBitmap(decodePicture)
+
+                    progressBar.visibility = View.INVISIBLE
+                }
+            }
+            catch (e: Exception){
                 progressBar.visibility = View.INVISIBLE
+                Handler(Looper.getMainLooper()).post{
+                    val db = DBHelper(this, null)
+                    val cursor = db.getUser()
+                    cursor?.moveToFirst()
+                    val name = cursor?.getString(cursor.getColumnIndex(DBHelper.NAME))
+                    val dbEmail = cursor?.getString(cursor.getColumnIndex(DBHelper.EMAIL))
+                    val level = cursor?.getString(cursor.getColumnIndex(DBHelper.LEVEL))
+                    val experience = cursor?.getString(cursor.getColumnIndex(DBHelper.EXPERIENCE))
+                    val user = User(experience!!.toInt(), level!!.toInt(), dbEmail!!, name!!)
+
+                    txtName.text = user.Name
+                    txtEmail.text = user.Email
+                    txtLevel.text = user.Level.toString()
+                    txtExperience.text = user.Experience.toString()
+                    cursor?.close()
+                }
             }
         }
     }

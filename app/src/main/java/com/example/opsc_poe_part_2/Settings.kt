@@ -16,7 +16,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.core.os.LocaleListCompat
@@ -39,8 +38,6 @@ import java.util.concurrent.Executors
 
 class Settings : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
-
-
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -55,8 +52,6 @@ class Settings : AppCompatActivity() {
         val btnDelete = findViewById<Button>(R.id.btnDelete)
         val btnprofile = findViewById<Button>(R.id.btnprofile)
         val btnPrivacyPolicy = findViewById<Button>(R.id.btnPrivacyPolicy)
-
-//        stringsets()
 
        // LanguageTst()
         //language test that breaks
@@ -120,15 +115,6 @@ class Settings : AppCompatActivity() {
             handleAccountDelete()
         }
     }
-
-//    @Composable
-//    private fun stringsets() {
-//        val lblSettings = findViewById<TextView>(R.id.lblSettings)
-//        lblSettings.text = stringResource(id = R.string.Setting)  //stringResource(id = R.string.Setting)
-//
-//    }
-
-
     private fun showPrivacyPolicyDialog() {
         val privacyPolicyText = "Here at Oceans Depth your privacy is very important to us.\n" +
                 "\n" +

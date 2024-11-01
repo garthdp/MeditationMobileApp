@@ -18,6 +18,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.work.BackoffPolicy
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
@@ -28,8 +35,10 @@ import okhttp3.RequestBody
 import okhttp3.Response
 import java.io.IOException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.Calendar
 import java.util.Date
+import java.util.concurrent.TimeUnit
 
 class AddDiaryEntry : AppCompatActivity() {
 
@@ -58,9 +67,9 @@ class AddDiaryEntry : AppCompatActivity() {
         setContentView(R.layout.activity_add_diary_entry)
 
         val constraintLayout = findViewById<ConstraintLayout>(R.id.constraintLayout)
-        val emojiButton = findViewById<ImageButton>(R.id.emojiButton)
         val changeColorButton = findViewById<Button>(R.id.changeColorButton)
         val cameraButton = findViewById<ImageButton>(R.id.cameraButton)
+        var color = ""
         // val imageView = findViewById<ImageView>(R.id.imgPreview)
 
         cameraButton.setOnClickListener {
@@ -68,26 +77,10 @@ class AddDiaryEntry : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-        // Initialize the dateTextView
-        dateTextView = findViewById(R.id.dateTextView)
-
         // Back Button functionality
         val backButton = findViewById<ImageButton>(R.id.backButton)
         backButton.setOnClickListener {
             finish()
-        }
-
-        // Calendar button
-        val calendarButton = findViewById<ImageButton>(R.id.calendarButton)
-        calendarButton.setOnClickListener {
-            showDatePickerDialog()
-        }
-
-        // Emoji cycling logic
-        emojiButton.setOnClickListener {
-            emojiIndex = (emojiIndex + 1) % emojiImages.size
-            emojiButton.setImageResource(emojiImages[emojiIndex])
         }
 
         val saveButton = findViewById<Button>(R.id.saveButton)
@@ -107,7 +100,10 @@ class AddDiaryEntry : AppCompatActivity() {
             setResult(RESULT_OK)
 
             levelUp()
-            postRequest(content, title, emojiIndex)
+            if(color == ""){
+                color = "#44CBC9"
+            }
+            postRequest(content, title, color)
 
             val intent = Intent(this, DashboardActivity::class.java)
             startActivity(intent)
@@ -117,10 +113,9 @@ class AddDiaryEntry : AppCompatActivity() {
         changeColorButton.setOnClickListener {
             colorIndex = (colorIndex + 1) % backgroundColors.size
             val selectedColor = Color.parseColor(backgroundColors[colorIndex])
+            color = backgroundColors[colorIndex]
             constraintLayout.setBackgroundColor(selectedColor)
         }
-
-
     }
 
     private fun openCamera() {
@@ -182,52 +177,44 @@ class AddDiaryEntry : AppCompatActivity() {
             Post Link: https://stackoverflow.com/questions/56893945/how-to-use-okhttp-to-make-a-post-request-in-kotlin
             Usage: learned how to make patch api requests
         */
-        val client = OkHttpClient()
-        // gets url and adds parameters
-        val url = "https://opscmeditationapi.azurewebsites.net/api/users/updateLevel".toHttpUrlOrNull()!!.newBuilder()
-            .addQueryParameter("email", userEmail)
-            .addQueryParameter("experience", "50")
-            .build()
-        val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), "")
-        // builds request
-        val request = Request.Builder().url(url).patch(requestBody).build()
-        //makes call
-        client.newCall(request).enqueue(object : Callback{
-            override fun onFailure(call: Call, e: IOException) {
-                Log.d("Patch Response", "Failure")
-            }
+        val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
 
-            override fun onResponse(call: Call, response: Response) {
-                Log.d("Patch Response", "Success")
-            }
-        } )
+        val progressData = workDataOf(LevelUpWorker.EXPERIENCE to 50.toString())
+
+        Log.d("ProgressData", progressData.toString())
+        val request: OneTimeWorkRequest =
+            OneTimeWorkRequestBuilder<LevelUpWorker>()
+                .setConstraints(constraints)
+                .setInputData(progressData)
+                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 20, TimeUnit.SECONDS)
+                .build()
+        WorkManager.getInstance()
+            .enqueue(request)
     }
 
     // adds diary
-    fun postRequest(content: String, title: String, emoji: Int) {
-        val client = OkHttpClient()
-        val sdf = SimpleDateFormat("dd/MM/yyyy")
-        val currentDate = sdf.format(Date())
-        // gets url and adds parameters
-        val url = "https://opscmeditationapi.azurewebsites.net/api/Journal".toHttpUrlOrNull()!!.newBuilder()
-            .addQueryParameter("email", userEmail)
-            .addQueryParameter("date", currentDate)
-            .addQueryParameter("content", content)
-            .addQueryParameter("emoji", emoji.toString())
-            .addQueryParameter("title", title)
-            .build()
-        val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), "")
-        // builds request
-        val request = Request.Builder().url(url).post(requestBody).build()
-        // does request
-        client.newCall(request).enqueue(object : Callback{
-            override fun onFailure(call: Call, e: IOException) {
-                Log.d("Patch Response", "Failure")
-            }
+    fun postRequest(content: String, title: String, color: String) {
+        /*
+            Code Attribution
+            Title: Handling Offline Network Request — WorkManager to the rescue
+            Author: Pulkit Aggarwal
+            Post Link: https://medium.com/coding-blocks/handling-offline-network-request-workmanager-to-the-rescue-613887cd3034
+            Usage: learned how to make api requests offline
+        */
+        val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
 
-            override fun onResponse(call: Call, response: Response) {
-                Log.d("Patch Response", "Success")
-            }
-        } )
+        val progressData = workDataOf(AddDiaryEntryWorker.CONTENT to content, AddDiaryEntryWorker.TITLE to title, AddDiaryEntryWorker.COLOR to color)
+
+        Log.d("ProgressData", progressData.toString())
+        val request: OneTimeWorkRequest =
+            OneTimeWorkRequestBuilder<AddDiaryEntryWorker>()
+                .setConstraints(constraints)
+                .setInputData(progressData)
+                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 20, TimeUnit.SECONDS)
+                .build()
+        val db = DBHelper(this, null)
+        db.addDiary(title, content, LocalDate.now().toString(), color)
+        WorkManager.getInstance()
+            .enqueue(request)
     }
 }

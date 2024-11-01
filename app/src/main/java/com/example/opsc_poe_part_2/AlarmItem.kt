@@ -4,5 +4,6 @@ import java.time.LocalDateTime
 
 data class AlarmItem (
     val goalString : String,
-    val time : LocalDateTime
+    val time : LocalDateTime,
+    val id: Int
 )
