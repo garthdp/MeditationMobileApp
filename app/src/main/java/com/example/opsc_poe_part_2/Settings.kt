@@ -3,6 +3,7 @@ package com.example.opsc_poe_part_2
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -55,9 +56,14 @@ class Settings : AppCompatActivity() {
         val btnDelete = findViewById<Button>(R.id.btnDelete)
         val btnprofile = findViewById<Button>(R.id.btnprofile)
         val btnPrivacyPolicy = findViewById<Button>(R.id.btnPrivacyPolicy)
+        val notificationButton = findViewById<Button>(R.id.notificationButton)
 
        // LanguageTst()
         //language test that breaks
+
+        notificationButton.setOnClickListener {
+            openNotificationSettings()
+        }
 
         btnBack.setOnClickListener {
             // Create an intent to start RegisterActivity
@@ -161,6 +167,21 @@ class Settings : AppCompatActivity() {
             .setNegativeButton("No", null)
             .show()
     }
+    private fun openNotificationSettings() {
+        /*
+            Code Attribution
+            Title: Open the notification channel settings
+            Author: Android Developer
+            Post Link: https://developer.android.com/develop/ui/views/notifications/channels#kotlin
+            Usage: Learned to open notifications page
+        */
+        val intent = Intent(android.provider.Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
+            putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, packageName)
+            putExtra(android.provider.Settings.EXTRA_CHANNEL_ID,"goal_reminder_channel")
+        }
+        startActivity(intent)
+    }
+
     fun DeleteUser(email : String?) {
         /*
             Code Attribution
