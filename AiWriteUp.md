@@ -38,7 +38,7 @@ It then told me to call this function in the login button
 
 ![Screenshot 2024-11-01 134111](https://github.com/user-attachments/assets/b7580403-22a9-4fd2-b3c6-5f09b149a266)
 
-It also told me to initial GoogleAuthUiClient in the main activity code
+It also told me to initialize GoogleAuthUiClient in the main activity code
 
 ![Screenshot 2024-11-01 134134](https://github.com/user-attachments/assets/08a8e42b-0419-4827-8cc9-f3b608aca02d)
 
