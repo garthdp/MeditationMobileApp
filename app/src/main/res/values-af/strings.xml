@@ -3,4 +3,5 @@
     <string name="app_name">OPSC_POE_PART_2</string>
     <string name="pick_color">Kies die kleur</string>
     <string name="LanguageTest">Hallo maat</string>
+    <string name="Setting">Settings</string>
 </resources>

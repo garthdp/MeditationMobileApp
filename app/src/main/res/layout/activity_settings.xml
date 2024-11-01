@@ -17,7 +17,7 @@
         android:layout_marginBottom="500dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Name"
+        android:text="@string/Name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="@android:color/transparent"
-        android:text="Theme swap"
+        android:text="@string/Themeswap"
         app:icon="@drawable/ic_dark"
         app:iconSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,13 +72,13 @@
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/lblSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="118dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="117dp"
-        android:text="Settings"
+        android:text= "@string/Setting"
         android:textColor="#FBFBFB"
         android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -93,12 +93,12 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="281dp"
-        android:text="Notifications"
+        android:text="@string/Notifications"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintTop_toBottomOf="@+id/lblSettings" />
 
     <com.google.android.material.chip.Chip
         android:id="@+id/chip"
@@ -117,7 +117,7 @@
         android:layout_height="37dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="@android:color/holo_red_light"
-        android:text="Privacy Policy"
+        android:text="@string/PrivacyPolicy"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -131,7 +131,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="306dp"
-        android:text="Language"
+        android:text="@string/Language"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -146,7 +146,7 @@
         android:layout_marginTop="40dp"
         app:icon="@drawable/ic_return"
         app:iconSize="40dp"
-        app:layout_constraintEnd_toStartOf="@+id/textView7"
+        app:layout_constraintEnd_toStartOf="@+id/lblSettings"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -156,7 +156,7 @@
         android:layout_height="47dp"
         android:layout_marginBottom="30dp"
         android:backgroundTint="#002336"
-        android:text="Logout"
+        android:text="@string/Logout"
         app:layout_constraintBottom_toTopOf="@+id/btnDelete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -167,7 +167,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:backgroundTint="@android:color/holo_red_light"
-        android:text="Delete Account"
+        android:text="@string/DeleteAccount"
         app:layout_constraintBottom_toTopOf="@+id/semi_circle6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -181,20 +181,6 @@
         android:layout_marginEnd="26dp"
         app:icon="@drawable/ic_profile"
         app:iconSize="60dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="294dp"
-        android:layout_marginTop="264dp"
-        android:layout_marginEnd="93dp"
-        android:layout_marginBottom="448dp"
-        android:text="test"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
