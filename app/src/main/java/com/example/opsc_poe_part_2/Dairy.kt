@@ -18,6 +18,8 @@ import com.google.gson.Gson
 import java.net.URL
 import java.util.concurrent.Executors
 
+var currentDiary: DiaryEntry? = null
+
 class Dairy : AppCompatActivity() {
     private lateinit var addEntryButton: Button
     private lateinit var adapter: DiaryEntryAdapter
@@ -31,6 +33,7 @@ class Dairy : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
         val email = currentUser?.email
+
         progressBar.visibility = View.VISIBLE
         if (email != null) {
             getDiaryEntries(email)
@@ -67,6 +70,8 @@ class Dairy : AppCompatActivity() {
             val intent = Intent(this, AddDiaryEntry::class.java)
             startActivity(intent)
         }
+
+
     }
 
     // gets diary entries
@@ -96,6 +101,14 @@ class Dairy : AppCompatActivity() {
                         adapter = DiaryEntryAdapter(dairyResponse)
                         recyclerView.adapter = adapter
                         progressBar.visibility = View.INVISIBLE
+
+                        adapter.setOnClickListener(object : DiaryEntryAdapter.OnClickListener{
+                            override fun onClick(position: Int, model: DiaryEntry) {
+                                currentDiary = model
+                                val intent = Intent(this@Dairy, ViewDiaryEntry::class.java)
+                                startActivity(intent)
+                            }
+                        })
                     }
 
                     if(dairyResponse.size != 0){
@@ -104,7 +117,7 @@ class Dairy : AppCompatActivity() {
                         db.deleteDiaries()
 
                         for(diary in dairyResponse){
-                            db.addDiary(diary.Title, diary.Content, diary.Date, diary.emoji.toString())
+                            db.addDiary(diary.Title, diary.Content, diary.Date, diary.Color)
                         }
                     }
                 }
@@ -120,9 +133,9 @@ class Dairy : AppCompatActivity() {
                         var diaryTitle = cursor?.getString(cursor.getColumnIndex(DBHelper.TITLE))
                         var diaryContent = cursor?.getString(cursor.getColumnIndex(DBHelper.CONTENT))
                         var diaryDate = cursor?.getString(cursor.getColumnIndex(DBHelper.DATE))
-                        var diaryEmoji = cursor?.getString(cursor.getColumnIndex(DBHelper.EMOJI))
                         var diaryId = cursor?.getString(cursor.getColumnIndex(DBHelper.ID_COL))
-                        var diaryEntry = DiaryEntry(diaryEmoji!!.toInt(), diaryId!!, diaryContent!!, diaryTitle!!, diaryDate!!)
+                        var color = cursor?.getString(cursor.getColumnIndex(DBHelper.COLOR))
+                        var diaryEntry = DiaryEntry(diaryId!!, diaryContent!!, diaryTitle!!, diaryDate!!, color!!)
 
                         Log.d("firest", diaryTitle)
                         dairyResponse.add(diaryEntry)
@@ -131,9 +144,9 @@ class Dairy : AppCompatActivity() {
                             diaryTitle = cursor.getString(cursor.getColumnIndex(DBHelper.TITLE))
                             diaryContent = cursor.getString(cursor.getColumnIndex(DBHelper.CONTENT))
                             diaryDate = cursor.getString(cursor.getColumnIndex(DBHelper.DATE))
-                            diaryEmoji = cursor.getString(cursor.getColumnIndex(DBHelper.EMOJI))
                             diaryId = cursor.getString(cursor.getColumnIndex(DBHelper.ID_COL))
-                            diaryEntry = DiaryEntry(diaryEmoji!!.toInt(), diaryId!!, diaryContent!!, diaryTitle!!, diaryDate!!)
+                            color = cursor?.getString(cursor.getColumnIndex(DBHelper.COLOR))
+                            diaryEntry = DiaryEntry(diaryId!!, diaryContent!!, diaryTitle!!, diaryDate!!, color!!)
                             Log.d("diary", diaryEntry.toString())
                             dairyResponse.add(diaryEntry)
                         }
@@ -147,8 +160,14 @@ class Dairy : AppCompatActivity() {
                             adapter = DiaryEntryAdapter(arrDairy)
                             recyclerView.adapter = adapter
                             progressBar.visibility = View.INVISIBLE
+                            adapter.setOnClickListener(object : DiaryEntryAdapter.OnClickListener{
+                                override fun onClick(position: Int, model: DiaryEntry) {
+                                    currentDiary = model
+                                    val intent = Intent(this@Dairy, ViewDiaryEntry::class.java)
+                                    startActivity(intent)
+                                }
+                            })
                         }
-
                     }
                 }
             }

@@ -17,8 +17,8 @@ class DBHelper(context: Context, factory : SQLiteDatabase.CursorFactory?) :
                 + ID_COL + " INTEGER PRIMARY KEY, " +
                 TITLE + " TEXT," +
                 CONTENT + " TEXT," +
-                DATE + " TEXT," +
-                EMOJI + " TEXT" + ")")
+                COLOR + " TEXT," +
+                DATE + " TEXT" + ")")
         val query2 = ("CREATE TABLE " + TABLE_NAME2 + " ("
                 + ID_COL + " INTEGER PRIMARY KEY, " +
                 NAME + " TEXT," +
@@ -48,7 +48,7 @@ class DBHelper(context: Context, factory : SQLiteDatabase.CursorFactory?) :
     }
 
     //this method is for adding data in our database
-    fun addDiary(title: String, content : String, date: String, emoji: String){
+    fun addDiary(title: String, content : String, date: String, color: String){
 
         //below we are creating
         // a content values variable
@@ -59,7 +59,7 @@ class DBHelper(context: Context, factory : SQLiteDatabase.CursorFactory?) :
         values.put(TITLE, title)
         values.put(CONTENT, content)
         values.put(DATE, date)
-        values.put(EMOJI, emoji)
+        values.put(COLOR, color)
 
         // here we are creating a
         // writable variable of
@@ -132,7 +132,7 @@ class DBHelper(context: Context, factory : SQLiteDatabase.CursorFactory?) :
         private val DATABASE_NAME = "SQL_LIGHT"
 
         //below is the variable for database version
-        private val DATABASE_VERSION = 6
+        private val DATABASE_VERSION = 7
 
         // below is the variable for table name
         val TABLE_NAME1 = "diary_table"
@@ -150,11 +150,10 @@ class DBHelper(context: Context, factory : SQLiteDatabase.CursorFactory?) :
         val DATE = "date"
 
         // below is the variable for age column
-        val EMOJI = "emoji"
+        val COLOR = "color"
 
         //below is the variable for id column
         val NAME = "name"
-
 
         // below is the variable for age column
         val EMAIL = "email"

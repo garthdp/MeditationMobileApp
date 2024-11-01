@@ -67,9 +67,9 @@ class AddDiaryEntry : AppCompatActivity() {
         setContentView(R.layout.activity_add_diary_entry)
 
         val constraintLayout = findViewById<ConstraintLayout>(R.id.constraintLayout)
-        val emojiButton = findViewById<ImageButton>(R.id.emojiButton)
         val changeColorButton = findViewById<Button>(R.id.changeColorButton)
         val cameraButton = findViewById<ImageButton>(R.id.cameraButton)
+        var color = ""
         // val imageView = findViewById<ImageView>(R.id.imgPreview)
 
         cameraButton.setOnClickListener {
@@ -77,26 +77,10 @@ class AddDiaryEntry : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-        // Initialize the dateTextView
-        dateTextView = findViewById(R.id.dateTextView)
-
         // Back Button functionality
         val backButton = findViewById<ImageButton>(R.id.backButton)
         backButton.setOnClickListener {
             finish()
-        }
-
-        // Calendar button
-        val calendarButton = findViewById<ImageButton>(R.id.calendarButton)
-        calendarButton.setOnClickListener {
-            showDatePickerDialog()
-        }
-
-        // Emoji cycling logic
-        emojiButton.setOnClickListener {
-            emojiIndex = (emojiIndex + 1) % emojiImages.size
-            emojiButton.setImageResource(emojiImages[emojiIndex])
         }
 
         val saveButton = findViewById<Button>(R.id.saveButton)
@@ -116,7 +100,10 @@ class AddDiaryEntry : AppCompatActivity() {
             setResult(RESULT_OK)
 
             levelUp()
-            postRequest(content, title, 1)
+            if(color == ""){
+                color = "#44CBC9"
+            }
+            postRequest(content, title, color)
 
             val intent = Intent(this, DashboardActivity::class.java)
             startActivity(intent)
@@ -126,10 +113,9 @@ class AddDiaryEntry : AppCompatActivity() {
         changeColorButton.setOnClickListener {
             colorIndex = (colorIndex + 1) % backgroundColors.size
             val selectedColor = Color.parseColor(backgroundColors[colorIndex])
+            color = backgroundColors[colorIndex]
             constraintLayout.setBackgroundColor(selectedColor)
         }
-
-
     }
 
     private fun openCamera() {
@@ -207,7 +193,7 @@ class AddDiaryEntry : AppCompatActivity() {
     }
 
     // adds diary
-    fun postRequest(content: String, title: String, emoji: Int) {
+    fun postRequest(content: String, title: String, color: String) {
         /*
             Code Attribution
             Title: Handling Offline Network Request — WorkManager to the rescue
@@ -217,7 +203,7 @@ class AddDiaryEntry : AppCompatActivity() {
         */
         val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
 
-        val progressData = workDataOf(AddDiaryEntryWorker.CONTENT to content, AddDiaryEntryWorker.TITLE to title, AddDiaryEntryWorker.EMOJI to emoji.toString())
+        val progressData = workDataOf(AddDiaryEntryWorker.CONTENT to content, AddDiaryEntryWorker.TITLE to title, AddDiaryEntryWorker.COLOR to color)
 
         Log.d("ProgressData", progressData.toString())
         val request: OneTimeWorkRequest =
@@ -227,7 +213,7 @@ class AddDiaryEntry : AppCompatActivity() {
                 .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 20, TimeUnit.SECONDS)
                 .build()
         val db = DBHelper(this, null)
-        db.addDiary(title, content, LocalDate.now().toString(), emoji.toString())
+        db.addDiary(title, content, LocalDate.now().toString(), color)
         WorkManager.getInstance()
             .enqueue(request)
     }

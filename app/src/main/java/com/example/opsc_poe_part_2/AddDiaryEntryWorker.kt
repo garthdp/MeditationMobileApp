@@ -27,20 +27,20 @@ class AddDiaryEntryWorker constructor(context: Context, workerParameters:WorkerP
         val sdf = SimpleDateFormat("dd/MM/yyyy")
         auth = FirebaseAuth.getInstance()
         val content = inputData.getString(CONTENT)
-        val emoji = inputData.getString(EMOJI)?.toInt()
         val title = inputData.getString(TITLE)
         val email = auth.currentUser?.email.toString()
+        val color = inputData.getString(COLOR)
         val currentDate = sdf.format(Date())
         var resString = ""
         // gets url and adds parameters
 
-        Log.d("Patch stuff", email + currentDate.toString() + content + emoji + title)
+        Log.d("Patch stuff", email + currentDate.toString() + content + title)
 
         val url = "https://opscmeditationapi.azurewebsites.net/api/Journal".toHttpUrlOrNull()!!.newBuilder()
             .addQueryParameter("email", email)
             .addQueryParameter("date", currentDate)
             .addQueryParameter("content", content)
-            .addQueryParameter("emoji", emoji.toString())
+            .addQueryParameter("color", color)
             .addQueryParameter("title", title)
             .build()
         val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), "")
@@ -59,6 +59,6 @@ class AddDiaryEntryWorker constructor(context: Context, workerParameters:WorkerP
     companion object {
         var CONTENT = "CONTENT"
         var TITLE = "TITLE"
-        var EMOJI = "EMOJI"
+        var COLOR = "COLOR"
     }
 }
