@@ -10,6 +10,36 @@
     <string name="Notifications">Notifications</string>
     <string name="Themeswap">Theme swap</string>
     <string name="Name">Name</string>
+    <string name="Register">Register</string>
+    <string name="login">Login</string>
+    <string name="TITLE">TITLE</string>
+    <string name="TEXT">TEXT</string>
+    <string name="PageColor">Page Color</string>
+    <string name="SAVE">SAVE</string>
+    <string name="ImagePreview">Image Preview</string>
+    <string name="RecognizeText">Recognize Text</string>
+    <string name="TakeImage">Take Image</string>
+    <string name="RecognizedText">Recognized Text</string>
+    <string name="DailyGoals">Daily Goals</string>
+    <string name="SelectYourGoalType">Select Your Goal Type</string>
+    <string name="WhatisTroublingYou">What is troubling you?</string>
+    <string name="Whatdoyouwanttoachieve">What do you want to achieve?</string>
+    <string name="SaveGoal">Save Goal</string>
+    <string name="WelcometoyourDiary">Welcome to your diary!</string>
+    <string name="AddEntry">Add Entry</string>
+    <string name="PlayBackgroundSound">Play background sound</string>
+    <string name="Focus">Focus</string>
+    <string name="Whalesounds">Whale sounds</string>
+    <string name="Swipetoexploremorevideos">Swipe to explore more videos!</string>
+    <string name="WhaleQuest">Whale Quest</string>
+    <string name="Start">Start</string>
+    <string name="LevelUp">Level Up</string>
+    <string name="ThisweekLevel">This weeks levels</string>
+    <string name="ThisMonthLevel">This months levels</string>
+    <string name="Unlock">Unlocks</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="ForgotPassword">Forgot Password?</string>
 
     <string-array name="color_options">
         <item>Red</item>

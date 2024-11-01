@@ -31,7 +31,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Play Background Sound"
+        android:contentDescription="@string/PlayBackgroundSound"
         android:src="@drawable/ic_sound"
         app:layout_constraintEnd_toStartOf="@id/ic_settings"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +44,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Settings"
+        android:contentDescription="@string/Setting"
         android:src="@drawable/ic_settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
