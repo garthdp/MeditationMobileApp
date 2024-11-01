@@ -4,4 +4,11 @@
     <string name="pick_color">Kies die kleur</string>
     <string name="LanguageTest">Hallo maat</string>
     <string name="Setting">Settings</string>
+    <string name="DeleteAccount">Delete account</string>
+    <string name="Logout">Logout</string>
+    <string name="Language">Language</string>
+    <string name="PrivacyPolicy">Privacy Policy</string>
+    <string name="Notifications">Notifications</string>
+    <string name="Themeswap">Theme swap</string>
+    <string name="Name">Name</string>
 </resources>
