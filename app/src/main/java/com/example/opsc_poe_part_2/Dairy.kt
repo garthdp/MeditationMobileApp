@@ -111,55 +111,55 @@ class Dairy : AppCompatActivity() {
                         })
                     }
 
-                    if(dairyResponse.size != 0){
-                        val db = DBHelper(this, null)
+                    val db = DBHelper(this, null)
 
-                        db.deleteDiaries()
+                    db.deleteDiaries()
 
-                        for(diary in dairyResponse){
-                            db.addDiary(diary.Title, diary.Content, diary.Date, diary.Color)
-                        }
+                    for(diary in dairyResponse){
+                        db.addDiary(diary.Title, diary.Content, diary.Date, diary.Color)
                     }
                 }
             } catch (e: Exception) {
                 progressBar.visibility = View.INVISIBLE
-                Log.d("Error", e.message.toString())
                 Handler(Looper.getMainLooper()).post{
                     val dairyResponse = ArrayList<DiaryEntry>()
                     val db = DBHelper(this, null)
                     val cursor = db.getEntries()
-                    if (cursor?.count != 0){
-                        cursor?.moveToFirst()
-                        var diaryTitle = cursor?.getString(cursor.getColumnIndex(DBHelper.TITLE))
-                        var diaryContent = cursor?.getString(cursor.getColumnIndex(DBHelper.CONTENT))
-                        var diaryDate = cursor?.getString(cursor.getColumnIndex(DBHelper.DATE))
-                        var diaryId = cursor?.getString(cursor.getColumnIndex(DBHelper.ID_COL))
-                        var color = cursor?.getString(cursor.getColumnIndex(DBHelper.COLOR))
-                        var diaryEntry = DiaryEntry(diaryId!!, diaryContent!!, diaryTitle!!, diaryDate!!, color!!)
+                    if (cursor!!.count > 0){
+                        cursor.moveToFirst()
+                        var diaryTitle = cursor.getString(cursor.getColumnIndex(DBHelper.TITLE))
+                        var diaryContent = cursor.getString(cursor.getColumnIndex(DBHelper.CONTENT))
+                        var diaryDate = cursor.getString(cursor.getColumnIndex(DBHelper.DATE))
+                        var diaryId = cursor.getString(cursor.getColumnIndex(DBHelper.ID_COL))
+                        var color = cursor.getString(cursor.getColumnIndex(DBHelper.COLOR))
+                        var diaryEntry = DiaryEntry(diaryId!!, diaryContent!!, diaryTitle!!, color!!, diaryDate!!)
 
                         Log.d("firest", diaryTitle)
                         dairyResponse.add(diaryEntry)
+                        Log.d("Error DB", diaryEntry.toString())
 
-                        while(cursor?.moveToNext() == true){
+                        while(cursor.moveToNext() == true){
                             diaryTitle = cursor.getString(cursor.getColumnIndex(DBHelper.TITLE))
                             diaryContent = cursor.getString(cursor.getColumnIndex(DBHelper.CONTENT))
                             diaryDate = cursor.getString(cursor.getColumnIndex(DBHelper.DATE))
                             diaryId = cursor.getString(cursor.getColumnIndex(DBHelper.ID_COL))
-                            color = cursor?.getString(cursor.getColumnIndex(DBHelper.COLOR))
-                            diaryEntry = DiaryEntry(diaryId!!, diaryContent!!, diaryTitle!!, diaryDate!!, color!!)
+                            color = cursor.getString(cursor.getColumnIndex(DBHelper.COLOR))
+                            diaryEntry = DiaryEntry(diaryId!!, diaryContent!!, diaryTitle!!, color!!, diaryDate!!)
                             Log.d("diary", diaryEntry.toString())
                             dairyResponse.add(diaryEntry)
                         }
-                        cursor?.close()
+                        cursor.close()
                         val arrDairy = dairyResponse.toTypedArray()
                         // Initialize and set the adapter
-                        if (arrDairy != null){
-                            for(diary in arrDairy){
-                                Log.d("diary", diary.Title)
-                            }
+                        for(diary in arrDairy){
+                            Log.d("diary", diary.Title)
+                        }
+                        Handler(Looper.getMainLooper()).post{
+                            // Initialize and set the adapter
                             adapter = DiaryEntryAdapter(arrDairy)
                             recyclerView.adapter = adapter
                             progressBar.visibility = View.INVISIBLE
+
                             adapter.setOnClickListener(object : DiaryEntryAdapter.OnClickListener{
                                 override fun onClick(position: Int, model: DiaryEntry) {
                                     currentDiary = model
