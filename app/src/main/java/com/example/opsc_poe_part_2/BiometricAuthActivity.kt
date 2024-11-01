@@ -41,7 +41,7 @@ class BiometricAuthActivity : AppCompatActivity() {
         setContent {
             Surface (
                 modifier = Modifier.fillMaxSize(),
-                color = Color.Blue
+                color = Color.Transparent
             ) {
                 val biometricResult by promptManager.promptResult.collectAsState(
                     initial = null
