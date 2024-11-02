@@ -247,7 +247,7 @@ class Settings : AppCompatActivity() {
 //              R.string.af to "af")
 //        //  ).mapKeys { stringResource(it.key) }
 //
-//
+///
 //          AppCompatActivity.setApplicationLocales(
 //               LocaleListCompat.forLanguageTags(
 //                 localeOptions[R.string.selectionLocale]
