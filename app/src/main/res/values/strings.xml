@@ -41,6 +41,27 @@
     <string name="Email">Email</string>
     <string name="Password">Password</string>
     <string name="ForgotPassword">Forgot Password?</string>
+    <string name="Meditation">Meditation</string>
+    <string name="Music">Music</string>
+    <string name="Sleep">Sleep</string>
+    <string name="Meditate">Meditate</string>
+    <string name="Profile">Profile</string>
+    <string name="INFORMATION">INFORMATION</string>
+    <string name="Level">Level</string>
+    <string name="Experience">Experience</string>
+    <string name="Depthtohelpyou">How do you want Ocean\'s Depth to help you?</string>
+    <string name="ReduceStress">Reduce Stress</string>
+    <string name="ImprovePerformance">Improve performance</string>
+    <string name="BetterSleep">Better sleep</string>
+    <string name="IncreaseHappiness">Increase Happiness</string>
+    <string name="ImproveMentalHealth">Improve mental health</string>
+    <string name="Other">Other</string>
+    <string name="Continue">Continue</string>
+    <string name="Surname">Surname</string>
+    <string name="Username">Username</string>
+    <string name="Rewards">Rewards</string>
+    <string name="Date">Date</string>
+    <string name="Title">Title</string>
 
     <string-array name="color_options">
         <item>Red</item>

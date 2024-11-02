@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:gravity="center"
-            android:text="Meditation"
+            android:text="@string/Meditation"
             android:textColor="@android:color/white"
             android:textSize="28sp"
             android:textStyle="bold" />
@@ -75,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:onClick="goToMusicPage"
-                        android:text="Music"
+                        android:text="@string/Music"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -107,7 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:onClick="goToSleepPage"
-                        android:text="Sleep"
+                        android:text="@string/Sleep"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -139,7 +139,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:onClick="goToMeditationPage"
-                        android:text="Meditate"
+                        android:text="@string/Meditate"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -171,7 +171,7 @@
                         android:layout_height="48dp"
                         android:layout_marginTop="10dp"
                         android:onClick="goToFocusPage"
-                        android:text="Focus"
+                        android:text="@string/Focus"
                         android:textStyle="bold" />
 
                 </LinearLayout>
