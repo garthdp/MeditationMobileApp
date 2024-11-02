@@ -17,6 +17,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.core.os.LocaleListCompat
@@ -234,22 +235,23 @@ class Settings : AppCompatActivity() {
     private fun saveThemePreference(isDarkMode: Boolean) {
         sharedPreferences.edit().putBoolean("isDarkMode", isDarkMode).apply()
     }
-
-    fun LanguageTst(){
-
-        val lbltest = findViewById<TextView>(R.id.lbltest)
-        lbltest.text = R.string.LanguageTest.toString()
-        // val context = LocalContext.current
-        //  val localeOptions = mapOf(
-        //      R.string.en to "en",
-        //      R.string.af to "af"
-        //  ).mapKeys { stringResource(it.key) }
-
-
-        //  AppCompatActivity.setApplicationLocales(
-        //       LocaleListCompat.forLanguageTags(
-        //         localeOptions[R.string.pick_color]
-        ///      )
-        //   )
-    }
+//@OptIn
+//    @Composable
+//    fun LanguageTst(){
+//
+////        val lbltest = findViewById<TextView>(R.id.lbltest)
+////        lbltest.text = R.string.LanguageTest.toString()
+//        // val context = LocalContext.current
+//          val localeOptions = mapOf(
+//              R.string.en to "en",
+//              R.string.af to "af")
+//        //  ).mapKeys { stringResource(it.key) }
+//
+//
+//          AppCompatActivity.setApplicationLocales(
+//               LocaleListCompat.forLanguageTags(
+//                 localeOptions[R.string.selectionLocale]
+//              )
+//           )
+//    }
 }

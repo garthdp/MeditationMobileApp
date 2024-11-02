@@ -62,6 +62,8 @@
     <string name="Rewards">Rewards</string>
     <string name="Date">Date</string>
     <string name="Title">Title</string>
+    <string name="en">English</string>
+    <string name="af">Afrikaans</string>
 
     <string-array name="color_options">
         <item>Red</item>
