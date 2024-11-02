@@ -194,10 +194,7 @@ class Settings : AppCompatActivity() {
             Post Link: https://developer.android.com/develop/ui/views/notifications/channels#kotlin
             Usage: Learned to open notifications page
         */
-        val intent = Intent(android.provider.Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
-            putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, packageName)
-            putExtra(android.provider.Settings.EXTRA_CHANNEL_ID,"goal_reminder_channel")
-        }
+        val intent = Intent(android.provider.Settings.ACTION_APP_LOCALE_SETTINGS)
         startActivity(intent)
     }
 
