@@ -64,6 +64,7 @@
     <string name="Title">Title</string>
     <string name="en">English</string>
     <string name="af">Afrikaans</string>
+    <string name="NotificateButton">Change Permissions</string>
 
     <string-array name="color_options">
         <item>Red</item>

@@ -58,12 +58,16 @@ class Settings : AppCompatActivity() {
         val btnprofile = findViewById<Button>(R.id.btnprofile)
         val btnPrivacyPolicy = findViewById<Button>(R.id.btnPrivacyPolicy)
         val notificationButton = findViewById<Button>(R.id.notificationButton)
+        val btnLanguage = findViewById<Button>(R.id.btnLanguage)
 
         // LanguageTst()
         //language test that breaks
 
         notificationButton.setOnClickListener {
             openNotificationSettings()
+        }
+        btnLanguage.setOnClickListener{
+            openLanguageSettings()
         }
 
         btnBack.setOnClickListener {
@@ -169,6 +173,20 @@ class Settings : AppCompatActivity() {
             .show()
     }
     private fun openNotificationSettings() {
+        /*
+            Code Attribution
+            Title: Open the notification channel settings
+            Author: Android Developer
+            Post Link: https://developer.android.com/develop/ui/views/notifications/channels#kotlin
+            Usage: Learned to open notifications page
+        */
+        val intent = Intent(android.provider.Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
+            putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, packageName)
+            putExtra(android.provider.Settings.EXTRA_CHANNEL_ID,"goal_reminder_channel")
+        }
+        startActivity(intent)
+    }
+    private fun openLanguageSettings() {
         /*
             Code Attribution
             Title: Open the notification channel settings
