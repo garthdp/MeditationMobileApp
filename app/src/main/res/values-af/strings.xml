@@ -41,4 +41,25 @@
     <string name="Email">Email</string>
     <string name="Password">Wagwoord</string>
     <string name="ForgotPassword">Wagwoord vergeet?</string>
+    <string name="Meditation">Meditasie</string>
+    <string name="Music">Musiek</string>
+    <string name="Sleep">Slaap</string>
+    <string name="Meditate">Mediteer</string>
+    <string name="Profile">Profiel</string>
+    <string name="INFORMATION">INFORMASIE</string>
+    <string name="Level">Level</string>
+    <string name="Experience">Ondervinding</string>
+    <string name="Depthtohelpyou">Hoe kan Ocean\'s Depth vir u help?</string>
+    <string name="ReduceStress">Verminder stres</string>
+    <string name="ImprovePerformance">Verbeter prestasie</string>
+    <string name="BetterSleep">Verbeterde slaap</string>
+    <string name="IncreaseHappiness">Vebeter gelukkigheid</string>
+    <string name="ImproveMentalHealth">Verbeter geestesgesondheid</string>
+    <string name="Other">Ander</string>
+    <string name="Continue">Gaan voort</string>
+    <string name="Surname">Van</string>
+    <string name="Username">Gebruikersnaam</string>
+    <string name="Rewards">Belongs</string>
+    <string name="Date">Datum</string>
+    <string name="Title">Titel</string>
 </resources>
