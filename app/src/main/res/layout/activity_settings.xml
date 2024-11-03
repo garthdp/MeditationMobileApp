@@ -38,10 +38,12 @@
         android:id="@+id/semi_circle6"
         android:layout_width="236dp"
         android:layout_height="175dp"
+        android:layout_marginTop="23dp"
         android:contentDescription="Semi-Circle Shape"
         android:src="@drawable/cutewhale"
-        tools:layout_editor_absoluteX="52dp"
-        tools:layout_editor_absoluteY="495dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDelete" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -87,11 +89,13 @@
         android:id="@+id/btnPrivacyPolicy"
         android:layout_width="145dp"
         android:layout_height="37dp"
+        android:layout_marginTop="30dp"
         android:backgroundTint="@android:color/holo_red_light"
         android:text="@string/PrivacyPolicy"
         android:textColor="#124167"
-        tools:layout_editor_absoluteX="132dp"
-        tools:layout_editor_absoluteY="320dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnThemeSwap" />
 
     <TextView
         android:id="@+id/textView10"
@@ -124,24 +128,24 @@
         android:id="@+id/btnLogout"
         android:layout_width="147dp"
         android:layout_height="47dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="#fff"
         android:text="@string/Logout"
-        app:layout_constraintBottom_toTopOf="@+id/btnDelete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPrivacyPolicy" />
 
     <Button
         android:id="@+id/btnDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="@android:color/holo_red_light"
         android:text="@string/DeleteAccount"
-        app:layout_constraintBottom_toTopOf="@+id/semi_circle6"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogout" />
 
     <Button
         android:id="@+id/btnprofile"
