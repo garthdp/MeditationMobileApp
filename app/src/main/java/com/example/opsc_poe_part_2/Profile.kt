@@ -3,6 +3,7 @@ package com.example.opsc_poe_part_2
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
@@ -143,23 +144,26 @@ class Profile : AppCompatActivity() {
         val progressBar : ProgressBar = findViewById(R.id.progressBar)
         progressBar.visibility = View.VISIBLE
         auth = FirebaseAuth.getInstance()
-        val picture = auth.currentUser?.photoUrl.toString()
         val email = auth.currentUser?.email
+        val picture = auth.currentUser?.photoUrl.toString()
         val profilePic = findViewById<ImageView>(R.id.imageView13)
         val txtName = findViewById<TextView>(R.id.lblName)
         val txtEmail = findViewById<TextView>(R.id.lblEmail)
         val txtLevel = findViewById<TextView>(R.id.lblLevel)
         val txtExperience = findViewById<TextView>(R.id.lblExperience)
+        var decodedPicture: Bitmap? = null
+        Log.d("Picture", decodedPicture.toString())
         val executor = Executors.newSingleThreadExecutor()
 
         executor.execute {
             try {
                 val url = URL("https://opscmeditationapi.azurewebsites.net/api/users?email=${email}")
-                val `in` = java.net.URL(picture).openStream()
-                val decodePicture = BitmapFactory.decodeStream(`in`)
+                if(picture != "null"){
+                    val `in` = java.net.URL(picture).openStream()
+                    decodedPicture = BitmapFactory.decodeStream(`in`)
+                }
                 val json = url.readText()
                 val res = Gson().fromJson(json, User::class.java)
-
                 val db = DBHelper(this, null)
 
                 db.deleteDiaries()
@@ -171,7 +175,10 @@ class Profile : AppCompatActivity() {
                     txtEmail.text = res.Email
                     txtLevel.text = res.Level.toString()
                     txtExperience.text = res.Experience.toString()
-                    profilePic.setImageBitmap(decodePicture)
+                    Log.d("picture", picture)
+                    if(decodedPicture != null){
+                        profilePic.setImageBitmap(decodedPicture)
+                    }
 
                     progressBar.visibility = View.INVISIBLE
                 }
