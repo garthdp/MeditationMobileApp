@@ -28,18 +28,15 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
         android:layout_marginTop="80dp"
-        android:layout_marginEnd="160dp"
         android:layout_marginBottom="35dp"
         android:text="@string/Register"
         android:textAlignment="center"
+        android:textColor="@color/white"
         android:textSize="28sp"
         android:textStyle="bold"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/editTextEmail"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
@@ -50,11 +47,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="155dp"
-        android:layout_marginEnd="356dp"
         android:layout_marginBottom="10dp"
         android:text="@string/Email"
         app:layout_constraintBottom_toTopOf="@+id/editTextEmail"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -135,11 +130,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="329dp"
         android:layout_marginBottom="9dp"
         android:text="@string/Password"
         app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -147,11 +140,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="327dp"
         android:layout_marginBottom="10dp"
         android:text="@string/Username"
         app:layout_constraintBottom_toTopOf="@+id/editTextUsername"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -174,11 +165,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="354dp"
         android:layout_marginBottom="10dp"
         android:text="@string/Name"
         app:layout_constraintBottom_toTopOf="@+id/txtName"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -200,11 +189,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="335dp"
         android:layout_marginBottom="10dp"
         android:text="@string/Surname"
         app:layout_constraintBottom_toTopOf="@+id/txtSurname"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
