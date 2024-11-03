@@ -3,6 +3,7 @@ package com.example.opsc_poe_part_2
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -14,6 +15,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -189,12 +191,22 @@ class Settings : AppCompatActivity() {
     private fun openLanguageSettings() {
         /*
             Code Attribution
-            Title: Open the notification channel settings
+            Title: Open the locale settings
             Author: Android Developer
-            Post Link: https://developer.android.com/develop/ui/views/notifications/channels#kotlin
-            Usage: Learned to open notifications page
+            Post Link: https://developer.android.com/reference/android/provider/Settings#ACTION_APP_LOCALE_SETTINGS
+            Usage: Learned to open locale page
+        */
+        /*
+            Code Attribution
+            Title:How can I programmatically open the permission screen for a specific app on Android 6.0 (Marshmallow)?
+            Author: Martin Konecny
+            Author Link: https://stackoverflow.com/users/276949/martin-konecny
+            Post Link: https://stackoverflow.com/questions/32822101/how-can-i-programmatically-open-the-permission-screen-for-a-specific-app-on-andr
+            Usage: who to get package uri and add it to intent
         */
         val intent = Intent(android.provider.Settings.ACTION_APP_LOCALE_SETTINGS)
+        val data = Uri.parse("package:$packageName")
+        intent.setData(data)
         startActivity(intent)
     }
 
