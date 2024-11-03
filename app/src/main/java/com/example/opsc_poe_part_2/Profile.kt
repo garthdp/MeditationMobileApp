@@ -68,12 +68,12 @@ class Profile : AppCompatActivity() {
                     true
                 }
                 R.id.nav_profile -> {
-                    startActivity(Intent(this, Profile::class.java))
                     true
                 }
                 else -> false
             }
         }
+        bottomNavigationView.selectedItemId = R.id.nav_profile
 
         // Initialize SharedPreferences and TextView
 
