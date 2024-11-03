@@ -90,13 +90,6 @@ class AddDiaryEntry : AppCompatActivity() {
             val title = titleEditText.text.toString()
             val content = contentEditText.text.toString()
 
-            // Create a new DiaryEntry object
-            //val newEntry = DiaryEntry(title, content, selectedEmojiResId)
-
-            // Save to a static list
-            //DiaryEntries.entries.add(newEntry)
-
-            // Set result to OK and pass back the new entry (optional)
             setResult(RESULT_OK)
 
             levelUp()
@@ -105,7 +98,7 @@ class AddDiaryEntry : AppCompatActivity() {
             }
             postRequest(content, title, color)
 
-            val intent = Intent(this, DashboardActivity::class.java)
+            val intent = Intent(this, Meditation::class.java)
             startActivity(intent)
         }
 

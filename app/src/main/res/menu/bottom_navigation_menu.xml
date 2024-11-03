@@ -10,11 +10,6 @@
         android:icon="@drawable/ic_meditation" />
 
     <item
-        android:id="@+id/nav_dashboard"
-        android:title="Dashboard"
-        android:icon="@drawable/ic_dashboard" />
-
-    <item
         android:id="@+id/nav_rewards"
         android:title="Rewards"
         android:icon="@drawable/ic_reward" />

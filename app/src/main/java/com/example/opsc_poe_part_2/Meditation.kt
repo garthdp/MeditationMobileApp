@@ -23,10 +23,6 @@ class Meditation : AppCompatActivity() {
                     // Stays on the current page
                     true
                 }
-                R.id.nav_dashboard -> {
-                    startActivity(Intent(this, DashboardActivity::class.java))
-                    true
-                }
                 R.id.nav_rewards -> {
                     startActivity(Intent(this, Rewards::class.java))
                     true

@@ -111,7 +111,7 @@ class Login : AppCompatActivity() {
                     ).show()
 
                     // Navigate to the next activity (DashboardActivity)
-                    val intent = Intent(this, DashboardActivity::class.java)
+                    val intent = Intent(this, Meditation::class.java)
                     startActivity(intent)
                     finish()
                 } else {

@@ -91,7 +91,7 @@ class BiometricAuthActivity : AppCompatActivity() {
                                 Text("Authentication Not Set")
                             }
                             BiometricResult.AuthenticationSuccess -> {
-                                val intent = Intent(this@BiometricAuthActivity, DashboardActivity::class.java)
+                                val intent = Intent(this@BiometricAuthActivity, Meditation::class.java)
                                 startActivity(intent)
                                 finish()
                             }

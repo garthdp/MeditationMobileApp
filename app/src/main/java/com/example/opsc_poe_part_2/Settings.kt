@@ -3,6 +3,7 @@ package com.example.opsc_poe_part_2
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -43,9 +44,31 @@ import java.util.concurrent.Executors
 class Settings : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var auth: FirebaseAuth
+
+    private lateinit var mediaPlayer: MediaPlayer
+    private var isPlaying = false
+    private lateinit var handler: Handler
+    private lateinit var runnable: Runnable
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        // Set up media player for sound
+        val playSoundIcon = findViewById<ImageButton>(R.id.play_sound_icon)
+        mediaPlayer = MediaPlayer.create(this, R.raw.audio)
+
+        // Set OnClickListener for sound control
+        playSoundIcon.setOnClickListener {
+            if (isPlaying) {
+                mediaPlayer.pause()
+                mediaPlayer.seekTo(0)
+                playSoundIcon.setImageResource(R.drawable.ic_sound)
+                isPlaying = false
+            } else {
+                mediaPlayer.start()
+                playSoundIcon.setImageResource(R.drawable.ic_sound)
+                isPlaying = true
+            }
+        }
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_settings)
@@ -62,6 +85,19 @@ class Settings : AppCompatActivity() {
         val notificationButton = findViewById<Button>(R.id.notificationButton)
         val btnLanguage = findViewById<Button>(R.id.btnLanguage)
 
+        playSoundIcon.setOnClickListener {
+            if (isPlaying) {
+                mediaPlayer.pause()
+                mediaPlayer.seekTo(0)
+                playSoundIcon.setImageResource(R.drawable.ic_sound)
+                isPlaying = false
+            } else {
+                mediaPlayer.start()
+                playSoundIcon.setImageResource(R.drawable.ic_sound)
+                isPlaying = true
+            }
+        }
+
         // LanguageTst()
         //language test that breaks
 
@@ -74,7 +110,7 @@ class Settings : AppCompatActivity() {
 
         btnBack.setOnClickListener {
             // Create an intent to start RegisterActivity
-            val intent = Intent(this, DashboardActivity::class.java)
+            val intent = Intent(this, Meditation::class.java)
             startActivity(intent)
         }
 
@@ -106,10 +142,6 @@ class Settings : AppCompatActivity() {
                 }
                 R.id.nav_meditation -> {
                     startActivity(Intent(this, Meditation::class.java))
-                    true
-                }
-                R.id.nav_dashboard -> {
-                    startActivity(Intent(this, DashboardActivity::class.java))
                     true
                 }
                 R.id.nav_rewards -> {

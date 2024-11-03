@@ -124,10 +124,6 @@ class DailyGoals : AppCompatActivity() {
                     startActivity(Intent(this, Meditation::class.java))
                     true
                 }
-                R.id.nav_dashboard -> {
-                    startActivity(Intent(this, DashboardActivity::class.java))
-                    true
-                }
                 R.id.nav_rewards -> {
                     startActivity(Intent(this, Rewards::class.java))
                     true

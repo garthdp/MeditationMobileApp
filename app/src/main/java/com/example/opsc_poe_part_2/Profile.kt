@@ -14,7 +14,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -26,6 +25,7 @@ import com.jjoe64.graphview.series.BarGraphSeries
 import com.jjoe64.graphview.series.DataPoint
 import java.net.URL
 import java.util.ArrayList
+import java.util.Calendar
 import java.util.concurrent.Executors
 
 class Profile : AppCompatActivity() {
@@ -33,18 +33,17 @@ class Profile : AppCompatActivity() {
     private lateinit var txtSelectedGoals: TextView
     private lateinit var graph2: GraphView
     private lateinit var auth: FirebaseAuth
+    private var sessionStartTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_profile)
         sharedPreferences = getSharedPreferences("ThemePrefs", MODE_PRIVATE)
 
+        sessionStartTime = System.currentTimeMillis() // Set session start time
+
         getUser()
-        // Find the back button in the layout
         val btnback1 = findViewById<Button>(R.id.btnback1)
-
-
 
         // Initialize BottomNavigationView and set up item selection listener
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
@@ -56,10 +55,6 @@ class Profile : AppCompatActivity() {
                 }
                 R.id.nav_meditation -> {
                     startActivity(Intent(this, Meditation::class.java))
-                    true
-                }
-                R.id.nav_dashboard -> {
-                    startActivity(Intent(this, DashboardActivity::class.java))
                     true
                 }
                 R.id.nav_rewards -> {
@@ -74,57 +69,22 @@ class Profile : AppCompatActivity() {
             }
         }
 
-        // Initialize SharedPreferences and TextView
-
-       // sharedPreferences = getSharedPreferences("UserGoals", MODE_PRIVATE)
-       // txtSelectedGoals = findViewById(R.id.txtSelectedGoals)
-
-        // Retrieve the selected goals from SharedPreferences
-       // val selectedGoals = sharedPreferences.getStringSet("selected_goals", emptySet()) ?: emptySet()
-
-        // Display the selected goals
-
-       // if (selectedGoals.isNotEmpty()) {
-       //     txtSelectedGoals.text = selectedGoals.joinToString(", ")
-       // } else {
-       //     txtSelectedGoals.text = "No goals selected."
-       // }
-
-        //  OnClickListener on the back button
         btnback1.setOnClickListener {
-            // Navigate back to dashboard page
-            val intent = Intent(this, DashboardActivity::class.java)
+            val intent = Intent(this, Meditation::class.java)
             startActivity(intent)
             finish()
         }
 
         val btnSettings = findViewById<Button>(R.id.btnSetting)
         btnSettings.setOnClickListener {
-            // Create an intent to start RegisterActivity
             val intent = Intent(this, Settings::class.java)
             startActivity(intent)
         }
 
-//        val imgpfp = findViewById<ImageView>(R.id.imageView13)
-//        val btnpicChanger = findViewById<Button>(R.id.btnchangepfp)
-//        btnpicChanger.setOnClickListener {
-//            // Create an intent to start RegisterActivity
-//            val options = arrayOf("Take Photo", "Choose from Gallery")
-//            val builder = android.app.AlertDialog.Builder(this)
-//            builder.setTitle("Select Option")
-//            builder.setItems(options) { _, which ->
-//                when (which) {
-//                    0 -> openCamera() // Take a photo
-//                    1 -> openGallery() // Choose from gallery
-//                }
-//                imgpfp.setImageResource(R.drawable.emoji2)
-//            }
-//            builder.show()
-//        }
-        // Set the graph data
         graph2 = findViewById(R.id.graph2)
         setGraphData()
     }
+
     private val CAMERA_REQUEST_CODE = 100
     private val GALLERY_REQUEST_CODE = 200
 
@@ -139,7 +99,7 @@ class Profile : AppCompatActivity() {
     }
 
     @SuppressLint("Range")
-    fun getUser(){
+    private fun getUser(){
         val progressBar : ProgressBar = findViewById(R.id.progressBar)
         progressBar.visibility = View.VISIBLE
         auth = FirebaseAuth.getInstance()
@@ -155,30 +115,27 @@ class Profile : AppCompatActivity() {
         executor.execute {
             try {
                 val url = URL("https://opscmeditationapi.azurewebsites.net/api/users?email=${email}")
-                val `in` = java.net.URL(picture).openStream()
+                val `in` = URL(picture).openStream()
                 val decodePicture = BitmapFactory.decodeStream(`in`)
                 val json = url.readText()
                 val res = Gson().fromJson(json, User::class.java)
 
                 val db = DBHelper(this, null)
-
                 db.deleteDiaries()
-
                 db.addUser(res.Name, res.Level.toString(), res.Experience.toString(), res.Email)
                 Log.d("Res", json)
+
                 Handler(Looper.getMainLooper()).post {
                     txtName.text = res.Name
                     txtEmail.text = res.Email
                     txtLevel.text = res.Level.toString()
                     txtExperience.text = res.Experience.toString()
                     profilePic.setImageBitmap(decodePicture)
-
                     progressBar.visibility = View.INVISIBLE
                 }
-            }
-            catch (e: Exception){
-                progressBar.visibility = View.INVISIBLE
-                Handler(Looper.getMainLooper()).post{
+            } catch (e: Exception) {
+                Handler(Looper.getMainLooper()).post {
+                    progressBar.visibility = View.INVISIBLE
                     val db = DBHelper(this, null)
                     val cursor = db.getUser()
                     cursor?.moveToFirst()
@@ -198,10 +155,23 @@ class Profile : AppCompatActivity() {
         }
     }
 
-    //Setup for the graph
+    override fun onStop() {
+        super.onStop()
+        val sessionEndTime = System.currentTimeMillis()
+        val sessionDuration = (sessionEndTime - sessionStartTime) / 60000
+
+        val calendar = Calendar.getInstance()
+        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1
+
+        val previousTime = sharedPreferences.getLong("day_$dayOfWeek", 0)
+        val updatedTime = previousTime + sessionDuration
+
+        sharedPreferences.edit().putLong("day_$dayOfWeek", updatedTime).apply()
+    }
+
     private fun setGraphData() {
         val dataPoints = ArrayList<DataPoint>()
-        val dayLabels = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+        val dayLabels = arrayOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
 
         for (i in 0 until 7) {
             val timeSpentInMinutes = sharedPreferences.getLong("day_$i", 0).toDouble()
@@ -213,19 +183,14 @@ class Profile : AppCompatActivity() {
         graph2.removeAllSeries()
         graph2.addSeries(series)
 
-
-        graph2.title = "Time spent"
+        graph2.title = "Weekly App Usage"
         graph2.gridLabelRenderer.verticalAxisTitle = "Time Spent (Hours)"
         graph2.gridLabelRenderer.horizontalAxisTitle = "Days"
 
         graph2.gridLabelRenderer.labelFormatter = object : DefaultLabelFormatter() {
             override fun formatLabel(value: Double, isValueX: Boolean): String {
                 return if (isValueX) {
-                    if (value.toInt() in dayLabels.indices) {
-                        dayLabels[value.toInt()]
-                    } else {
-                        ""
-                    }
+                    dayLabels.getOrNull(value.toInt()) ?: ""
                 } else {
                     String.format("%.1f h", value)
                 }
@@ -245,9 +210,6 @@ class Profile : AppCompatActivity() {
         graph2.viewport.isScalable = true
         graph2.viewport.isScrollable = true
 
-        series.spacing = 50
-        series.color = Color.parseColor("#6B8072")
-        graph2.gridLabelRenderer.padding = 50
+        series.color = Color.rgb(102, 153, 255)
     }
-
 }
