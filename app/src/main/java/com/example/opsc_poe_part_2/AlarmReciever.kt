@@ -1,5 +1,6 @@
 package com.example.opsc_poe_part_2
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.BroadcastReceiver
@@ -9,6 +10,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
 class AlarmReciever: BroadcastReceiver() {
+    @SuppressLint("MissingPermission")
     override fun onReceive(context: Context, intent: Intent?) {
         val goal = intent?.getStringExtra("goal") ?: "No Goal"
         val notificationId = 1

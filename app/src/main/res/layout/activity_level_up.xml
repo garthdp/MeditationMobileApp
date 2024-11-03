@@ -17,7 +17,7 @@
         app:menu="@menu/bottom_navigation_menu" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imgDay4"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="147dp"
@@ -94,7 +94,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imgDay1"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="12dp"
@@ -108,7 +108,7 @@
         app:srcCompat="@drawable/starfishnocolor" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imgDay2"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="57dp"
@@ -122,7 +122,7 @@
         app:srcCompat="@drawable/starfishnocolor" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imgDay3"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="102dp"
@@ -230,7 +230,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView14"
+        android:id="@+id/imgDay5"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="192dp"
@@ -244,7 +244,7 @@
         app:srcCompat="@drawable/starfishnocolor" />
 
     <ImageView
-        android:id="@+id/imageView15"
+        android:id="@+id/imgDay6"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="237dp"
@@ -258,7 +258,7 @@
         app:srcCompat="@drawable/starfishnocolor" />
 
     <ImageView
-        android:id="@+id/imageView16"
+        android:id="@+id/imgDay7"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="282dp"
