@@ -110,11 +110,12 @@
         android:id="@+id/textViewPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:text="@string/Password"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
-        tools:layout_editor_absoluteX="32dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
 
     <Button
         android:id="@+id/btnLoggingin"
@@ -125,19 +126,22 @@
         android:text="@string/login"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
-        app:layout_constraintTop_toBottomOf="@+id/txtForgotPassword"
-        tools:layout_editor_absoluteX="91dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtForgotPassword" />
 
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="379dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:hint="@string/Email"
         android:inputType="textEmailAddress"
         android:padding="16dp"
         android:textColor="@android:color/white"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="209dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewEmail" />
 
     <EditText
         android:id="@+id/editTextPassword"
