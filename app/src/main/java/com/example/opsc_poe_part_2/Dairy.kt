@@ -73,6 +73,13 @@ class Dairy : AppCompatActivity() {
 
 
     }
+    override fun onResume() {
+        super.onResume()
+        val email = auth.currentUser?.email
+        if (email != null) {
+            getDiaryEntries(email)
+        }
+    }
 
     // gets diary entries
     @SuppressLint("Range")

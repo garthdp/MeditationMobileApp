@@ -33,6 +33,8 @@ class CameraTextReader : AppCompatActivity() {
     private lateinit var imageIv: ImageView
     private lateinit var recognizedTextEt: EditText
 
+    private lateinit var saveEntryBtn: MaterialButton
+
     private companion object{
         private const val CAMERA_REQUEST_CODE =100
         private const val STORAGE_REQUEST_CODE = 101
@@ -52,7 +54,7 @@ class CameraTextReader : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_camera_text_reader)
 
-
+        saveEntryBtn = findViewById(R.id.saveTextBtn)
         inputImageBtn = findViewById(R.id.inputImageBtn)
         recognizeTextBtn = findViewById(R.id.recognizeTextBtn)
         imageIv = findViewById(R.id.imageIv)
@@ -84,6 +86,10 @@ class CameraTextReader : AppCompatActivity() {
             else{
                 recognizeTextFromImage()
             }
+        }
+
+        saveEntryBtn.setOnClickListener {
+            saveRecognizedTextAsEntry()
         }
 
     }
@@ -272,5 +278,21 @@ class CameraTextReader : AppCompatActivity() {
 
     private fun showToast(message:String){
         Toast.makeText(this,message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun saveRecognizedTextAsEntry() {
+        val title = "New Entry" // Placeholder title or get from user input
+        val content = recognizedTextEt.text.toString()
+        val date = System.currentTimeMillis().toString() // Example for a timestamp
+
+        if (content.isNotEmpty()) {
+            val dbHelper = DBHelper(this, null)
+            dbHelper.addDiary(title, content, date, "defaultColor") // Adjust the color as needed
+
+            Toast.makeText(this, "Diary entry saved!", Toast.LENGTH_SHORT).show()
+            finish() // Optional: close CameraTextReader after saving
+        } else {
+            Toast.makeText(this, "No text to save!", Toast.LENGTH_SHORT).show()
+        }
     }
 }

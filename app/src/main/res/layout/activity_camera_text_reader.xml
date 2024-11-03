@@ -64,7 +64,12 @@
                 android:layout_height="wrap_content"/>
 
 
-
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/saveTextBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Save Entry"
+                android:layout_marginTop="10dp"/>
 </LinearLayout>
 </ScrollView>
 
