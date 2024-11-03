@@ -24,26 +24,24 @@
         android:id="@+id/btnThemeSwap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:backgroundTint="@android:color/transparent"
         android:text="@string/Themeswap"
         app:icon="@drawable/ic_dark"
         app:iconSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPrivacyPolicy" />
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <ImageView
         android:id="@+id/semi_circle6"
-        android:layout_width="86dp"
-        android:layout_height="76dp"
-        android:layout_marginBottom="50dp"
+        android:layout_width="236dp"
+        android:layout_height="175dp"
         android:contentDescription="Semi-Circle Shape"
         android:src="@drawable/cutewhale"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        tools:layout_editor_absoluteX="52dp"
+        tools:layout_editor_absoluteY="495dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -64,7 +62,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="117dp"
         android:text="@string/Setting"
-        android:textColor="#FBFBFB"
+        android:textColor="#124167"
         android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnback"
@@ -79,7 +77,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="281dp"
         android:text="@string/Notifications"
-        android:textColor="#FFFFFF"
+        android:textColor="#124167"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,14 +87,11 @@
         android:id="@+id/btnPrivacyPolicy"
         android:layout_width="145dp"
         android:layout_height="37dp"
-        android:layout_marginTop="20dp"
         android:backgroundTint="@android:color/holo_red_light"
         android:text="@string/PrivacyPolicy"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        android:textColor="#124167"
+        tools:layout_editor_absoluteX="132dp"
+        tools:layout_editor_absoluteY="320dp" />
 
     <TextView
         android:id="@+id/textView10"
@@ -106,7 +101,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="306dp"
         android:text="@string/Language"
-        android:textColor="#FFFFFF"
+        android:textColor="#124167"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -118,8 +113,8 @@
         android:layout_height="71dp"
         android:layout_marginStart="11dp"
         android:layout_marginTop="40dp"
-        app:icon="@drawable/ic_return"
         android:background="@android:color/transparent"
+        app:icon="@drawable/ic_return"
         app:iconSize="40dp"
         app:layout_constraintEnd_toStartOf="@+id/lblSettings"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,11 +124,12 @@
         android:id="@+id/btnLogout"
         android:layout_width="147dp"
         android:layout_height="47dp"
-        android:layout_marginBottom="30dp"
-        android:backgroundTint="#002336"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="#fff"
         android:text="@string/Logout"
         app:layout_constraintBottom_toTopOf="@+id/btnDelete"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -154,8 +150,8 @@
         android:layout_marginStart="305dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="26dp"
-        app:icon="@drawable/ic_profile"
         android:background="@android:color/transparent"
+        app:icon="@drawable/ic_profile"
         app:iconSize="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

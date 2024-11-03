@@ -2,18 +2,18 @@
 <resources>
     <color name="green">#356a38</color>
     <!-- Light Mode Colors -->
-    <color name="light_background">#76ADFF</color>
-    <color name="light_text">#FFFFFF</color>
-    <color name="light_accent">#FFFFFF</color>
+    <color name="light_background">#fff</color>
+    <color name="light_text">#124167</color>
+    <color name="light_accent">#124167</color>
 
     <!-- Shared Colors -->
-    <color name="cyan">#00FFFF</color>
+    <color name="cyan">#124167</color>
     <color name="white">#FFFFFF</color>
 
     <!-- Dark Mode Colors -->
-    <color name="dark_background">#fff</color>
-    <color name="dark_text">#124167</color>
-    <color name="dark_accent">#124167</color>
+    <color name="dark_background">#000</color>
+    <color name="dark_text">#fff</color>
+    <color name="dark_accent">#fff</color>
 
     <color name="dark_blue">#124167</color>
 

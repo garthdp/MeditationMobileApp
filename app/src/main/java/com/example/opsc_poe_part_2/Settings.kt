@@ -52,23 +52,6 @@ class Settings : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        // Set up media player for sound
-        val playSoundIcon = findViewById<ImageButton>(R.id.play_sound_icon)
-        mediaPlayer = MediaPlayer.create(this, R.raw.audio)
-
-        // Set OnClickListener for sound control
-        playSoundIcon.setOnClickListener {
-            if (isPlaying) {
-                mediaPlayer.pause()
-                mediaPlayer.seekTo(0)
-                playSoundIcon.setImageResource(R.drawable.ic_sound)
-                isPlaying = false
-            } else {
-                mediaPlayer.start()
-                playSoundIcon.setImageResource(R.drawable.ic_sound)
-                isPlaying = true
-            }
-        }
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_settings)
@@ -85,18 +68,6 @@ class Settings : AppCompatActivity() {
         val notificationButton = findViewById<Button>(R.id.notificationButton)
         val btnLanguage = findViewById<Button>(R.id.btnLanguage)
 
-        playSoundIcon.setOnClickListener {
-            if (isPlaying) {
-                mediaPlayer.pause()
-                mediaPlayer.seekTo(0)
-                playSoundIcon.setImageResource(R.drawable.ic_sound)
-                isPlaying = false
-            } else {
-                mediaPlayer.start()
-                playSoundIcon.setImageResource(R.drawable.ic_sound)
-                isPlaying = true
-            }
-        }
 
         // LanguageTst()
         //language test that breaks
