@@ -132,7 +132,7 @@ class DBHelper(context: Context, factory : SQLiteDatabase.CursorFactory?) :
         private val DATABASE_NAME = "SQL_LIGHT"
 
         //below is the variable for database version
-        private val DATABASE_VERSION = 9
+        private val DATABASE_VERSION = 10
 
         // below is the variable for table name
         val TABLE_NAME1 = "diary_table"

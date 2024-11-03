@@ -166,7 +166,7 @@ class Profile : AppCompatActivity() {
                 val res = Gson().fromJson(json, User::class.java)
                 val db = DBHelper(this, null)
 
-                db.deleteDiaries()
+                db.deleteUser()
 
                 db.addUser(res.Name, res.Level.toString(), res.Experience.toString(), res.Email)
                 Log.d("Res", json)
