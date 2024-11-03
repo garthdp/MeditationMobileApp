@@ -46,7 +46,7 @@
             android:layout_marginTop="200dp"
             android:layout_marginBottom="50dp"
             android:columnCount="2"
-            android:padding="65dp"
+            android:padding="55dp"
             android:rowCount="2">
 
             <!-- Music Card (Green) -->
