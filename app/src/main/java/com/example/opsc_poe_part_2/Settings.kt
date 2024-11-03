@@ -152,6 +152,10 @@ class Settings : AppCompatActivity() {
                     startActivity(Intent(this, Game::class.java))
                     true
                 }
+                R.id.nav_profile -> {
+                    startActivity(Intent(this, Profile::class.java))
+                    true
+                }
                 else -> false
             }
         }

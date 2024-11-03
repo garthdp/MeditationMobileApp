@@ -54,7 +54,7 @@
             android:name=".Dairy"
             android:exported="false" />
         <activity
-            android:name=".DashboardActivity"
+            android:name=".Profile"
             android:exported="false" />
         <activity
             android:name=".Login"
