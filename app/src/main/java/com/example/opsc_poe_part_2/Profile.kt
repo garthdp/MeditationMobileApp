@@ -59,10 +59,6 @@ class Profile : AppCompatActivity() {
                     startActivity(Intent(this, Meditation::class.java))
                     true
                 }
-                R.id.nav_dashboard -> {
-                    startActivity(Intent(this, DashboardActivity::class.java))
-                    true
-                }
                 R.id.nav_rewards -> {
                     startActivity(Intent(this, Rewards::class.java))
                     true
@@ -94,7 +90,7 @@ class Profile : AppCompatActivity() {
         //  OnClickListener on the back button
         btnback1.setOnClickListener {
             // Navigate back to dashboard page
-            val intent = Intent(this, DashboardActivity::class.java)
+            val intent = Intent(this, Meditation::class.java)
             startActivity(intent)
             finish()
         }
