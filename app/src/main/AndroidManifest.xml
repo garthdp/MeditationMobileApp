@@ -54,9 +54,6 @@
             android:name=".Dairy"
             android:exported="false" />
         <activity
-            android:name=".DashboardActivity"
-            android:exported="false" />
-        <activity
             android:name=".Login"
             android:exported="false" />
         <activity
