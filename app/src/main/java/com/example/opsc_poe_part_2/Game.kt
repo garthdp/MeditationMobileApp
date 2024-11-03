@@ -40,7 +40,9 @@ class Game: AppCompatActivity() {
         bottomNavigationView.selectedItemId = R.id.nav_game
         val button = findViewById<Button>(R.id.start_btn_id)
         button.setOnClickListener {
-            Toast.makeText(this, "Coming Soon in part 3!", Toast.LENGTH_SHORT).show()
+            // Start the WhaleGame activity
+            val intent = Intent(this, WhaleGame::class.java)
+            startActivity(intent)
     }
 }
 }
