@@ -36,6 +36,25 @@ Theme Switching: Users can switch between light mode and dark mode according to 
 Log Out: Users can securely log out of their account through the settings.
 Theme Settings: Customize the appearance of the app by choosing between light and dark modes.
 
+##Part 3
+### Feature 4. Camera Text Reader
+The user will now be able to take a picture of text and then save it to a diary entry.
+
+### Feature 5. Whale Game 
+The user will now be able to play our whale game.
+
+### Offline Mode
+The user is now able to use the app offline and there changes will be save to the cloud when they are reconnected to the internet.
+
+### Language setting
+The users are now able to set the app's language to Afrikaans.
+
+### Notifications
+The user will now recieve daily notifications reminding the user to take time of out their day to meditate and complete daily goals. They will also recieve reminders for the daily goals they set.
+
+### Biometric scanner
+The user's app will be locked whenever they close it to protect their app. They will be able to unlock the app with their fingerprint or phone pin.
+
 ## Usage Instructions:
 Register:
 

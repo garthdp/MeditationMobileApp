@@ -33,9 +33,6 @@
             android:name=".DailyGoals"
             android:exported="false" />
         <activity
-            android:name=".EmojiPickerDialogFragment"
-            android:exported="false" />
-        <activity
             android:name=".AddDiaryEntry"
             android:exported="false" />
         <activity
@@ -52,9 +49,6 @@
             android:exported="false" />
         <activity
             android:name=".Dairy"
-            android:exported="false" />
-        <activity
-            android:name=".DashboardActivity"
             android:exported="false" />
         <activity
             android:name=".Login"

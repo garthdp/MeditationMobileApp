@@ -27,6 +27,11 @@ class Game: AppCompatActivity() {
                     startActivity(Intent(this, Rewards::class.java))
                     true
                 }
+
+                R.id.nav_profile -> {
+                    startActivity(Intent(this, Profile::class.java))
+                    true
+                }
                 R.id.nav_game -> {
                     true
                 }
