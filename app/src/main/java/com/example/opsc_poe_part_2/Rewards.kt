@@ -56,6 +56,4 @@ class Rewards : AppCompatActivity() {
         }
         bottomNavigationView.selectedItemId = R.id.nav_rewards
     }
-
-
 }
