@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9381AD"
+    android:background="@color/white"
     tools:context=".SleepActivity">
 
     <!-- Rounded Shape at the Top -->
@@ -12,29 +12,32 @@
         android:id="@+id/roundedShape"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="64dp"
         android:background="@drawable/rounded_top_shape_with_glow"
         android:rotation="180"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintDimensionRatio="2:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintDimensionRatio="2:1" /> <!-- Aspect ratio for the shape -->
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" /><!-- Aspect ratio for the shape -->
 
     <!-- Title inside the Shape -->
+
+    <!-- Back Button at Top Left -->
     <TextView
         android:id="@+id/MeditateTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="64dp"
         android:text="@string/Sleep"
         android:textColor="@android:color/white"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@id/roundedShape"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/imgDay1" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/roundedShape" />
 
-    <!-- Back Button at Top Left -->
     <ImageButton
         android:id="@+id/backButton"
         android:layout_width="48dp"
@@ -43,32 +46,19 @@
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="Back Button"
         android:src="@drawable/ic_return"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:tint="@android:color/white" />
 
     <!-- ImageView (Logo) below the Title -->
 
     <!-- Text below the Shape -->
 
-    <ImageView
-        android:id="@+id/imgDay1"
-        android:layout_width="309dp"
-        android:layout_height="186dp"
-        android:layout_marginTop="8dp"
-        android:adjustViewBounds="true"
-        android:scaleType="centerInside"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MeditateTitle"
-        app:srcCompat="@drawable/sleep_page_logo" />
-
     <TextView
         android:id="@+id/videoDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="411dp"
         android:background="@drawable/sleep_shape"
         android:elevation="4dp"
         android:gravity="center"
@@ -77,26 +67,27 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgDay1" />
+        app:layout_constraintTop_toBottomOf="@+id/roundedShape" />
 
     <TextView
         android:id="@+id/swipeInstruction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/Swipetoexploremorevideos"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:padding="12dp"
         android:background="@drawable/sleep_shape"
         android:elevation="4dp"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/videoDescription"
+        android:padding="12dp"
+        android:text="@string/Swipetoexploremorevideos"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/videoDescription" />
 
     <!-- ViewPager2 for Videos -->
     <androidx.viewpager2.widget.ViewPager2
@@ -117,15 +108,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="1 of 2"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:padding="8dp"
         android:background="@drawable/sleep_shape"
         android:elevation="4dp"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/viewPager"
+        android:padding="8dp"
+        android:text="1 of 2"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/viewPager" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

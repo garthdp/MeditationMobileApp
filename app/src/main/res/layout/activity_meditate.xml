@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CF7DAF"
+    android:background="@color/white"
     tools:context=".MeditateActivity">
 
     <!-- Upside-Down Rounded Shape at the Top -->
@@ -12,30 +12,29 @@
     <!-- Title (Meditation) inside the shape -->
 
     <!-- Back Button (outside the shape, fixed at the top left) -->
-    <ImageView
-        android:id="@+id/semi_circle"
-        android:layout_width="425dp"
-        android:layout_height="698dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="83dp"
-        android:contentDescription="Semi-Circle Shape"
-        android:src="@drawable/semi_circle_shape"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <View
+        android:id="@+id/roundedShape"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="64dp"
+        android:background="@drawable/rounded_top_shape_with_glow"
+        android:rotation="180"
+        app:layout_constraintDimensionRatio="2:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/MeditateTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
         android:text="Meditation"
         android:textColor="@android:color/white"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,34 +54,32 @@
         android:id="@+id/videoDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="240dp"
-        android:background="@drawable/rounded_text_background_meditate"
+        android:layout_marginBottom="413dp"
+        android:background="@drawable/whale_shape"
         android:elevation="4dp"
         android:gravity="center"
         android:padding="12dp"
-        android:text="Whale sounds"
+        android:text="@string/Whalesounds"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toBottomOf="@+id/roundedShape" />
 
     <TextView
         android:id="@+id/swipeInstruction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:background="@drawable/rounded_text_background_meditate"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/whale_shape"
         android:elevation="4dp"
         android:gravity="center"
         android:padding="12dp"
-        android:text="Swipe to explore more videos!"
+        android:text="@string/Swipetoexploremorevideos"
         android:textColor="@android:color/white"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/viewPager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/videoDescription" />

@@ -8,31 +8,37 @@
     tools:context=".Dairy">
 
     <!-- TextView positioned with constraints -->
+
+
+
+    <View
+        android:id="@+id/roundedShape"
+        android:layout_width="416dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="126dp"
+        android:background="@drawable/rounded_top_shape_with_glow"
+        android:rotation="180"
+        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="48dp"
         android:layout_marginBottom="27dp"
         android:text="@string/WelcometoyourDiary"
         android:textColor="@color/white"
         android:textSize="28dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/semi_circle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/semi_circle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:contentDescription="Semi-Circle Shape"
-        android:src="@drawable/semi_circle_shape"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="@id/roundedShape" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_entries"
@@ -49,11 +55,13 @@
         android:id="@+id/button5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="38dp"
-        android:layout_marginBottom="57dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/AddEntry"
-        app:layout_constraintBottom_toBottomOf="@+id/semi_circle"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textColor="@color/white"
+        android:backgroundTint="#192841"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view_entries" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -62,7 +70,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/semi_circle"
+
         app:menu="@menu/bottom_navigation_menu" />
 
     <ProgressBar
