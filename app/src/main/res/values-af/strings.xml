@@ -62,4 +62,10 @@
     <string name="Rewards">Belongs</string>
     <string name="Date">Datum</string>
     <string name="Title">Titel</string>
+    <string name="en">English</string>
+    <string name="af">Afrikaans</string>
+    <string name="NotificateButton">Verander Toestemmings</string>
+    <string name="Diary">Dagboek</string>
+    <string name="Dashboard">Dashboard</string>
+    <string name="Game">Speletjie</string>
 </resources>
