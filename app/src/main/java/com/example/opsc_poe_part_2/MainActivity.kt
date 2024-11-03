@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity() {
         // Find the register button by ID
         val registerButton = findViewById<Button>(R.id.btnRegister)
         val loginButton = findViewById<Button>(R.id.btnLogin)
+        val btnSSO = findViewById<Button>(R.id.btnSSO)
         auth = FirebaseAuth.getInstance()
         googleAuthUiClient = GoogleAuthUiClient(
             context = this,
@@ -80,6 +81,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         loginButton.setOnClickListener {
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+        }
+
+        btnSSO.setOnClickListener {
             signInWithGoogle()
         }
         // Find VideoView by ID and set the video background

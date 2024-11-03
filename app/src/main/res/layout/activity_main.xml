@@ -21,40 +21,54 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
         android:contentDescription="Logo"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/whalelogo"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/whalelogo"  />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Register Button -->
+
+    <!-- Login Button -->
+
     <Button
         android:id="@+id/btnRegister"
         android:layout_width="0dp"
         android:layout_height="46dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="34dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginLeft="100dp"
         android:backgroundTint="@android:color/black"
         android:text="@string/Register"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnLogin"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSSO" />
 
-    <!-- Login Button -->
+    <Button
+        android:id="@+id/btnSSO"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginLeft="100dp"
+        android:backgroundTint="@android:color/black"
+        android:text="SSO"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="0dp"
         android:layout_height="46dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="34dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginLeft="100dp"
         android:background="@drawable/rectangularbutton"
         android:backgroundTint="@android:color/white"
         android:text="@string/login"
         android:textColor="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btnRegister"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
