@@ -175,7 +175,6 @@ class Profile : AppCompatActivity() {
                     txtEmail.text = res.Email
                     txtLevel.text = res.Level.toString()
                     txtExperience.text = res.Experience.toString()
-                    Log.d("picture", picture)
                     if(decodedPicture != null){
                         profilePic.setImageBitmap(decodedPicture)
                     }
