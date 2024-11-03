@@ -65,6 +65,9 @@
     <string name="en">English</string>
     <string name="af">Afrikaans</string>
     <string name="NotificateButton">Change Permissions</string>
+    <string name="Diary">Diary</string>
+    <string name="Dashboard">Dashboard</string>
+    <string name="Game">Game</string>
 
     <string-array name="color_options">
         <item>Red</item>
