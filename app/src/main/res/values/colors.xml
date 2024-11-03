@@ -11,9 +11,11 @@
     <color name="white">#FFFFFF</color>
 
     <!-- Dark Mode Colors -->
-    <color name="dark_background">#464A7E</color>
-    <color name="dark_text">#FFFFFF</color>
-    <color name="dark_accent">#FFFFFF</color>
+    <color name="dark_background">#fff</color>
+    <color name="dark_text">#124167</color>
+    <color name="dark_accent">#124167</color>
+
+    <color name="dark_blue">#124167</color>
 
 
         <!-- Define a nice background color for the entry boxes -->
