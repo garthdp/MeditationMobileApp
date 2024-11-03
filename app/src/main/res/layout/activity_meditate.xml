@@ -24,14 +24,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Meditation"
+        android:text="@string/Meditation"
         android:textColor="@android:color/white"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="@id/roundedShape"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/imageView2" />
+        app:layout_constraintBottom_toTopOf="@id/imgDay1" />
 
     <!-- Back Button (outside the shape, fixed at the top left) -->
     <ImageButton
@@ -48,7 +48,7 @@
 
     <!-- Image Logo inside the shape -->
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imgDay1"
         android:layout_width="215dp"
         android:layout_height="178dp"
         android:layout_marginTop="8dp"
@@ -66,14 +66,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:padding="12dp"
-        android:text="Whale sounds"
+        android:text="@string/Whalesounds"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:background="@drawable/rounded_text_background_meditate"
         android:elevation="4dp"
         android:gravity="center"
         android:textStyle="italic"
-        app:layout_constraintTop_toBottomOf="@id/imageView2"
+        app:layout_constraintTop_toBottomOf="@id/imgDay1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -83,7 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Swipe to explore more videos!"
+        android:text="@string/Swipetoexploremorevideos"
         android:textColor="@android:color/white"
         android:textSize="16sp"
         android:padding="12dp"

@@ -52,7 +52,7 @@
     <!-- Text below the Shape -->
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imgDay1"
         android:layout_width="309dp"
         android:layout_height="186dp"
         android:layout_marginTop="8dp"
@@ -80,7 +80,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@id/imgDay1" />
 
     <TextView
         android:id="@+id/swipeInstruction"

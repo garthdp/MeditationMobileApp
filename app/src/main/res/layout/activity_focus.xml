@@ -29,7 +29,7 @@
         android:textColor="@android:color/white"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/imageView2"
+        app:layout_constraintBottom_toTopOf="@id/imgDay1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/roundedShape" />
@@ -48,7 +48,7 @@
         app:tint="@android:color/white" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imgDay1"
         android:layout_width="315dp"
         android:layout_height="192dp"
         android:adjustViewBounds="true"
@@ -72,7 +72,7 @@
         android:elevation="4dp"
         android:gravity="center"
         android:textStyle="italic"
-        app:layout_constraintTop_toBottomOf="@id/imageView2"
+        app:layout_constraintTop_toBottomOf="@id/imgDay1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="@id/roundedShape"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/imageView2" />
+        app:layout_constraintBottom_toTopOf="@id/imgDay1" />
 
     <!-- Back Button at Top Left -->
     <ImageButton
@@ -48,7 +48,7 @@
         app:tint="@android:color/white" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imgDay1"
         android:layout_width="276dp"
         android:layout_height="174dp"
         android:layout_marginTop="4dp"
@@ -73,7 +73,7 @@
         android:elevation="4dp"
         android:gravity="center"
         android:textStyle="italic"
-        app:layout_constraintTop_toBottomOf="@id/imageView2"
+        app:layout_constraintTop_toBottomOf="@id/imgDay1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
