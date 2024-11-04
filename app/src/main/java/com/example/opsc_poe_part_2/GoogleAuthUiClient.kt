@@ -15,7 +15,7 @@ import kotlinx.coroutines.tasks.await
 
 /*
     Code Attribution
-    Title: Firebase Google Sign-In With Jetpack Compose & Clean Architecture - Android Studio Tutorial
+    Title: Firebase Google Sign-In With Jetpack Compose &  mknClean Architecture - Android Studio Tutorial
     Author: Philipp Lackner
     Post Link: https://www.youtube.com/watch?v=zCIfBbm06QM
     Usage: learned to do sso
