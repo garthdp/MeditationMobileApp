@@ -76,7 +76,8 @@
             android:exported="false" />
         <activity
             android:name=".WhaleGame"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".CameraTextReader"
             android:exported="false" />

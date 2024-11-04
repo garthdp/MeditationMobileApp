@@ -16,6 +16,7 @@
     <color name="dark_accent">#fff</color>
 
     <color name="dark_blue">#124167</color>
+    <color name="gray">#7F7F7F</color>
 
 
         <!-- Define a nice background color for the entry boxes -->

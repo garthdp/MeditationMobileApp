@@ -8,6 +8,19 @@
     android:layout_height="match_parent"
     tools:context=".WhaleGame">
 
+    <!-- High Score TextView -->
+    <TextView
+        android:id="@+id/highScoreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:text="High Score: 0"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <ProgressBar
         android:id="@+id/airBar"
         style="?android:attr/progressBarStyleHorizontal"
@@ -19,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/progress_bar_background"
+        android:backgroundTint="@color/gray"
         android:progressTint="@color/green"
         android:indeterminate="false" />
 
@@ -28,10 +41,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/ocean_gradient"
-        app:layout_constraintTop_toBottomOf="@id/airBar"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/airBar"
+        app:layout_constraintVertical_bias="1.0">
 
         <ImageView
             android:id="@+id/bubble1"
@@ -63,23 +78,45 @@
             android:id="@+id/whaleImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/whale_animation"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:src="@drawable/whale_animation" />
 
         <TextView
             android:id="@+id/scoreTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|center_horizontal"
-            android:background="@drawable/score_background"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
             android:padding="16dp"
             android:text="Score: 0"
-            android:textColor="@android:color/black"
-            android:textSize="24sp" />
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/joystickContainer"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/circle_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/joystickHandle"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/circle_background_handle"
+                android:elevation="5dp"
+                android:src="@drawable/joystick_handle" />
+        </FrameLayout>
 
         <ImageView
             android:id="@+id/net"
-            android:layout_width="100dp"
+            android:layout_width="276dp"
             android:layout_height="100dp"
             android:src="@drawable/net"
             android:visibility="invisible"
