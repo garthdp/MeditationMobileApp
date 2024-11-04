@@ -34,6 +34,14 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 class WhaleGame : AppCompatActivity() {
+    /*
+Code Attribution
+Title:How to pass values from a Class to Activity using Intents in Android Studio Tutorial 12 Total Score
+Author: Coding Cafe
+post link: https://www.youtube.com/watch?v=pAIC3JI1org
+Usage: Learned how to make game
+
+*/
     private lateinit var airBar: ProgressBar
     private var airLevel = 100
     private val decreaseAmount = 1
@@ -68,7 +76,7 @@ class WhaleGame : AppCompatActivity() {
 
         joystickHandle = findViewById(R.id.joystickHandle)
         joystickContainer = findViewById(R.id.joystickContainer)
-        airBar = findViewById(R.id.airBar)
+
         whaleImageView = findViewById(R.id.whaleImageView)
         net = findViewById(R.id.net)
         scoreTextView = findViewById(R.id.scoreTextView)
@@ -81,7 +89,14 @@ class WhaleGame : AppCompatActivity() {
         setupJoystick()
         initializeGameComponents()
     }
+    /*
+    Code Attribution
+    Title:Ep. 04 - Joystick and touch events | Android Studio 2D Game Development
+    Author: Alex Bükk
+    post link: https://www.youtube.com/watch?v=3oZ2jt0hQmo
+    Usage: Learned how to make joystick
 
+    */
     private fun setupJoystick() {
         joystickContainer.post {
             centerX = joystickContainer.width / 2f
@@ -92,7 +107,14 @@ class WhaleGame : AppCompatActivity() {
         }
         joystickHandle.setOnClickListener {}
     }
+    /*
+    Code Attribution
+    Title:How to pass values from a Class to Activity using Intents in Android Studio Tutorial 12 Total Score
+    Author: Coding Cafe
+    post link: https://www.youtube.com/watch?v=pAIC3JI1org
+    Usage: Learned how to make game
 
+    */
     private fun saveScore(score: Int) {
         val sharedPreferences = getSharedPreferences("game_preferences", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -112,17 +134,14 @@ class WhaleGame : AppCompatActivity() {
             findViewById<ImageView>(R.id.bubble2) to 6000L,
             findViewById<ImageView>(R.id.bubble3) to 7000L
         )
-        bubbles.forEach { (bubble, duration) ->
-            startFloatingAnimation(bubble, duration)
-            bubble.setOnClickListener { collectBubble(bubble) }
-        }
+
 
         // Decrease air over time
         fixedRateTimer("decreaseAir", initialDelay = 0, period = 1000) {
             runOnUiThread {
                 if (airLevel > 0) {
                     airLevel -= decreaseAmount
-                    updateAirBar()
+
                 }
             }
         }
@@ -212,32 +231,63 @@ class WhaleGame : AppCompatActivity() {
         }
         bubble.startAnimation(floatAnimation)
     }
-
+    /*
+    Code Attribution
+    Title:ChatGpt Chat
+    Author: ChatGpt
+    post link: https://chatgpt.com/
+    Usage: How to spawn net
+    */
     private fun startNetSpawning() {
         net.visibility = View.VISIBLE
         netHandler.post(createNetRunnable())
     }
 
     private fun createNetRunnable(): Runnable {
+        var fallSpeed = 5 // Starting fall speed
+        var timeElapsed = 0L // Variable to track time elapsed
         return object : Runnable {
             override fun run() {
-                val fallSpeed = 10 + score / 5
+                // Increase fall speed every 10 seconds
+                timeElapsed += 30 // Increment time elapsed (this runs every 30ms)
+                if (timeElapsed >= 10000) { // 10 seconds
+                    fallSpeed = min(fallSpeed + 2, 50) // Increase speed but cap at max speed
+                    timeElapsed = 0 // Reset elapsed time
+                }
+
                 net.translationY += fallSpeed
 
+                // Check if the net has gone off-screen or if it has collided with the whale
                 if (net.translationY > rootLayout.height) {
                     resetNet()
                 } else if (isColliding(whaleImageView, net)) {
                     gameOver()
                 } else {
-                    netHandler.postDelayed(this, 30)
+                    netHandler.postDelayed(this, 30) // Continue running every 30ms
                 }
             }
         }
     }
-
+    /*
+    Code Attribution
+    Title:ChatGpt Chat
+    Author: ChatGpt
+    post link: https://chatgpt.com/
+    Usage: How to spawn net
+    */
     private fun resetNet() {
-        net.translationY = 0f
+        // Get the whale's current Y position
+        val whaleCurrentY = whaleImageView.translationY
+
+        // Set the net's Y position to a random value between the top of the screen and just above the whale's current position
+        // The maximum Y position for the net should be just above the whale
+        val maxStartY = if (whaleCurrentY > 0) whaleCurrentY - 1 else 0
+        val randomStartY = (0..maxStartY.toInt()).random().toFloat()
+        net.translationY = randomStartY
+
+        // Randomize the X position of the net within the layout's width
         net.translationX = (0..(rootLayout.width - net.width)).random().toFloat()
+
         netHandler.post(createNetRunnable())
     }
 
@@ -337,7 +387,6 @@ class WhaleGame : AppCompatActivity() {
     private fun restartGame() {
         score = 0
         airLevel = 100
-        updateAirBar()
         resetNet()
         startScoreCounting()
         initializeGameComponents()
@@ -350,19 +399,6 @@ class WhaleGame : AppCompatActivity() {
             scoreHandler.postDelayed(scoreRunnable!!, 1000)
         }
         scoreHandler.post(scoreRunnable!!)
-    }
-
-    private fun collectBubble(bubble: ImageView) {
-        score += 5
-        scoreTextView.text = "Score: $score"
-        bubble.visibility = View.INVISIBLE
-    }
-
-    private fun updateAirBar() {
-        airBar.progress = airLevel
-        if (airLevel <= 0) {
-            gameOver()
-        }
     }
 
     private fun updateHighScore() {
