@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".FocusActivity">
 
     <!-- Upside-Down Rounded Shape at the Top -->
@@ -18,7 +17,7 @@
         app:layout_constraintDimensionRatio="2:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" /> <!-- Aspect ratio 2:1 -->
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Title (Focus) inside the shape -->
 

@@ -70,7 +70,7 @@
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/musiccard" />
+                        android:src="@drawable/music_icon" />
 
                     <Button
                         android:id="@+id/button_music"
@@ -102,7 +102,7 @@
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/sleepcard" />
+                        android:src="@drawable/sleep_icon" />
 
                     <Button
                         android:id="@+id/button_sleep"
@@ -134,7 +134,7 @@
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/meditatecard" />
+                        android:src="@drawable/meditate_icon" />
 
                     <Button
                         android:id="@+id/button_meditation"
@@ -166,7 +166,7 @@
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/whalecard" />
+                        android:src="@drawable/focus_icon" />
 
                     <Button
                         android:id="@+id/button_focus"
