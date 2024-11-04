@@ -68,10 +68,6 @@ class Settings : AppCompatActivity() {
         val notificationButton = findViewById<Button>(R.id.notificationButton)
         val btnLanguage = findViewById<Button>(R.id.btnLanguage)
 
-
-        // LanguageTst()
-        //language test that breaks
-
         notificationButton.setOnClickListener {
             openNotificationSettings()
         }

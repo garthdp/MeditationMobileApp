@@ -50,3 +50,28 @@ I then had to change one of the functions because this code only signed a user i
 Firstly it does an api call to our api and checks if the user alreadly exists in the database, if the user doesnt it then runs a post request which adds the user to the database and then returns the user to the next page.
 
 I didnt use AI anywhere else because i used videos and example code from class, i find videos more reliable and easier to understand what the code is used for and why its being used, all things i used a video for has references in the code.
+
+Colby:
+
+For the final part of the POE we knew we wanted to implement a very simple game feature incorporating a whale that's controlled by the user to help users relax and have fun, but did not exactly know what the concept would be about, i then asked AI to help me with a couple concept ideas, this was the prompt and response: 
+
+![Screenshot (565)](https://github.com/user-attachments/assets/fc5734fb-84e1-4908-a3e2-87b916823f86)
+![Screenshot (566)](https://github.com/user-attachments/assets/51a80b24-a9de-4591-98a1-1cf6b42bfebd)
+![Screenshot (567)](https://github.com/user-attachments/assets/a64f33cb-d650-4c3b-a0c0-48a76debfeda)
+
+We then chose to navigate/control the whale through touching gestures, where the user taps anywhere on the screen and the whale will navigate to that spot,
+We also chose to implement the scoring system, that gives users something to play towards, and try and beat their score,
+And for avoiding obstacles we chose to implement a falling net , that the whale must try and dodge, and thought this will incorporate well with the sea theme. 
+
+For the game i also used AI called leonardo.ai to generate me cartoon images to use in the game, the promt was : Render a vibrant, 3D cartoon-style fishing net suspended in mid-air, its mesh pattern intricately woven with thick, curved ropes and wooden floats, facing directly downward as if ready to scoop up an underwater catch, with a subtle gradient of light blue and white hues reflecting off its surface, set against a soft, cream-colored background, with bold, expressive lines and textures that evoke a sense of playfulness and whimsy.The ai then generated several images for me to choose from :
+
+![Screenshot (563)](https://github.com/user-attachments/assets/65c4e69b-d070-472d-82f9-9381ee1b5de5)
+
+i then liked this one the most and ended on picking this:
+
+![Screenshot (564)](https://github.com/user-attachments/assets/27f558ee-1384-46d8-8a92-1215fed01451)
+
+We then found videos to help us code the features, like the scoring , obstacles and movements, and referenced them in our code.
+
+
+

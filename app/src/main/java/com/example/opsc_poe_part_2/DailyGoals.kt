@@ -168,6 +168,12 @@ class DailyGoals : AppCompatActivity() {
 
         val alarmsJson = gson.toJson(alarmList)
         sharedPreferences.edit().putString("alarms", alarmsJson).apply()
+        UserWorked()
+    }
+    private fun UserWorked() {
+        val worked = "yes"
+        sharedPreferences.edit().putString("userWorked", worked).apply()
+
     }
 
     // loads lists from shared preferences and saves them to lists

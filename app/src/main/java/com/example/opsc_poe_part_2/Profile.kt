@@ -37,7 +37,6 @@ class Profile : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_profile)
         sharedPreferences = getSharedPreferences("ThemePrefs", MODE_PRIVATE)
 

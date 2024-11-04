@@ -36,7 +36,7 @@
     <string name="Start">Start</string>
     <string name="LevelUp">Level Up</string>
     <string name="ThisweekLevel">This weeks levels</string>
-    <string name="ThisMonthLevel">This months levels</string>
+    <string name="ThisMonthLevel">Completed weeks levels</string>
     <string name="Unlock">Unlocks</string>
     <string name="Email">Email</string>
     <string name="Password">Password</string>

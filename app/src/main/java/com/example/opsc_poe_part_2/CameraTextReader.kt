@@ -53,7 +53,6 @@ class CameraTextReader : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_camera_text_reader)
 
         saveEntryBtn = findViewById(R.id.saveTextBtn)
