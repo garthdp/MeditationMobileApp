@@ -63,6 +63,7 @@ The user's app will be locked whenever they close it to protect their app. They 
 ## Play store
 Submitted for review
 ![image](https://github.com/user-attachments/assets/6048837f-f1f1-4abd-bac2-ae7831ac1f43)
+![image](https://github.com/user-attachments/assets/fe78768f-265e-40ac-bb29-cc44b5cb528e)
 
 
 ## Usage Instructions:
