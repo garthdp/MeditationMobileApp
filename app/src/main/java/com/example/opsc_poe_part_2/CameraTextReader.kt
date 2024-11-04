@@ -287,6 +287,7 @@ class CameraTextReader : AppCompatActivity() {
 //camera text reader reference
 //youtube video
 //author
-//tihomir radev
+//Atif Pervaiz
 //video name
-//develop camera text reader in android studio
+//Recognize text in images
+//https://m.youtube.com/watch?v=VigFgq7h2X0
