@@ -26,6 +26,8 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 
+var ctrText : String = ""
+
 class CameraTextReader : AppCompatActivity() {
 
     private lateinit var inputImageBtn: MaterialButton
@@ -59,6 +61,7 @@ class CameraTextReader : AppCompatActivity() {
         recognizeTextBtn = findViewById(R.id.recognizeTextBtn)
         imageIv = findViewById(R.id.imageIv)
         recognizedTextEt = findViewById(R.id.recognizeTextEt)
+        ctrText = ""
 
 
         cameraPermissions = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -89,7 +92,10 @@ class CameraTextReader : AppCompatActivity() {
         }
 
         saveEntryBtn.setOnClickListener {
-            saveRecognizedTextAsEntry()
+            ctrText = recognizedTextEt.text.toString()
+            val intent = Intent(this@CameraTextReader, AddDiaryEntry::class.java)
+            startActivity(intent)
+            finish()
         }
 
     }
@@ -146,13 +152,7 @@ class CameraTextReader : AppCompatActivity() {
                 }
             }
             else if (id == 2){
-
-                if(checkStoragePermission()){
-                    pickImageGallery()
-                }
-                else{
-                    requestStoragePermission()
-                }
+                pickImageGallery()
             }
 
             return@setOnMenuItemClickListener true
@@ -226,7 +226,7 @@ class CameraTextReader : AppCompatActivity() {
 
 
     private fun requestStoragePermission(){
-    ActivityCompat.requestPermissions(this,storagePermissions, STORAGE_REQUEST_CODE)
+        ActivityCompat.requestPermissions(this,storagePermissions, STORAGE_REQUEST_CODE)
     }
 
     private fun requestCameraPermission(){
@@ -278,21 +278,5 @@ class CameraTextReader : AppCompatActivity() {
 
     private fun showToast(message:String){
         Toast.makeText(this,message, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun saveRecognizedTextAsEntry() {
-        val title = "New Entry" // Placeholder title or get from user input
-        val content = recognizedTextEt.text.toString()
-        val date = System.currentTimeMillis().toString() // Example for a timestamp
-
-        if (content.isNotEmpty()) {
-            val dbHelper = DBHelper(this, null)
-            dbHelper.addDiary(title, content, date, "defaultColor") // Adjust the color as needed
-
-            Toast.makeText(this, "Diary entry saved!", Toast.LENGTH_SHORT).show()
-            finish() // Optional: close CameraTextReader after saving
-        } else {
-            Toast.makeText(this, "No text to save!", Toast.LENGTH_SHORT).show()
-        }
     }
 }
