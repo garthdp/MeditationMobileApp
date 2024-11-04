@@ -8,6 +8,7 @@ import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
@@ -17,6 +18,14 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.work.BackoffPolicy
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
+import java.util.concurrent.TimeUnit
 import kotlin.concurrent.fixedRateTimer
 
 class WhaleGame: AppCompatActivity() {
@@ -29,6 +38,7 @@ class WhaleGame: AppCompatActivity() {
     private lateinit var rootLayout: View
 
     private var score = 0
+    private var xpEarned = 0
     private val scoreHandler = Handler(Looper.getMainLooper())
     private val netHandler = Handler(Looper.getMainLooper())
 
@@ -144,13 +154,46 @@ class WhaleGame: AppCompatActivity() {
         netHandler.removeCallbacksAndMessages(null)
         scoreHandler.removeCallbacksAndMessages(null)
         saveScore(score)
+        var xp = 0
+        if(25 < score && score < 50){
+            xp = 50
+        }
+        else if(score >= 50){
+            xp = 75
+        }
+        xpEarned = xp
+        levelUp(xp)
         showGameOverDialog()
+    }
+
+    fun levelUp(score: Int) {
+        /*
+            Code Attribution
+            Title: How to use OKHTTP to make a post request in Kotlin?
+            Author: heX
+            Author Link: https://stackoverflow.com/users/11740298/hex
+            Post Link: https://stackoverflow.com/questions/56893945/how-to-use-okhttp-to-make-a-post-request-in-kotlin
+            Usage: learned how to make patch api requests
+        */
+        val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+
+        val progressData = workDataOf(LevelUpWorker.EXPERIENCE to score.toString())
+
+        Log.d("ProgressData", progressData.toString() + score.toString())
+        val request: OneTimeWorkRequest =
+            OneTimeWorkRequestBuilder<LevelUpWorker>()
+                .setConstraints(constraints)
+                .setInputData(progressData)
+                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 20, TimeUnit.SECONDS)
+                .build()
+        WorkManager.getInstance()
+            .enqueue(request)
     }
 
     private fun showGameOverDialog() {
         AlertDialog.Builder(this).apply {
             setTitle("Game Over")
-            setMessage("Your score: $score\nDo you want to play again?")
+            setMessage("Your score: $score\nXP earned: $xpEarned\nDo you want to play again?")
             setPositiveButton("Yes") { _, _ -> restartGame() }
             setNegativeButton("Quit") { _, _ -> finish() }
             setCancelable(true)
