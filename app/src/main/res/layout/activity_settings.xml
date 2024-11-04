@@ -114,6 +114,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="-10dp"
+        android:textColor="#fff"
+        android:backgroundTint="@color/dark_blue"
         android:text="@string/NotificateButton"
         app:layout_constraintStart_toEndOf="@+id/textView10"
         app:layout_constraintTop_toTopOf="@+id/textView10" />
@@ -164,8 +166,10 @@
         android:id="@+id/notificationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/dark_blue"
         android:layout_marginStart="20dp"
         android:layout_marginTop="-10dp"
+        android:textColor="#fff"
         android:text="@string/NotificateButton"
         app:layout_constraintStart_toEndOf="@+id/textView9"
         app:layout_constraintTop_toTopOf="@+id/textView9" />
