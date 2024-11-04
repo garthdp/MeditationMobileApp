@@ -60,6 +60,11 @@ The user will now recieve daily notifications reminding the user to take time of
 ### Biometric scanner
 The user's app will be locked whenever they close it to protect their app. They will be able to unlock the app with their fingerprint or phone pin.
 
+## Play store
+Submitted for review
+![image](https://github.com/user-attachments/assets/6048837f-f1f1-4abd-bac2-ae7831ac1f43)
+
+
 ## Usage Instructions:
 Register:
 
