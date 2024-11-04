@@ -19,9 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" /> <!-- Aspect ratio for the shape -->
 
-    <!-- Title inside the Shape -->
-
-    <!-- Back Button at Top Left -->
     <TextView
         android:id="@+id/MeditateTitle"
         android:layout_width="wrap_content"
