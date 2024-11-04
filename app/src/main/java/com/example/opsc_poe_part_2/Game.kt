@@ -1,13 +1,17 @@
 package com.example.opsc_poe_part_2
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class Game: AppCompatActivity() {
+class Game : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
@@ -27,7 +31,6 @@ class Game: AppCompatActivity() {
                     startActivity(Intent(this, Rewards::class.java))
                     true
                 }
-
                 R.id.nav_profile -> {
                     startActivity(Intent(this, Profile::class.java))
                     true
@@ -39,11 +42,31 @@ class Game: AppCompatActivity() {
             }
         }
         bottomNavigationView.selectedItemId = R.id.nav_game
-        val button = findViewById<Button>(R.id.start_btn_id)
-        button.setOnClickListener {
-            // Start the WhaleGame activity
+
+        val startButton = findViewById<Button>(R.id.start_btn_id)
+        startButton.setOnClickListener {
             val intent = Intent(this, WhaleGame::class.java)
             startActivity(intent)
+        }
+
+        val menuButton = findViewById<Button>(R.id.menu_btn_id)
+        menuButton.setOnClickListener {
+            showGameInfoDialog()
+        }
     }
-}
+
+    private fun showGameInfoDialog() {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialoggameinfo, null)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(true)
+            .create()
+
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.window?.addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
+
+        dialog.show()
+    }
 }

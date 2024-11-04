@@ -279,3 +279,9 @@ class CameraTextReader : AppCompatActivity() {
         Toast.makeText(this,message, Toast.LENGTH_SHORT).show()
     }
 }
+//camera text reader reference
+//youtube video
+//author
+//tihomir radev
+//video name
+//develop camera text reader in android studio
