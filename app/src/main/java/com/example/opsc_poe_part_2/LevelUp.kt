@@ -28,6 +28,7 @@ class LevelUp : AppCompatActivity() {
         setContentView(R.layout.activity_level_up)
         sharedPreferences = getSharedPreferences("GoalPrefs", Context.MODE_PRIVATE)
         loadGoals()
+        loadStickers()
 
         val currentDayOfWeek: Int = LocalDate.now().dayOfWeek.value
 
@@ -39,30 +40,37 @@ class LevelUp : AppCompatActivity() {
                 if (currentDayOfWeek == 1) {
                     val imgday1 = findViewById<ImageView>(R.id.imgDay1)
                     imgday1.setImageResource(R.drawable.starfishcolor)
+                    sharedPreferences.edit().putString("Day1", "yes").apply()
                 }
                 if (currentDayOfWeek == 2) {
                     val imgday2 = findViewById<ImageView>(R.id.imgDay2)
                     imgday2.setImageResource(R.drawable.starfishcolor)
+                    sharedPreferences.edit().putString("Day2", "yes").apply()
                 }
                 if (currentDayOfWeek == 3) {
                     val imgday3 = findViewById<ImageView>(R.id.imgDay3)
                     imgday3.setImageResource(R.drawable.starfishcolor)
+                    sharedPreferences.edit().putString("Day3", "yes").apply()
                 }
                 if (currentDayOfWeek == 4) {
                     val imgday4 = findViewById<ImageView>(R.id.imgDay4)
                     imgday4.setImageResource(R.drawable.starfishcolor)
+                    sharedPreferences.edit().putString("Day4", "yes").apply()
                 }
                 if (currentDayOfWeek == 5) {
                     val imgday5 = findViewById<ImageView>(R.id.imgDay5)
                     imgday5.setImageResource(R.drawable.starfishcolor)
+                    sharedPreferences.edit().putString("Day5", "yes").apply()
                 }
                 if (currentDayOfWeek == 6) {
                     val imgday6 = findViewById<ImageView>(R.id.imgDay6)
                     imgday6.setImageResource(R.drawable.starfishcolor)
+                    sharedPreferences.edit().putString("Day6", "yes").apply()
                 }
                 if (currentDayOfWeek == 7) {
                     val imgday7 = findViewById<ImageView>(R.id.imgDay7)
                     imgday7.setImageResource(R.drawable.starfishcolor)
+                    sharedPreferences.edit().putString("Day7", "yes").apply()
                 }
 
             }
@@ -102,6 +110,45 @@ class LevelUp : AppCompatActivity() {
 
     }
 
+    private fun loadStickers() {
+        val Day1 = sharedPreferences.getString("Day1", null)
+        val Day2 = sharedPreferences.getString("Day2", null)
+        val Day3 = sharedPreferences.getString("Day3", null)
+        val Day4 = sharedPreferences.getString("Day4", null)
+        val Day5 = sharedPreferences.getString("Day5", null)
+        val Day6 = sharedPreferences.getString("Day6", null)
+        val Day7 = sharedPreferences.getString("Day7", null)
+
+        if(Day1 == "yes"){
+            val imgday1 = findViewById<ImageView>(R.id.imgDay1)
+            imgday1.setImageResource(R.drawable.starfishcolor)
+        }
+        if(Day2 == "yes"){
+            val imgday2 = findViewById<ImageView>(R.id.imgDay2)
+            imgday2.setImageResource(R.drawable.starfishcolor)
+        }
+        if(Day3 == "yes"){
+            val imgday3 = findViewById<ImageView>(R.id.imgDay3)
+            imgday3.setImageResource(R.drawable.starfishcolor)
+        }
+        if(Day4 == "yes"){
+            val imgday4 = findViewById<ImageView>(R.id.imgDay4)
+            imgday4.setImageResource(R.drawable.starfishcolor)
+        }
+        if(Day5 == "yes"){
+            val imgday5 = findViewById<ImageView>(R.id.imgDay5)
+            imgday5.setImageResource(R.drawable.starfishcolor)
+        }
+        if(Day6 == "yes"){
+            val imgday6 = findViewById<ImageView>(R.id.imgDay6)
+            imgday6.setImageResource(R.drawable.starfishcolor)
+        }
+        if(Day7 == "yes"){
+            val imgday7 = findViewById<ImageView>(R.id.imgDay7)
+            imgday7.setImageResource(R.drawable.starfishcolor)
+        }
+    }
+
     private fun loadGoals() {
         val goalsJson = sharedPreferences.getString("goals", null)
         if (goalsJson != null) {
@@ -109,6 +156,11 @@ class LevelUp : AppCompatActivity() {
             goalsList.addAll(gson.fromJson(goalsJson, goalsType))
 //            adapter.notifyDataSetChanged()
         }
+
+    }
+    private fun DayWorked() {
+        val worked = "yes"
+        sharedPreferences.edit().putString("userWorked", worked).apply()
 
     }
 }
