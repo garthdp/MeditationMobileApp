@@ -12,7 +12,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class Rewards : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_rewards)
         val btnDailyGoals = findViewById<Button>(R.id.btnDailyGoals)
         val btnLevelUp = findViewById<Button>(R.id.btnLevelUp)

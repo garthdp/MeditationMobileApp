@@ -19,31 +19,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/DiaryDateText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:maxLength="50"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="70dp"
         android:hint="@string/Date"
+        android:maxLength="50"
+        android:textAlignment="center"
         android:textColor="@android:color/white"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Content Text -->
     <TextView
         android:id="@+id/DiaryTitleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
         android:layout_marginTop="18dp"
+        android:layout_marginEnd="40dp"
         android:hint="@string/TITLE"
+        android:textAlignment="center"
         android:maxLength="50"
         android:textColor="@android:color/white"
         android:textSize="24sp"
@@ -53,18 +55,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DiaryDateText" />
 
-    <TextView
-        android:id="@+id/DiaryContentText"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="18dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:hint="@string/TEXT"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/DiaryTitleText"
-        app:layout_constraintTop_toBottomOf="@+id/DiaryTitleText" />
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DiaryTitleText">
 
+        <TextView
+            android:id="@+id/DiaryContentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:hint="@string/TEXT"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/DiaryTitleText"
+            app:layout_constraintTop_toBottomOf="@+id/DiaryTitleText" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
