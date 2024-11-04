@@ -66,27 +66,11 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="255dp"
-        android:layout_marginEnd="242dp"
-        android:layout_marginBottom="449dp"
-        android:text="@string/ThisMonthLevel"
-        android:textColor="#19283F"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="419dp"
-        android:layout_marginEnd="338dp"
-        android:layout_marginBottom="285dp"
-        android:text="@string/Unlock"
+        android:layout_marginTop="254dp"
+        android:layout_marginEnd="183dp"
+        android:layout_marginBottom="450dp"
+        android:text="@string/ThisMonthLevel"
         android:textColor="#19283F"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -137,98 +121,50 @@
         app:srcCompat="@drawable/starfishnocolor" />
 
     <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="127dp"
-        android:layout_marginTop="464dp"
-        android:layout_marginEnd="239dp"
-        android:layout_marginBottom="222dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/unlock3" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="464dp"
-        android:layout_marginEnd="294dp"
-        android:layout_marginBottom="222dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/unlock2" />
-
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="464dp"
-        android:layout_marginEnd="354dp"
-        android:layout_marginBottom="222dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/unlock1" />
-
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="192dp"
-        android:layout_marginTop="464dp"
-        android:layout_marginBottom="222dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.505"
-        app:srcCompat="@drawable/unlock4" />
-
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="46dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="301dp"
-        android:layout_marginEnd="177dp"
-        android:layout_marginBottom="371dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView11"
-        android:layout_width="48dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="91dp"
-        android:layout_marginTop="298dp"
-        android:layout_marginEnd="261dp"
-        android:layout_marginBottom="374dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView12"
+        android:id="@+id/imgweek3"
         android:layout_width="51dp"
         android:layout_height="57dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="298dp"
-        android:layout_marginEnd="332dp"
-        android:layout_marginBottom="370dp"
+        android:layout_marginStart="158dp"
+        android:layout_marginTop="302dp"
+        android:layout_marginEnd="202dp"
+        android:layout_marginBottom="372dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/starfishcolor" />
+
+    <ImageView
+        android:id="@+id/imgweek2"
+        android:layout_width="51dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="301dp"
+        android:layout_marginEnd="272dp"
+        android:layout_marginBottom="373dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/starfishcolor" />
+
+    <ImageView
+        android:id="@+id/imgweek1"
+        android:layout_width="51dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="301dp"
+        android:layout_marginEnd="338dp"
+        android:layout_marginBottom="373dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/starfishcolor" />
+
 
     <ImageView
         android:id="@+id/imgDay5"

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
@@ -31,8 +32,12 @@ class LevelUp : AppCompatActivity() {
         loadStickers()
 
         val currentDayOfWeek: Int = LocalDate.now().dayOfWeek.value
-
         val worked = sharedPreferences.getString("userWorked", null)
+
+        if (currentDayOfWeek == 1){
+            AreAllDaysDone()
+        }
+
 
         if (worked == "yes"){
             if (goalsList.isEmpty()){
@@ -110,6 +115,44 @@ class LevelUp : AppCompatActivity() {
 
     }
 
+    private fun AreAllDaysDone() {
+        val Day1 = sharedPreferences.getString("Day1", null)
+        val Day2 = sharedPreferences.getString("Day2", null)
+        val Day3 = sharedPreferences.getString("Day3", null)
+        val Day4 = sharedPreferences.getString("Day4", null)
+        val Day5 = sharedPreferences.getString("Day5", null)
+        val Day6 = sharedPreferences.getString("Day6", null)
+        val Day7 = sharedPreferences.getString("Day7", null)
+        val Week1 = sharedPreferences.getString("week1", null)
+        val Week2 = sharedPreferences.getString("week2", null)
+        val Week3 = sharedPreferences.getString("week3", null)
+
+        if (Day1 == "yes" && Day2 == "yes" && Day3 == "yes" &&
+            Day4 == "yes" && Day5 == "yes" && Day6 == "yes" &&
+            Day7 == "yes") {
+            // Display toast message
+            val imgweek1 = findViewById<ImageView>(R.id.imgweek1)
+            imgweek1.visibility = View.VISIBLE
+            sharedPreferences.edit().putString("Week1", "yes").apply()
+        }
+        if (Day1 == "yes" && Day2 == "yes" && Day3 == "yes" &&
+            Day4 == "yes" && Day5 == "yes" && Day6 == "yes" &&
+            Day7 == "yes" && Week1 == "yes") {
+            // Display toast message
+            val imgweek2 = findViewById<ImageView>(R.id.imgweek2)
+            imgweek2.visibility = View.VISIBLE
+            sharedPreferences.edit().putString("Week2", "yes").apply()
+        }
+        if (Day1 == "yes" && Day2 == "yes" && Day3 == "yes" &&
+            Day4 == "yes" && Day5 == "yes" && Day6 == "yes" &&
+            Day7 == "yes" && Week1 == "yes"&& Week2 == "yes") {
+            // Display toast message
+            val imgweek3 = findViewById<ImageView>(R.id.imgweek3)
+            imgweek3.visibility = View.VISIBLE
+            sharedPreferences.edit().putString("Week2", "yes").apply()
+        }
+    }
+
     private fun loadStickers() {
         val Day1 = sharedPreferences.getString("Day1", null)
         val Day2 = sharedPreferences.getString("Day2", null)
@@ -118,6 +161,10 @@ class LevelUp : AppCompatActivity() {
         val Day5 = sharedPreferences.getString("Day5", null)
         val Day6 = sharedPreferences.getString("Day6", null)
         val Day7 = sharedPreferences.getString("Day7", null)
+        val Week1 = sharedPreferences.getString("week1", null)
+        val Week2 = sharedPreferences.getString("week2", null)
+        val Week3 = sharedPreferences.getString("week3", null)
+
 
         if(Day1 == "yes"){
             val imgday1 = findViewById<ImageView>(R.id.imgDay1)
@@ -147,6 +194,19 @@ class LevelUp : AppCompatActivity() {
             val imgday7 = findViewById<ImageView>(R.id.imgDay7)
             imgday7.setImageResource(R.drawable.starfishcolor)
         }
+        if(Week1 == "yes"){
+            val imgweek1 = findViewById<ImageView>(R.id.imgweek1)
+            imgweek1.visibility = View.VISIBLE
+        }
+        if(Week2 == "yes"){
+            val imgweek2 = findViewById<ImageView>(R.id.imgweek2)
+            imgweek2.visibility = View.VISIBLE
+        }
+        if(Week3 == "yes"){
+            val imgweek3 = findViewById<ImageView>(R.id.imgweek3)
+            imgweek3.visibility = View.VISIBLE
+        }
+
     }
 
     private fun loadGoals() {
