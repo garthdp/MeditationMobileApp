@@ -51,6 +51,8 @@ Firstly it does an api call to our api and checks if the user alreadly exists in
 
 I didnt use AI anywhere else because i used videos and example code from class, i find videos more reliable and easier to understand what the code is used for and why its being used, all things i used a video for has references in the code.
 
+Colby:
+
 For the final part of the POE we knew we wanted to implement a very simple game feature incorporating a whale that's controlled by the user to help users relax and have fun, but did not exactly know what the concept would be about, i then asked AI to help me with a couple concept ideas, this was the prompt and response: 
 
 ![Screenshot (565)](https://github.com/user-attachments/assets/fc5734fb-84e1-4908-a3e2-87b916823f86)
