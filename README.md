@@ -1,6 +1,6 @@
 # Oceans Depth Meditation App
 ## AI Write Up
-Our AI write up is in the file AIWriteUp.md
+Our AI write up is in the file AiWriteUp.md
 
 ## Overview:
 Oceans Depth is a meditation app designed to promote mindfulness, help users focus, and track their personal progress. This app offers features like diary entries, personalized meditation sessions, breathing exercises, and goal tracking, all while allowing users to switch between light and dark modes for a customizable experience. The app also rewards users with points, helping them to level up as they achieve their daily goals.
