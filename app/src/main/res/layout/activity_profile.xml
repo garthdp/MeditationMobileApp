@@ -7,12 +7,25 @@
     android:layout_height="match_parent"
     tools:context=".Profile">
 
+    <View
+        android:id="@+id/roundedShape"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="64dp"
+        android:background="@drawable/rounded_top_shape_with_glow"
+        android:rotation="180"
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="@string/Profile"
+        android:textColor="#fff"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,18 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView13"
         app:srcCompat="@drawable/logo" />
 
-    <ImageView
-        android:id="@+id/semi_circle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:contentDescription="Semi-Circle Shape"
-        android:src="@drawable/semi_circle_shape"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView13"
-        app:layout_constraintVertical_bias="0.0" />
+
 
     <com.jjoe64.graphview.GraphView
         android:id="@+id/graph2"
@@ -61,7 +63,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +74,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="@string/INFORMATION"
-        android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +85,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/Email"
-        android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +94,6 @@
         android:id="@+id/lblEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -107,7 +105,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/Level"
-        android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -117,7 +114,6 @@
         android:id="@+id/lblLevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
         android:layout_marginTop="10dp"
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
@@ -130,7 +126,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/Experience"
-        android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -142,7 +137,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text=""
-        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvExperience" />
@@ -159,13 +153,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView13" />
 
+
+
     <Button
         android:id="@+id/btnSetting"
         android:layout_width="90dp"
         android:layout_height="54dp"
         android:layout_marginTop="-5dp"
         android:layout_marginEnd="16dp"
-        app:icon="@drawable/ic_settings"
+        app:icon="@drawable/settings_icon"
         app:iconGravity="textEnd"
         app:iconSize="50dp"
         app:layout_constraintEnd_toEndOf="parent"

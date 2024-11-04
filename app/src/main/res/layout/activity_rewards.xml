@@ -7,16 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".Rewards">
 
-    <ImageView
-        android:id="@+id/semi_circle"
+    <View
+        android:id="@+id/roundedShape"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:contentDescription="Semi-Circle Shape"
-        android:src="@drawable/semi_circle_shape"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="64dp"
+        android:background="@drawable/rounded_top_shape_with_glow"
+        android:rotation="180"
+        app:layout_constraintDimensionRatio="2:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rewardsTitle" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/rewardsTitle"
@@ -28,22 +29,20 @@
         android:textColor="#FFFFFF"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/semi_circle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Image below buttons inside the semi-circle -->
-
-    <!-- Bottom Navigation View -->
+    <!-- Button with dark blue background -->
     <Button
         android:id="@+id/btnDailyGoals"
         android:layout_width="169dp"
         android:layout_height="150dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="252dp"
         android:layout_marginEnd="12dp"
         android:text="@string/DailyGoals"
+        android:background="@color/dark_blue"
         app:icon="@drawable/ic_levelup"
         app:iconGravity="textTop"
         app:iconSize="80dp"
@@ -57,26 +56,13 @@
         android:layout_height="150dp"
         android:layout_marginEnd="20dp"
         android:text="@string/LevelUp"
+        android:background="@color/dark_blue"
         app:icon="@drawable/ic_dailygoals"
         app:iconGravity="textTop"
         app:iconSize="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnDailyGoals"
         app:layout_constraintTop_toTopOf="@+id/btnDailyGoals" />
-
-    <ImageView
-        android:id="@+id/imageBelowButtons"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="30dp"
-        android:contentDescription="Image below buttons"
-        android:src="@drawable/rewards_page_logo"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLevelUp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -88,4 +74,3 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
