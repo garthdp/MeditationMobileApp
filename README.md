@@ -41,7 +41,7 @@ Theme Switching: Users can switch between light mode and dark mode according to 
 Log Out: Users can securely log out of their account through the settings.
 Theme Settings: Customize the appearance of the app by choosing between light and dark modes.
 
-##Part 3
+## Part 3
 ### Feature 4. Camera Text Reader
 The user will now be able to take a picture of text and then save it to a diary entry.
 
