@@ -31,38 +31,43 @@ class LevelUp : AppCompatActivity() {
 
         val currentDayOfWeek: Int = LocalDate.now().dayOfWeek.value
 
-        if (goalsList == null){
+        val worked = sharedPreferences.getString("userWorked", null)
 
-            if (currentDayOfWeek == 1) {
-                val imgday1 = findViewById<ImageView>(R.id.imgDay1)
-                imgday1.setImageResource(R.drawable.starfishcolor)
-            }
-            if (currentDayOfWeek == 2) {
-                val imgday2 = findViewById<ImageView>(R.id.imgDay2)
-                imgday2.setImageResource(R.drawable.starfishcolor)
-            }
-            if (currentDayOfWeek == 3) {
-                val imgday3 = findViewById<ImageView>(R.id.imgDay3)
-                imgday3.setImageResource(R.drawable.starfishcolor)
-            }
-            if (currentDayOfWeek == 4) {
-                val imgday4 = findViewById<ImageView>(R.id.imgDay4)
-                imgday4.setImageResource(R.drawable.starfishcolor)
-            }
-            if (currentDayOfWeek == 5) {
-                val imgday5 = findViewById<ImageView>(R.id.imgDay5)
-                imgday5.setImageResource(R.drawable.starfishcolor)
-            }
-            if (currentDayOfWeek == 6) {
-                val imgday6 = findViewById<ImageView>(R.id.imgDay6)
-                imgday6.setImageResource(R.drawable.starfishcolor)
-            }
-            if (currentDayOfWeek == 7) {
-                val imgday7 = findViewById<ImageView>(R.id.imgDay7)
-                imgday7.setImageResource(R.drawable.starfishcolor)
-            }
+        if (worked == "yes"){
+            if (goalsList.isEmpty()){
 
+                if (currentDayOfWeek == 1) {
+                    val imgday1 = findViewById<ImageView>(R.id.imgDay1)
+                    imgday1.setImageResource(R.drawable.starfishcolor)
+                }
+                if (currentDayOfWeek == 2) {
+                    val imgday2 = findViewById<ImageView>(R.id.imgDay2)
+                    imgday2.setImageResource(R.drawable.starfishcolor)
+                }
+                if (currentDayOfWeek == 3) {
+                    val imgday3 = findViewById<ImageView>(R.id.imgDay3)
+                    imgday3.setImageResource(R.drawable.starfishcolor)
+                }
+                if (currentDayOfWeek == 4) {
+                    val imgday4 = findViewById<ImageView>(R.id.imgDay4)
+                    imgday4.setImageResource(R.drawable.starfishcolor)
+                }
+                if (currentDayOfWeek == 5) {
+                    val imgday5 = findViewById<ImageView>(R.id.imgDay5)
+                    imgday5.setImageResource(R.drawable.starfishcolor)
+                }
+                if (currentDayOfWeek == 6) {
+                    val imgday6 = findViewById<ImageView>(R.id.imgDay6)
+                    imgday6.setImageResource(R.drawable.starfishcolor)
+                }
+                if (currentDayOfWeek == 7) {
+                    val imgday7 = findViewById<ImageView>(R.id.imgDay7)
+                    imgday7.setImageResource(R.drawable.starfishcolor)
+                }
+
+            }
         }
+
 
 
         // Initialize BottomNavigationView and set up item selection listener
