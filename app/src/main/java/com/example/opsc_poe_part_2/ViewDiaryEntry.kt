@@ -15,7 +15,6 @@ import androidx.core.view.WindowInsetsCompat
 class ViewDiaryEntry : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_view_diary_entry)
 
         val title: TextView = findViewById(R.id.DiaryTitleText)

@@ -4,16 +4,25 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.work.BackoffPolicy
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
 import com.google.gson.Gson
 import java.time.LocalDate
+import java.util.concurrent.TimeUnit
 
 class LevelUp : AppCompatActivity() {
     private val goalsList = mutableListOf<String>()
@@ -147,6 +156,33 @@ class LevelUp : AppCompatActivity() {
             val imgday7 = findViewById<ImageView>(R.id.imgDay7)
             imgday7.setImageResource(R.drawable.starfishcolor)
         }
+        if(Day1 == "yes" && Day7 == "yes" && Day6 == "yes" && Day5 == "yes" && Day4 == "yes" && Day3 == "yes" && Day2 == "yes"){
+            levelUp(100)
+        }
+    }
+
+    fun levelUp(score: Int) {
+        /*
+            Code Attribution
+            Title: How to use OKHTTP to make a post request in Kotlin?
+            Author: heX
+            Author Link: https://stackoverflow.com/users/11740298/hex
+            Post Link: https://stackoverflow.com/questions/56893945/how-to-use-okhttp-to-make-a-post-request-in-kotlin
+            Usage: learned how to make patch api requests
+        */
+        val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+
+        val progressData = workDataOf(LevelUpWorker.EXPERIENCE to score.toString())
+
+        Log.d("ProgressData", progressData.toString() + score.toString())
+        val request: OneTimeWorkRequest =
+            OneTimeWorkRequestBuilder<LevelUpWorker>()
+                .setConstraints(constraints)
+                .setInputData(progressData)
+                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 20, TimeUnit.SECONDS)
+                .build()
+        WorkManager.getInstance()
+            .enqueue(request)
     }
 
     private fun loadGoals() {

@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#44CBC9"
+    android:orientation="horizontal"
     tools:context=".AddDiaryEntry">
-
     <!-- Back Arrow Icon -->
     <ImageButton
         android:id="@+id/backButton"
@@ -41,7 +41,6 @@
             android:contentDescription="Camera Icon"
             android:src="@drawable/ic_camera" />
     </LinearLayout>
-
     <EditText
         android:id="@+id/titleText"
         android:layout_width="match_parent"
@@ -58,19 +57,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Content Text -->
-    <EditText
-        android:id="@+id/contentText"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:hint="@string/TEXT"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/titleText"
-        app:layout_constraintTop_toBottomOf="@+id/titleText" />
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleText">
+        <!-- Content Text -->
+        <EditText
+            android:id="@+id/contentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:hint="@string/TEXT"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/titleText"
+            app:layout_constraintTop_toBottomOf="@+id/titleText" />
+    </ScrollView>
 
     <ImageView
         android:id="@+id/imgPreview"
