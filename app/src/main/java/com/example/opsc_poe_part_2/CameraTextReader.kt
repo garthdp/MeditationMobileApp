@@ -41,9 +41,10 @@ class CameraTextReader : AppCompatActivity() {
         private const val CAMERA_REQUEST_CODE =100
         private const val STORAGE_REQUEST_CODE = 101
     }
+//uri of the image that we will take from camera / gallery
 
     private var imageUri: Uri? = null
-
+//arrays of perission required to pck image from camera
     private lateinit var cameraPermissions: Array<String>
     private lateinit var storagePermissions:Array<String>
 
@@ -54,7 +55,7 @@ class CameraTextReader : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera_text_reader)
-
+//init ui views
         saveEntryBtn = findViewById(R.id.saveTextBtn)
         inputImageBtn = findViewById(R.id.inputImageBtn)
         recognizeTextBtn = findViewById(R.id.recognizeTextBtn)
@@ -62,7 +63,7 @@ class CameraTextReader : AppCompatActivity() {
         recognizedTextEt = findViewById(R.id.recognizeTextEt)
         ctrText = ""
 
-
+//init arrays of permissions required fr camera
         cameraPermissions = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         storagePermissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
@@ -74,7 +75,7 @@ class CameraTextReader : AppCompatActivity() {
 
         textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
-
+//haandle click show input dialog
         inputImageBtn.setOnClickListener{
 
             showInputImageDialog()
@@ -160,9 +161,9 @@ class CameraTextReader : AppCompatActivity() {
     }
 
     private fun pickImageGallery(){
-
+//intent to pick image from ggallery will show all resouces from where we can pick image
         val intent = Intent(Intent.ACTION_PICK)
-
+//set type of file we want to pick i.e image
         intent.type = "image/*"
         galleryActivityResultLauncher.launch(intent)
 
@@ -171,20 +172,22 @@ class CameraTextReader : AppCompatActivity() {
     private val galleryActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result->
-
+//here we will recieve the image if picked
             if(result.resultCode == Activity.RESULT_OK){
-
+//image picked
                 val data = result.data
                 imageUri = data!!.data
-
+//set to imageView i.e. imageiv
                 imageIv.setImageURI(imageUri)
             }
             else{
+                //cancelled
                 showToast("Cancelled...!")
             }
         }
 
     private fun pickImageCamera(){
+        //get the image ready to store in mediiastore
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, "Sample Title")
         values.put(MediaStore.Images.Media.DESCRIPTION,"Sample Description")
@@ -225,10 +228,12 @@ class CameraTextReader : AppCompatActivity() {
 
 
     private fun requestStoragePermission(){
+        //request storage permissions
         ActivityCompat.requestPermissions(this,storagePermissions, STORAGE_REQUEST_CODE)
     }
 
     private fun requestCameraPermission(){
+        //request camera permissions
         ActivityCompat.requestPermissions(this,cameraPermissions, CAMERA_REQUEST_CODE)
     }
 
@@ -238,7 +243,7 @@ class CameraTextReader : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
+//handle permissions result
         when(requestCode){
             CAMERA_REQUEST_CODE ->{
 
