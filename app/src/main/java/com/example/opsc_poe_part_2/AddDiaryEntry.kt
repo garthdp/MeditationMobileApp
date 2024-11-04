@@ -69,6 +69,8 @@ class AddDiaryEntry : AppCompatActivity() {
         val constraintLayout = findViewById<ConstraintLayout>(R.id.constraintLayout)
         val changeColorButton = findViewById<Button>(R.id.changeColorButton)
         val cameraButton = findViewById<ImageButton>(R.id.cameraButton)
+        val contentEditText = findViewById<EditText>(R.id.contentText)
+        contentEditText.setText(ctrText)
         var color = ""
         // val imageView = findViewById<ImageView>(R.id.imgPreview)
 
