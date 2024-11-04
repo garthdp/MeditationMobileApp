@@ -8,6 +8,7 @@ import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
@@ -17,6 +18,14 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.work.BackoffPolicy
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
+import java.util.concurrent.TimeUnit
 import kotlin.concurrent.fixedRateTimer
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -36,7 +45,9 @@ class WhaleGame : AppCompatActivity() {
     private lateinit var joystickContainer: View
 
     private var score = 0
+
     private var highScore = 0
+    private var xpEarned = 0
     private val scoreHandler = Handler(Looper.getMainLooper())
     private val netHandler = Handler(Looper.getMainLooper())
     private val movementHandler = Handler(Looper.getMainLooper())
@@ -79,7 +90,14 @@ class WhaleGame : AppCompatActivity() {
 
             joystickHandle.setOnTouchListener { _, event -> handleJoystickTouch(event) }
         }
-        joystickHandle.setOnClickListener {} // Override performClick for accessibility
+        joystickHandle.setOnClickListener {}
+    }
+
+    private fun saveScore(score: Int) {
+        val sharedPreferences = getSharedPreferences("game_preferences", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putInt("current_score", score)
+        editor.apply()
     }
 
     private fun initializeGameComponents() {
@@ -235,6 +253,22 @@ class WhaleGame : AppCompatActivity() {
                 location1[1] + view1.height < location2[1] ||
                 location1[1] > location2[1] + view2.height)
     }
+    private var currentScore = 0 // Initialize current score
+
+    private fun updateScore(newScore: Int) {
+        currentScore = newScore
+        findViewById<TextView>(R.id.scoreTextView).text = "Score: $currentScore"
+
+        // Check for high score
+        val highScore = getHighScoreFromStorage()
+        if (currentScore > highScore) {
+            saveHighScoreToStorage(currentScore)
+            findViewById<TextView>(R.id.highScoreTextView).text = "High Score: $currentScore"
+        } else {
+            findViewById<TextView>(R.id.highScoreTextView).text = "High Score: $highScore"
+        }
+    }
+
 
     private fun gameOver() {
         netHandler.removeCallbacksAndMessages(null)
@@ -250,6 +284,54 @@ class WhaleGame : AppCompatActivity() {
             }
             .setCancelable(false)
             .show()
+
+        saveScore(score)
+        var xp = 0
+        if(25 < score && score < 50){
+            xp = 50
+        }
+        else if(score >= 50){
+            xp = 75
+        }
+        xpEarned = xp
+        levelUp(xp)
+        showGameOverDialog()
+    }
+
+    fun levelUp(score: Int) {
+        /*
+            Code Attribution
+            Title: How to use OKHTTP to make a post request in Kotlin?
+            Author: heX
+            Author Link: https://stackoverflow.com/users/11740298/hex
+            Post Link: https://stackoverflow.com/questions/56893945/how-to-use-okhttp-to-make-a-post-request-in-kotlin
+            Usage: learned how to make patch api requests
+        */
+        val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+
+        val progressData = workDataOf(LevelUpWorker.EXPERIENCE to score.toString())
+
+        Log.d("ProgressData", progressData.toString() + score.toString())
+        val request: OneTimeWorkRequest =
+            OneTimeWorkRequestBuilder<LevelUpWorker>()
+                .setConstraints(constraints)
+                .setInputData(progressData)
+                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 20, TimeUnit.SECONDS)
+                .build()
+        WorkManager.getInstance()
+            .enqueue(request)
+    }
+
+    private fun showGameOverDialog() {
+        AlertDialog.Builder(this).apply {
+            setTitle("Game Over")
+            setMessage("Your score: $score\nXP earned: $xpEarned\nDo you want to play again?")
+            setPositiveButton("Yes") { _, _ -> restartGame() }
+            setNegativeButton("Quit") { _, _ -> finish() }
+            setCancelable(true)
+            setOnCancelListener { finish() }
+            show()
+        }
     }
 
     private fun restartGame() {
