@@ -1,11 +1,6 @@
 # Oceans Depth Meditation App
-## AI Write Up
-Our AI write up is in the file AiWriteUp.md
-
 ## Overview:
 Oceans Depth is a meditation app designed to promote mindfulness, help users focus, and track their personal progress. This app offers features like diary entries, personalized meditation sessions, breathing exercises, and goal tracking, all while allowing users to switch between light and dark modes for a customizable experience. The app also rewards users with points, helping them to level up as they achieve their daily goals.
-
-API LINK = https://opscmeditationapi.azurewebsites.net/swagger/index.html
 
 Video Link = https://www.youtube.com/watch?v=3jI7t0JIBvE
 
@@ -59,12 +54,6 @@ The user will now recieve daily notifications reminding the user to take time of
 
 ### Biometric scanner
 The user's app will be locked whenever they close it to protect their app. They will be able to unlock the app with their fingerprint or phone pin.
-
-## Play store
-Submitted for review
-![image](https://github.com/user-attachments/assets/6048837f-f1f1-4abd-bac2-ae7831ac1f43)
-![image](https://github.com/user-attachments/assets/fe78768f-265e-40ac-bb29-cc44b5cb528e)
-
 
 ## Usage Instructions:
 Register:
